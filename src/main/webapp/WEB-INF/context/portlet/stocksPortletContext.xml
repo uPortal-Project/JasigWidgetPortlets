@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+    >
+    
+    <!-- Properties configuration -->
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+        lazy-init="false">
+        <property name="locations">
+            <list>
+                <value>classpath:configuration.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sessionKeyGenerator" class="org.jasig.web.util.DefaultSessionKeyGenerator">
+        <property name="seed" value="0" />
+    </bean>
+    
+    <!-- Main portlet view controller -->
+    <bean id="mainStocksController" class="org.jasig.portlet.widget.mvc.StocksController">
+        <property name="apiKey" value="${google.api.key}"/>
+    </bean>
+
+    <bean id="savePreferencesController" class="org.jasig.portlet.widget.mvc.StocksSavePreferencesController">
+        <property name="sessionKeyGenerator" ref="sessionKeyGenerator" />
+        <property name="modelPasser" ref="modelPasser"/>
+        <property name="ajaxServletName" value="ajax/json"/>
+    </bean>
+    
+    <bean id="portletModeParameterHandlerMapping" class="org.springframework.web.portlet.handler.ParameterHandlerMapping">
+        <property name="order" value="10" />
+        <property name="defaultHandler" ref="mainStocksController" />
+        <property name="parameterMap">
+            <map>
+                <entry key="main" value-ref="mainStocksController" />
+                <entry key="savePreferences" value-ref="savePreferencesController" />
+            </map>
+        </property>
+    </bean>
+    
+</beans>

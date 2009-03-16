@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
+                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+
+    <portlet>
+        <portlet-name>google-search</portlet-name>
+        <display-name xml:lang="en">Google Search</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleSearchPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Google Search Portlet</title>
+            <short-title>Search</short-title>
+            <keywords>Google Search</keywords>
+        </portlet-info>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>google-maps</portlet-name>
+        <display-name xml:lang="en">Google Maps</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleMapsPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Google Maps</title>
+            <short-title>Map</short-title>
+            <keywords>Google Maps</keywords>
+        </portlet-info>
+    </portlet>
+
+    <portlet>
+        <portlet-name>google-rss</portlet-name>
+        <display-name xml:lang="en">RSS</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleRssPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>RSS</title>
+            <short-title>RSS</short-title>
+            <keywords>Google RSS Atom feed</keywords>
+        </portlet-info>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>google-translate</portlet-name>
+        <display-name xml:lang="en">Translate</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleTranslatePortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Language Translation</title>
+            <short-title>Translate</short-title>
+            <keywords>Google Language Translate</keywords>
+        </portlet-info>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>stocks</portlet-name>
+        <display-name xml:lang="en">Stocks</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/stocksPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Stocks</title>
+            <short-title>Stocks</short-title>
+            <keywords>Yahoo Yahoo! Stocks Finance</keywords>
+        </portlet-info>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>dictionary</portlet-name>
+        <display-name xml:lang="en">Dictionary</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/dictionaryPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Dictionary</title>
+            <short-title>Dictionary</short-title>
+            <keywords>Dictionary</keywords>
+        </portlet-info>
+    </portlet>
+    
+</portlet-app>

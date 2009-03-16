@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+>
+
+    <bean id="ajaxResponseController" class="org.jasig.web.servlet.mvc.AjaxResponseController">
+        <property name="modelPasser" ref="modelPasser"/>
+    </bean>
+    
+    <bean id="dictionaryResponseController" class="org.jasig.portlet.widget.servlet.mvc.DictionaryDataController">
+    </bean>
+
+    <bean id="stockResponseController" class="org.jasig.portlet.widget.servlet.mvc.StockDataController">
+    </bean>
+    
+    
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="0"/>
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="urlMap">
+            <map>
+                <entry key="/ajax/dictionary" value-ref="dictionaryResponseController"/>
+                <entry key="/ajax/stock" value-ref="stockResponseController"/>
+                <entry key="/ajax/json" value-ref="ajaxResponseController"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>
