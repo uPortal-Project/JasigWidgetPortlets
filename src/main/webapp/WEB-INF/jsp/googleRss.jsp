@@ -1,5 +1,6 @@
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
 <%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 <c:set var="n"><portlet:namespace/></c:set>
@@ -14,7 +15,7 @@
     
     ${n}.jQuery(function(){
         var $ = ${n}.jQuery;
-        var feeds = new Array(<c:forEach items="${feedNames}" var="name" varStatus="status">{name: '${name}', url: '${feedUrls[status.index]}'}${status.last ? "" : ", "}</c:forEach>)
+        var feeds = new Array(<c:forEach items="${feedNames}" var="name" varStatus="status">{name: '${fn:replace(name, "'", "\\'")}', url: '${feedUrls[status.index]}'}${status.last ? "" : ", "}</c:forEach>)
 
 	    var writeFeeds = function() {
 	      document.getElementById("${n}feed").innerHTML = null;
