@@ -31,6 +31,10 @@
 	
 	
 	<bean id="modelPasser" class="org.jasig.web.util.DefaultModelPasser"/>
+
+	<bean id="sessionKeyGenerator" class="org.jasig.web.util.DefaultSessionKeyGenerator">
+		<property name="seed" value="0" />
+	</bean>
 	
 	<bean id="requiredAnnotationBeanPostProcessor" class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
 </beans>

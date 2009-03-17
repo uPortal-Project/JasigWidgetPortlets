@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
-    >
-    
-    <!-- Properties configuration -->
-    <bean id="propertyConfigurer"
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-        lazy-init="false">
-        <property name="locations">
-            <list>
-                <value>classpath:configuration.properties</value>
-            </list>
-        </property>
-    </bean>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
     <!-- Main portlet view controller -->
-    <bean id="mainDictionaryController" class="org.jasig.portlet.widget.mvc.DictionaryController">
-    </bean>
+    <bean id="mainDictionaryController" class="org.jasig.portlet.widget.mvc.DictionaryController"/>
     
-    <bean id="portletModeParameterHandlerMapping" class="org.springframework.web.portlet.handler.ParameterHandlerMapping">
-        <property name="order" value="10" />
+    
+    <!-- Portlet controller mappings -->
+    <bean id="portletModeParameterHandlerMapping" 
+            class="org.springframework.web.portlet.handler.ParameterHandlerMapping">
         <property name="defaultHandler" ref="mainDictionaryController" />
-        <property name="parameterMap">
-            <map>
-                <entry key="main" value-ref="mainDictionaryController" />
-            </map>
-        </property>
     </bean>
     
     

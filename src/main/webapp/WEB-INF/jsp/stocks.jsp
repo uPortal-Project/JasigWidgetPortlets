@@ -70,7 +70,7 @@
 	        return false;
 	    }
 	    
-        $(document).ready(function(){
+        $("#${n}stocks").ready(function(){
             $("#${n}tabs").tabs();
             fillTable();
             $("#${n}editLink").click(function(){ return switchMode('edit'); });
@@ -81,38 +81,40 @@
     });
 </script>
 
-<div id="${n}view" class="${n}viewMode">
-	<div id="${n}tabs">
-		<ul>
-		   <li><a href="#${n}stockTab">Ticker</a></li>
-		   <li><a href="#${n}newsTab">News</a></li>
-		</ul>
-		
-		<div id="${n}stockTab">
-			<table id="${n}stocks">
-			    <tbody>
-			        <tr>
-			            <th>Symbol</th><th>Price</th><th>Change</th>
-			            <th>&nbsp;</th><th>&nbsp;</th>
-			        </tr>
-			    </tbody>
-			</table>
+<div id="${n}stocks">
+	<div id="${n}view" class="${n}viewMode">
+		<div id="${n}tabs">
+			<ul>
+			   <li><a href="#${n}stockTab">Ticker</a></li>
+			   <li><a href="#${n}newsTab">News</a></li>
+			</ul>
+			
+			<div id="${n}stockTab">
+				<table id="${n}stocks">
+				    <tbody>
+				        <tr>
+				            <th>Symbol</th><th>Price</th><th>Change</th>
+				            <th>&nbsp;</th><th>&nbsp;</th>
+				        </tr>
+				    </tbody>
+				</table>
+			</div>
+			
+			<div id="${n}newsTab">
+			   <div id="${n}feed"></div>
+			</div>
+			
 		</div>
-		
-		<div id="${n}newsTab">
-		   <div id="${n}feed"></div>
-		</div>
-		
+	    <a id="${n}editLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/chart_line_edit.png"/>"/> Edit stocks</a>
 	</div>
-    <a id="${n}editLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/chart_line_edit.png"/>"/> Edit stocks</a>
-</div>
-
-<div id="${n}edit" style="display:none" class="${n}editMode">
-    <h2>Edit Stocks Preferences</h2>
-    <form name="${n}stocks">
-        <label for="stock">Enter a comma-delimited list of stocks:</label>
-        <input name="stock" value="<c:forEach items="${stocks}" var="stock" varStatus="status">${stock}${!status.last ? "," : ""}</c:forEach>"/>
-	    <input type="submit" value="Save"/>
-    </form>
-    <a id="${n}viewLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/arrow_left.png"/>"/> Back</a>
+	
+	<div id="${n}edit" style="display:none" class="${n}editMode">
+	    <h2>Edit Stocks Preferences</h2>
+	    <form name="${n}stocks">
+	        <label for="stock">Enter a comma-delimited list of stocks:</label>
+	        <input name="stock" value="<c:forEach items="${stocks}" var="stock" varStatus="status">${stock}${!status.last ? "," : ""}</c:forEach>"/>
+		    <input type="submit" value="Save"/>
+	    </form>
+	    <a id="${n}viewLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/arrow_left.png"/>"/> Back</a>
+	</div>
 </div>

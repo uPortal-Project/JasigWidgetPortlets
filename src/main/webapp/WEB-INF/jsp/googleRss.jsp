@@ -70,7 +70,7 @@
 	        writeFeeds();
 	        return false;
 	    }
-	    $(document).ready(function(){
+	    $("#${n}googleRss").ready(function(){
 		    $("#${n}edit form:first").submit(function(){ return updateFeeds(this); });
             $("#${n}edit form:eq(1)").submit(function(){ return searchFeeds(this); });
             $("#${n}editLink").click(function(){ return switchMode('edit'); });
@@ -82,31 +82,32 @@
     });
 </script>
 
-<div id="${n}view">
-    <div id="${n}feed"></div>
-    <a id="${n}editLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_edit.png"/>"/> Edit feeds</a>
-</div>
-
-<div id="${n}edit" style="display:none">
-    <form name="${n}googlerss">
-        <div id="${n}inputFeeds">
-	        <c:forEach items="${ feedNames }" var="name" varStatus="status">
-	            <div>
-	               Name: <input name="name" value="${ name }"/>,
-	               url: <input name="url" value="${ feedUrls[status.index] }"/>
-	               <a href="#" onclick="${n}.jQuery(this).parent().remove(); return false;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>"/></a>
-	            </div>
-	        </c:forEach>
-        </div>
-        <input type="submit" value="Save"/>
-    </form>
-    <h3 id="${n}searchFeedsLink"><a href="javascript:;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/bullet_toggle_plus.png"/>"/> Find new feeds</a></h3>
-    <div style="display:none">
-	    <form name="${n}googlersssearch">
-	        Search feeds: <input name="search"/> <input type="submit" value="Go!"/>
+<div id="${n}googleRss">
+	<div id="${n}view">
+	    <div id="${n}feed"></div>
+	    <a id="${n}editLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_edit.png"/>"/> Edit feeds</a>
+	</div>
+	
+	<div id="${n}edit" style="display:none">
+	    <form name="${n}googlerss">
+	        <div id="${n}inputFeeds">
+		        <c:forEach items="${ feedNames }" var="name" varStatus="status">
+		            <div>
+		               Name: <input name="name" value="${ name }"/>,
+		               url: <input name="url" value="${ feedUrls[status.index] }"/>
+		               <a href="#" onclick="${n}.jQuery(this).parent().remove(); return false;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>"/></a>
+		            </div>
+		        </c:forEach>
+	        </div>
+	        <input type="submit" value="Save"/>
 	    </form>
-	    <ul id="${n}feedSearchResults"></ul>
-    </div>
-    <a id="${n}viewLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/arrow_left.png"/>"/> Back</a>
+	    <h3 id="${n}searchFeedsLink"><a href="javascript:;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/bullet_toggle_plus.png"/>"/> Find new feeds</a></h3>
+	    <div style="display:none">
+		    <form name="${n}googlersssearch">
+		        Search feeds: <input name="search"/> <input type="submit" value="Go!"/>
+		    </form>
+		    <ul id="${n}feedSearchResults"></ul>
+	    </div>
+	    <a id="${n}viewLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/arrow_left.png"/>"/> Back</a>
+	</div>
 </div>
-

@@ -133,4 +133,25 @@
         </portlet-info>
     </portlet>
     
+    <portlet>
+        <portlet-name>calendar</portlet-name>
+        <display-name xml:lang="en">Dictionary</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/calendarPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Calendar</title>
+            <short-title>Calendar</short-title>
+            <keywords>Calendar</keywords>
+        </portlet-info>
+    </portlet>
+    
 </portlet-app>

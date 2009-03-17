@@ -10,28 +10,33 @@
 <script type="text/javascript">
     var ${n} = {};
     ${n}.jQuery = jQuery.noConflict(true);
-    ${n}.jQuery(document).ready(function(){
-        ${n}.jQuery("#${n}tabs").tabs();
-        ${n}.jQuery("#${n}dictionaryTab > form").submit(function(){ return ${n}searchDictionary(this); });
+    ${n}.jQuery(function(){
+
+	    var ${n}searchDictionary = function(form) {
+	         var $ = ${n}.jQuery;
+	         $("#${n}defs").html("");
+	         $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(xml){
+	            $(xml).find("Definition > WordDefinition").each(function(){
+	                $(form).parent().find("div.defContainer").append($(document.createElement("div")).html($(this).text()));
+	            });
+	         });
+	         return false;
+	    };
+
+        ${n}.jQuery("#${n}tabs").ready(function(){
+            ${n}.jQuery("#${n}tabs").tabs();
+            ${n}.jQuery("#${n}dictionaryTab > form").submit(function(){ return ${n}searchDictionary(this); });
+            ${n}.jQuery("#${n}thesaurusTab > form").submit(function(){ return ${n}searchDictionary(this); });
+        });
+        
     });
-    
-    function ${n}searchDictionary(form) {
-         var $ = ${n}.jQuery;
-         $("#${n}defs").html("");
-         $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(xml){
-            $(xml).find("Definition > WordDefinition").each(function(){
-                $(form).parent().find("div.defContainer").append($(document.createElement("div")).html($(this).text()));
-            });
-         });
-         return false;
-    };
 
 </script>
 
 <div id="${n}tabs">
     <ul>
        <li><a href="#${n}dictionaryTab">Dictionary</a></li>
-       <li><a href="#${n}thesaurusTab">Thesaurus</li></a>
+       <li><a href="#${n}thesaurusTab">Thesaurus</a></li>
     </ul>
     
     <div id="${n}dictionaryTab">
@@ -44,7 +49,7 @@
 	</div>
 
 	<div id="${n}thesaurusTab">
-        <form onsubmit="return ${n}searchDictionary(this);">
+        <form>
             <input type="hidden" name="dict" value="moby-thes"/> 
             <input name="word"/>
             <input type="submit" value="Go!"/>

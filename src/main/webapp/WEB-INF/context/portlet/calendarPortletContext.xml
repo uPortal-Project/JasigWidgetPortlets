@@ -3,27 +3,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-
-    <!-- Properties configuration -->
-    <bean id="propertyConfigurer"
-        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-        lazy-init="false">
-        <property name="locations">
-            <list><value>classpath:configuration.properties</value></list>
-        </property>
-    </bean>
     
     <!-- Main portlet view controller -->
-    <bean id="mapsController" class="org.jasig.portlet.widget.mvc.GoogleMapsController">
-        <property name="apiKey" value="${google.api.key}"/>
+    <bean id="mainCalendarController" class="org.springframework.web.portlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="calendar"/>
     </bean>
-    
     
     <!-- Portlet controller mappings -->
     <bean id="portletModeParameterHandlerMapping" 
             class="org.springframework.web.portlet.handler.ParameterHandlerMapping">
-        <property name="defaultHandler" ref="mapsController" />
+        <property name="defaultHandler" ref="mainCalendarController" />
     </bean>
-    
-    
+	
 </beans>
