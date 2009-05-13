@@ -17,7 +17,7 @@
     };
     ${n}.jQuery(function(){
         var $ = ${n}.jQuery;
-        var stocks = new Array(<c:forEach items="${stocks}" var="stock" varStatus="status">'${stock}'${status.last ? '' : ', '}</c:forEach>)
+        var stocks = new Array(<c:forEach items="${stocks}" var="stock" varStatus="status">'${fn:escapeXml(stock)}'${status.last ? '' : ', '}</c:forEach>)
 
 	    function loadFinanceFeeds() {
 	      document.getElementById("${n}feed").innerHTML = "";
@@ -112,7 +112,7 @@
 	    <h2>Edit Stocks Preferences</h2>
 	    <form name="${n}stocks">
 	        <label for="stock">Enter a comma-delimited list of stocks:</label>
-	        <input name="stock" value="<c:forEach items="${stocks}" var="stock" varStatus="status">${stock}${!status.last ? "," : ""}</c:forEach>"/>
+	        <input name="stock" value="<c:forEach items="${stocks}" var="stock" varStatus="status">${fn:escapeXml(stock)}${!status.last ? "," : ""}</c:forEach>"/>
 		    <input type="submit" value="Save"/>
 	    </form>
 	    <a id="${n}viewLink" href="#"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/arrow_left.png"/>"/> Back</a>

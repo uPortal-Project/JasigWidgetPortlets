@@ -46,8 +46,8 @@
         var addFeed = function(el) {
             var html = "Name: <input name=\"name\" value=\"" + el.name + "\"/>, ";
             html += "url: <input name=\"url\" value=\"" + el.href + "\"/>";
-            html += "<a href=\"#\" onclick=\"${n}.jQuery(this).parent().remove(); return false;\"><img src=\"<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>\"/></a>";
-            $("#${n}inputFeeds").append($(document.createElement("div")).html(html));
+            html += "<a href=\"#\" onclick=\"${n}.jQuery(this).parent().remove(); return false;\"><img src=\"<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>\"/> Remove</a>";
+            $("#${n}inputFeeds").append($(document.createElement("p")).html(html));
             return false;
         }
         var switchMode = function(mode) {
@@ -89,19 +89,20 @@
 	</div>
 	
 	<div id="${n}edit" style="display:none">
+	    <h2>Edit feeds</h2>
 	    <form name="${n}googlerss">
 	        <div id="${n}inputFeeds">
 		        <c:forEach items="${ feedNames }" var="name" varStatus="status">
-		            <div>
-		               Name: <input name="name" value="${ name }"/>,
-		               url: <input name="url" value="${ feedUrls[status.index] }"/>
-		               <a href="#" onclick="${n}.jQuery(this).parent().remove(); return false;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>"/></a>
-		            </div>
+		            <p>
+		               Name: <input name="name" value="${ name }"/><br/>
+		               URL: <input name="url" value="${ feedUrls[status.index] }"/><br/>
+		               <a href="#" onclick="${n}.jQuery(this).parent().remove(); return false;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/feed_delete.png"/>"/> Remove</a>
+		            </p>
 		        </c:forEach>
 	        </div>
 	        <input type="submit" value="Save"/>
 	    </form>
-	    <h3 id="${n}searchFeedsLink"><a href="javascript:;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/bullet_toggle_plus.png"/>"/> Find new feeds</a></h3>
+	    <h2 id="${n}searchFeedsLink"><a href="javascript:;"><img src="<rs:resourceURL value="/rs/famfamfam/silk/1.3/bullet_toggle_plus.png"/>"/> Find new feeds</a></h2>
 	    <div style="display:none">
 		    <form name="${n}googlersssearch">
 		        Search feeds: <input name="search"/> <input type="submit" value="Go!"/>
