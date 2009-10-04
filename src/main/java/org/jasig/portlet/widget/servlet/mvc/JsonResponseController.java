@@ -18,30 +18,31 @@
  */
 package org.jasig.portlet.widget.servlet.mvc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.jasig.web.service.AjaxPortletSupportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/ajax/dictionary")
-public class DictionaryDataController {
+@RequestMapping("/ajax/json")
+public class JsonResponseController {
 
-	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView getDefinition(HttpServletRequest request) throws Exception {
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		
-		String word = request.getParameter("word");
-		String dict = request.getParameter("dictId");
-		String url = "http://services.aonaware.com/DictService/DictService.asmx/DefineInDict?dictId=" + dict + "&word=" + word;
-		
-		map.put(ProxyView.URL, url);
-		return new ModelAndView("proxyView", map);
+	@Autowired(required=true)
+	private AjaxPortletSupportService ajaxPortletSupportService;
+	
+	public void setAjaxPortletSupportService(
+			AjaxPortletSupportService ajaxPortletSupportService) {
+		this.ajaxPortletSupportService = ajaxPortletSupportService;
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView getJsonResponse(HttpServletRequest request, 
+			HttpServletResponse response) throws Exception {
+		return ajaxPortletSupportService.getAjaxModelAndView("jsonView", request, response);
+	}
 }

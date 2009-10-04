@@ -18,26 +18,19 @@
  */
 package org.jasig.portlet.widget.mvc;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.ModelAndView;
 
-import org.jasig.portlet.widget.servlet.mvc.ProxyView;
-import org.jasig.web.portlet.mvc.AbstractAjaxController;
+@Controller
+@RequestMapping("VIEW")
+public class CalendarController {
 
-public class StockDataController extends AbstractAjaxController {
-
-	@Override
-	protected Map<Object, Object> handleAjaxRequestInternal(
-			ActionRequest request, ActionResponse response) throws Exception {
-
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String url = "http://quote.yahoo.com/d/quotes.csv?s=YHOO&f=sl1d1t1c1ohgvj1pp2wern";
-		
-		map.put(ProxyView.URL, url);
-		return map;
+	@RequestMapping()
+	public ModelAndView view() throws Exception {		
+		return new ModelAndView("calendar", Collections.<Object,Object>emptyMap());
 	}
 
 }

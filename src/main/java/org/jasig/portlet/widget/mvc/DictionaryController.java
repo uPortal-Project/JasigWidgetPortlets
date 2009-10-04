@@ -18,25 +18,19 @@
  */
 package org.jasig.portlet.widget.mvc;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.AbstractController;
 
-public class DictionaryController extends AbstractController {
+@Controller
+@RequestMapping("VIEW")
+public class DictionaryController {
 
-	@Override
-	public ModelAndView handleRenderRequest(RenderRequest request,
-			RenderResponse response) throws Exception {
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		PortletPreferences preferences = request.getPreferences();
-		return new ModelAndView("dictionary", map);
+	@RequestMapping()
+	public ModelAndView view() throws Exception {		
+		return new ModelAndView("dictionary", Collections.<Object,Object>emptyMap());
 	}
 
 }

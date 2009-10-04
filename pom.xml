@@ -14,7 +14,7 @@
   <packaging>war</packaging>
 
   <name>Jasig Widget Portlets</name>
-  <description>The root project definition for the Resource Server project.</description>
+  <description>Collection of small, simple widget-type portlets.</description>
   <version>1.0.0-SNAPSHOT</version>
 
 
@@ -141,7 +141,7 @@
     <dependency>
       <groupId>org.jasig</groupId>
       <artifactId>AjaxPortletSupport</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5-SNAPSHOT</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>

@@ -23,14 +23,16 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.AbstractController;
 
-public class GoogleSearchController extends AbstractController {
+@Controller
+@RequestMapping("VIEW")
+public class GoogleSearchController {
 	
-	private String apiKey = null;
+	private String apiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
 	
 	public void setApiKey(String key) {
 		this.apiKey = key;
@@ -38,9 +40,8 @@ public class GoogleSearchController extends AbstractController {
 	
 	private static final String[] defaultSearchEngines = new String[]{ "web", "news" };
 
-	@Override
-	public ModelAndView handleRenderRequest(RenderRequest request,
-			RenderResponse response) throws Exception {
+	@RequestMapping()
+	public ModelAndView handleRenderRequest(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();

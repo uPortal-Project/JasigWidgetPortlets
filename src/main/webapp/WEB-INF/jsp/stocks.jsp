@@ -63,14 +63,15 @@
 	                      },
 	                      showURL: false
 	                  });
-	                table.append(
-	                   $(document.createElement("tr"))
-	                       .append($(document.createElement("td")).text(items[0]))
-	                       .append($(document.createElement("td")).text(items[1]))
-	                       .append($(document.createElement("td")).text(items[4]))
-	                       .append($(document.createElement("td")).text(items[11]))
-	                       .append($(document.createElement("td")).append(img))
-	                );
+	                  var tr = $(document.createElement("tr"))
+	                      .append($(document.createElement("td")).text(items[0]).addClass("stock-name"))
+	                      .append($(document.createElement("td")).text(items[1]))
+	                      .append($(document.createElement("td")).text(items[4]))
+	                      .append($(document.createElement("td")).text(items[11]))
+	                      .append($(document.createElement("td")).append(img));
+                      if (items[4] < 0) tr.addClass("falling-stock");
+                      if (items[4] > 0) tr.addClass("rising-stock");
+	                table.append(tr);
 	            });
 	        });
 	    }
@@ -101,6 +102,11 @@
     });
 </script>
 
+<style type="text/css">
+	tr.rising-stock td.stock-name { color:green }
+	tr.falling-stock td.stock-name { color:red }
+</style>
+
 <div id="${n}stocks">
 	<div id="${n}view" class="${n}viewMode">
 		<div id="${n}tabs">
@@ -111,11 +117,14 @@
 			
 			<div id="${n}stockTab">
 				<table id="${n}stocks">
+				    <thead>
+                        <tr>
+                            <th>Symbol</th><th>Price</th><th>Change</th>
+                            <th>&nbsp;</th><th>&nbsp;</th>
+                        </tr>
+				    </thead>
+				    <tfoot/>
 				    <tbody>
-				        <tr>
-				            <th>Symbol</th><th>Price</th><th>Change</th>
-				            <th>&nbsp;</th><th>&nbsp;</th>
-				        </tr>
 				    </tbody>
 				</table>
 			</div>

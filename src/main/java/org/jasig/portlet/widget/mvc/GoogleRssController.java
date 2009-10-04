@@ -18,42 +18,75 @@
  */
 package org.jasig.portlet.widget.mvc;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jasig.web.service.AjaxPortletSupportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.AbstractController;
 
-public class GoogleRssController extends AbstractController {
+@Controller
+@RequestMapping("VIEW")
+public class GoogleRssController {
 	
-	private String apiKey = null;
+	private Log log = LogFactory.getLog(GoogleRssController.class);
 	
-	public void setApiKey(String key) {
-		this.apiKey = key;
-	}
-	
-	private String[] defaultFeedUrls = new String[]{
+	private static final String DEFAULT_GOOGLE_API_KEY = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
+	private static final String[] DEFAULT_FEED_URLS = new String[]{
 			"http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml", 
 			"http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml"};
-	private String[] defaultFeedNames = new String[]{"NY Times", "BBC"};
+	private static final String[] DEFAULT_FEED_NAMES = new String[]{"NY Times", "BBC"};
+	
+	@Autowired(required=true)
+	private AjaxPortletSupportService ajaxService;
+	
+	public void setAjaxPortletSupportService(AjaxPortletSupportService service) {
+		this.ajaxService = service;
+	}
 
-	@Override
-	public ModelAndView handleRenderRequest(RenderRequest request,
-			RenderResponse response) throws Exception {
+	@RequestMapping()
+	public ModelAndView getView(PortletRequest request) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();
-		map.put("key", preferences.getValue("key", this.apiKey));
+		map.put("key", preferences.getValue("key", this.DEFAULT_GOOGLE_API_KEY));
 		map.put("feedUrls", 
-				preferences.getValues("feedUrls", defaultFeedUrls));
+				preferences.getValues("feedUrls", DEFAULT_FEED_URLS));
 		map.put("feedNames", 
-				preferences.getValues("feedNames", defaultFeedNames));
+				preferences.getValues("feedNames", DEFAULT_FEED_NAMES));
 		
 		return new ModelAndView("googleRss", map);
 	}
+	
+	@RequestMapping(params = "action=savePreferences")
+	public void savePreferences(ActionRequest request, ActionResponse response) throws Exception {
 
+		Map<Object, Object> model = new HashMap<Object, Object>();
+		try {
+			// save the preferences
+			PortletPreferences preferences = request.getPreferences();
+			preferences.setValues("feedNames", request.getParameterValues("feedNames"));
+			preferences.setValues("feedUrls", request.getParameterValues("feedUrls"));
+			preferences.store();
+
+		} catch (Exception e) {
+			log.error("Error storing Google rss preferences", e);
+			model = Collections.<Object,Object>singletonMap("status", "failure");
+		}
+
+        model = Collections.<Object,Object>singletonMap("status", "success");
+        ajaxService.redirectAjaxResponse("ajax/json", model, request, response);
+
+	}
+	
 }

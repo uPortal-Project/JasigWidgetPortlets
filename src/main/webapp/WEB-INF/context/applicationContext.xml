@@ -21,42 +21,30 @@
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<!--
-		| Message source for this context, loaded from localized "messages_xx" files
-		+-->
+	 | Message source for this context, loaded from localized "messages_xx" files
+	 +-->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
-			<list>
-				<value>messages</value>
-			</list>
+			<list><value>messages</value></list>
 		</property>
 	</bean>
+	
+	<bean class="org.jasig.web.service.AjaxPortletSupportService"/>
 
 	<!-- 
-		| View resolvers, look for a named view bean before going to JSP resolution
-		+-->
-	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
-		<property name="order" value="0"/>
-		<property name="location" value="/WEB-INF/context/views.xml"/>
-	</bean>
+	 | View resolvers, look for a named view bean before going to JSP resolution
+	 +-->
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
+		p:order="0" p:location="/WEB-INF/context/views.xml"/>
+	
 	<bean id="jspViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="10"/>
-		<property name="cache" value="true"/>
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-		<property name="prefix" value="/WEB-INF/jsp/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="10" p:cache="true" p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
-
-	<bean id="modelPasser" class="org.jasig.web.util.DefaultModelPasser"/>
-
-	<bean id="sessionKeyGenerator" class="org.jasig.web.util.DefaultSessionKeyGenerator">
-		<property name="seed" value="0"/>
-	</bean>
-
-	<bean id="requiredAnnotationBeanPostProcessor"
-		class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 </beans>

@@ -23,18 +23,16 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.AbstractController;
 
-public class GoogleTranslateController extends AbstractController {
+@Controller
+@RequestMapping("VIEW")
+public class GoogleTranslateController {
 
-	private String apiKey = null;
-	
-	public void setApiKey(String key) {
-		this.apiKey = key;
-	}
+	private final String defaultApiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
 	
 	private static final String[] languages = new String[]{"sq", "ar", "bg", "zh", "ca",
 			"hr", "cs", "da", "nl", "en", "et", "fi", "fr", "gl", "de", "el",
@@ -42,13 +40,12 @@ public class GoogleTranslateController extends AbstractController {
 			"pl", "pt", "ro", "ru", "es", "sr", "sk", "sl", "sv", "th", "tr", 
 			"uk", "vi"};
 	
-	@Override
-	public ModelAndView handleRenderRequest(RenderRequest request,
-			RenderResponse response) throws Exception {
+	@RequestMapping()
+	public ModelAndView getView(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();
-		map.put("key", preferences.getValue("key", this.apiKey));
+		map.put("key", preferences.getValue("key", this.defaultApiKey));
 		map.put("languages", languages);
 		
 		return new ModelAndView("googleTranslate", map);
