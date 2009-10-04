@@ -1,8 +1,8 @@
 
 <channel-definition script="classpath://org/jasig/portal/io/import-channel_v3-1.crn">
   <title>Google Search</title>
-  <name>Google Search</name>
-  <fname>google-search-portlet</fname>
+  <name>Google Search Widget</name>
+  <fname>google-widget-search-portlet</fname>
   <desc>Jasig Google Search Portlet</desc>
   <type>Portlet</type>
   <class>org.jasig.portal.channels.portlet.CSpringPortletAdaptor</class>
