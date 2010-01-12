@@ -18,6 +18,8 @@
  */
 package org.jasig.portlet.widget.servlet.mvc;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +45,7 @@ public class JsonResponseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getJsonResponse(HttpServletRequest request, 
 			HttpServletResponse response) throws Exception {
-		return ajaxPortletSupportService.getAjaxModelAndView("jsonView", request, response);
+		Map<String, ?> model = ajaxPortletSupportService.getAjaxModel(request, response);
+		return new ModelAndView("jsonView", model);
 	}
 }

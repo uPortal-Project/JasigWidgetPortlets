@@ -68,17 +68,17 @@ public class StocksController {
 	protected void handleAjaxRequestInternal(ActionRequest request,
 			ActionResponse response) throws Exception {
 		
-		Map<Object,Object> model = new HashMap<Object,Object>();
+		Map<String,Object> model = new HashMap<String,Object>();
 		try {
 			// save the preferences
 			PortletPreferences preferences = request.getPreferences();
 			preferences.setValues("stocks", request.getParameterValues("stocks"));
 			preferences.store();
-			model = Collections.<Object,Object>singletonMap("status", "success");
+			model = Collections.<String,Object>singletonMap("status", "success");
 
 		} catch (RuntimeException e) {
 			log.error("Error storing stocks preferences", e);
-			model = Collections.<Object,Object>singletonMap("status", "failure");
+			model = Collections.<String,Object>singletonMap("status", "failure");
 		}
 
 		ajaxPortletSupportService.redirectAjaxResponse("ajax/json", model, request, response);

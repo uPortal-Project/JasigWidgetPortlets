@@ -1,9 +1,7 @@
 <projectDescription>
   <name>jasig-widget-portlets</name>
-  <comment>The root project definition for the Resource Server project.</comment>
-  <projects>
-    <project>AjaxPortletSupport</project>
-  </projects>
+  <comment>Collection of small, simple widget-type portlets.</comment>
+  <projects/>
   <buildSpec>
     <buildCommand>
       <name>org.maven.ide.eclipse.maven2Builder</name>

@@ -18,19 +18,21 @@
  */
 package org.jasig.portlet.widget.mvc;
 
-import java.util.Collections;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.portlet.ModelAndView;
 
 @Controller
 @RequestMapping("VIEW")
 public class DictionaryController {
 
-	@RequestMapping()
-	public ModelAndView view() throws Exception {		
-		return new ModelAndView("dictionary", Collections.<Object,Object>emptyMap());
+	@RequestMapping
+	public String view(PortletRequest request) throws Exception {
+		PortletSession session = request.getPortletSession();
+		session.setAttribute("hasDictionarySession", true, PortletSession.APPLICATION_SCOPE);
+		return "dictionary";
 	}
 
 }

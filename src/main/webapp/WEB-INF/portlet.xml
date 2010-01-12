@@ -19,9 +19,7 @@
     under the License.
 
 -->
-<portlet-app
-    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
-    version="1.0"
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
@@ -46,7 +44,7 @@
             <keywords>Google Search</keywords>
         </portlet-info>
     </portlet>
-    
+
     <portlet>
         <portlet-name>google-maps</portlet-name>
         <display-name xml:lang="en">Google Maps</display-name>
@@ -69,27 +67,6 @@
     </portlet>
 
     <portlet>
-        <portlet-name>google-rss</portlet-name>
-        <display-name xml:lang="en">RSS</display-name>
-        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/googleRssPortletContext.xml</value>
-        </init-param>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <supported-locale>en</supported-locale>
-        <portlet-info>
-            <title>RSS</title>
-            <short-title>RSS</short-title>
-            <keywords>Google RSS Atom feed</keywords>
-        </portlet-info>
-    </portlet>
-    
-    <portlet>
         <portlet-name>google-translate</portlet-name>
         <display-name xml:lang="en">Translate</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
@@ -109,29 +86,7 @@
             <keywords>Google Language Translate</keywords>
         </portlet-info>
     </portlet>
-    
-    <portlet>
-        <portlet-name>stocks</portlet-name>
-        <display-name xml:lang="en">Stocks</display-name>
-        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/stocksPortletContext.xml</value>
-        </init-param>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>EDIT</portlet-mode>
-        </supports>
-        <supported-locale>en</supported-locale>
-        <portlet-info>
-            <title>Stocks</title>
-            <short-title>Stocks</short-title>
-            <keywords>Yahoo Yahoo! Stocks Finance</keywords>
-        </portlet-info>
-    </portlet>
-    
+
     <portlet>
         <portlet-name>dictionary</portlet-name>
         <display-name xml:lang="en">Dictionary</display-name>
@@ -152,7 +107,7 @@
             <keywords>Dictionary</keywords>
         </portlet-info>
     </portlet>
-    
+
     <portlet>
         <portlet-name>calendar</portlet-name>
         <display-name xml:lang="en">Dictionary</display-name>
@@ -173,5 +128,27 @@
             <keywords>Calendar</keywords>
         </portlet-info>
     </portlet>
-    
+
+    <!--portlet>
+        <portlet-name>stocks</portlet-name>
+        <display-name xml:lang="en">Stocks</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/stocksPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Stocks</title>
+            <short-title>Stocks</short-title>
+            <keywords>Yahoo Yahoo! Stocks Finance</keywords>
+        </portlet-info>
+    </portlet-->
+
 </portlet-app>

@@ -73,10 +73,10 @@
 		<url-pattern>/WEB-INF/servlet/view</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
+	<!--servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/ajax/stock</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping-->
 	
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>

@@ -1,0 +1,16 @@
+<ehcache>
+    
+    <!-- Default ehcache -->
+    <defaultCache
+        maxElementsInMemory="100"
+        eternal="true"
+        overflowToDisk="false"
+        memoryStoreEvictionPolicy="LFU"/>
+    
+    <cache name="definitionCache"
+        maxElementsInMemory="5000"
+        eternal="true"
+        overflowToDisk="false"
+        memoryStoreEvictionPolicy="LRU"/>
+    
+</ehcache>

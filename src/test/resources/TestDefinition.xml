@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WordDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://services.aonaware.com/webservices/">
+    <Word>test</Word>
+    <Definitions>
+        <Definition>
+            <Word>test</Word>
+            <Dictionary>
+                <Id>wn</Id>
+                
+                <Name>WordNet (r) 2.0</Name>
+            </Dictionary>
+            <WordDefinition>test
+                n 1: any standardized procedure for measuring sensitivity or
+                memory or intelligence or aptitude or personality etc;
+                "the test was standardized on a large sample of
+                students" [syn: {mental test}, {mental testing}, {psychometric
+                test}]
+                2: the act of testing something; "in the experimental trials
+                the amount of carbon was measured separately"; "he called
+                each flip of the coin a new trial" [syn: {trial}, {run}]
+                3: the act of undergoing testing; "he survived the great test
+                of battle"; "candidates must compete in a trial of skill"
+                [syn: {trial}]
+                4: trying something to find out about it; "a sample for ten
+                days free trial"; "a trial of progesterone failed to
+                relieve the pain" [syn: {trial}, {trial run}, {tryout}]
+                5: a set of questions or exercises evaluating skill or
+                knowledge; "when the test was stolen the professor had to
+                make a new set of questions" [syn: {examination}, {exam}]
+                6: a hard outer covering as of some amoebas and sea urchins
+                v 1: put to the test, as for its quality, or give experimental
+                use to; "This approach has been tried with good
+                results"; "Test this recipe" [syn: {prove}, {try}, {try
+                out}, {examine}, {essay}]
+                2: test or examine for the presence of disease or infection;
+                "screen the blood for the HIV virus" [syn: {screen}]
+                3: examine someone's knowledge of something; "The teacher tests
+                us every week"; "We got quizzed on French irregular verbs"
+                [syn: {quiz}]
+                4: show a certain characteristic when tested; "He tested
+                positive for HIV"
+                5: achieve a certain score or rating on a test; "She tested
+                high on the LSAT and was admitted to all the good law
+                schools"
+                6: determine the presence or properties of (a substance)
+                7: undergo a test; "She doesn't test well"
+            </WordDefinition>
+        </Definition>
+    </Definitions>
+</WordDefinition>
