@@ -13,7 +13,7 @@
 
   <name>Jasig Widget Portlets</name>
   <description>Collection of small, simple widget-type portlets.</description>
-  <version>1.0.0-RC1</version>
+  <version>1.0.0-RC2-SNAPSHOT</version>
 
 
   <properties>
@@ -398,10 +398,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <connection>scm:svn:https://www.ja-sig.org/svn/jasig-parent/tags/rel-1.0.0-RC1</connection>
-    <developerConnection>scm:svn:https://www.ja-sig.org/svn/jasig-parent/tags/rel-1.0.0-RC1</developerConnection>
-    <url>http://developer.jasig.org/source/browse/jasigsvn/jasig-parent/tags/rel-1.0.0-RC1</url>
-  </scm>
 </project>
