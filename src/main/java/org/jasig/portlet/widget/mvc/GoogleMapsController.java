@@ -32,18 +32,13 @@ import org.springframework.web.portlet.ModelAndView;
 @RequestMapping("VIEW")
 public class GoogleMapsController {
 
-	private String apiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
-	
-	public void setApiKey(String key) {
-		this.apiKey = key;
-	}
-	
 	@RequestMapping
 	public ModelAndView getView(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();
-		map.put("key", preferences.getValue("key", this.apiKey));
+		String key = preferences.getValue(EditGoogleApiKeyController.GOOGLE_API_KEY_PREF_NAME, null);
+		map.put("key", key);
 		
 		return new ModelAndView("googleMaps", map);
 	}

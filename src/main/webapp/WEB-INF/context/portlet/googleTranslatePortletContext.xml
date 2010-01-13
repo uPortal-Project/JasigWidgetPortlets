@@ -29,6 +29,8 @@
     
     <bean class="org.jasig.portlet.widget.mvc.GoogleTranslateController"/>
     
+    <bean class="org.jasig.portlet.widget.mvc.EditGoogleApiKeyController"/>
+    
     <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
     
 </beans>

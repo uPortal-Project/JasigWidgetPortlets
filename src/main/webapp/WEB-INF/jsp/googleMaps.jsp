@@ -67,6 +67,10 @@
 
 <p><input type="checkbox" value="traffic" onClick="${n}toggleTraffic(this);"/> Show Traffic</p>
 <form onsubmit="return ${n}search(this);">
-    <p>Go to: <input name="location" size="35"/> <input type="submit" value="Go!"/></p>
+    <p>
+        <label class="portlet-form-field-label" for="${n}location">Go to:</label>
+        <input class="portlet-form-input-field" id="${n}location" name="location" size="35"/>
+        <input class="portlet-form-button" type="submit" value="Go!"/>
+    </p>
 </form>
 

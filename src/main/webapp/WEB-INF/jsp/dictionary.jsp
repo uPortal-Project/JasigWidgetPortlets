@@ -52,26 +52,30 @@
 
 </script>
 
-<div id="${n}tabs">
-    <ul>
-       <li><a href="#${n}dictionaryTab">Dictionary</a></li>
-       <li><a href="#${n}thesaurusTab">Thesaurus</a></li>
+<div id="${n}tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all search-container">
+    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+            <a shape="rect" href="#${n}dictionaryTab">Dictionary</a>
+        </li>
+        <li class="ui-state-default ui-corner-top">
+            <a shape="rect" href="#${n}thesaurusTab">Thesaurus</a>
+        </li>
     </ul>
     
-    <div id="${n}dictionaryTab">
+    <div id="${n}dictionaryTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 		<form>
 		    <input type="hidden" name="dict" value="wn"/>
-		    <input name="word"/> 
-		    <input type="submit" value="Go!"/>
+		    <input class="portlet-form-input-field" name="word"/> 
+		    <input class="portlet-form-button" type="submit" value="Go!"/>
 		</form>
 		<div class="defContainer"></div>
 	</div>
 
-	<div id="${n}thesaurusTab">
+	<div id="${n}thesaurusTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
         <form>
             <input type="hidden" name="dict" value="moby-thes"/> 
-            <input name="word"/>
-            <input type="submit" value="Go!"/>
+            <input class="portlet-form-input-field" name="word"/>
+            <input class="portlet-form-button" type="submit" value="Go!"/>
         </form>
         <div class="defContainer"></div>
 	</div>

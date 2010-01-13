@@ -66,4 +66,4 @@
 
 //]]>
 </script>
-<div id="<portlet:namespace/>searchcontrol">Loading...</div>
+<div id="<portlet:namespace/>searchcontrol" style="width:100%;">Loading...</div>

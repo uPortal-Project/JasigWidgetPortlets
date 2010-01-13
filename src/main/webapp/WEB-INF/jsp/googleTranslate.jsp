@@ -46,7 +46,7 @@
         <textarea name="source" style="width:100%; height: 150px; padding:2px;"></textarea>
     </p>
     <p>from 
-        <select name="fromLanguage">
+        <select name="fromLanguage" class="portlet-form-input-field">
             <option value=""><spring:message code="language.guess"/></option>
             <c:forEach items="${ languages }" var="lang">
                 <option value="${ lang }">
@@ -55,18 +55,18 @@
             </c:forEach>
         </select>
         to: 
-        <select name="toLanguage">
+        <select name="toLanguage" class="portlet-form-input-field">
             <c:forEach items="${ languages }" var="lang">
                 <option value="${ lang }">
                     <spring:message code="language.${lang}"/>
                 </option>
             </c:forEach>
         </select>
-        <input type="submit" value="Go!"/>
+        <input class="portlet-form-button" type="submit" value="Go!"/>
     </p>
 </form>
 <div id="${namespace}translationContainer" style="display:none">
 	<hr/>
-	<p>Translation:</p>
+	<p><label class="portlet-form-field-label" for="${namespace}translation">Translation:</label></p>
 	<div id="${namespace}translation"></div>
 </div>

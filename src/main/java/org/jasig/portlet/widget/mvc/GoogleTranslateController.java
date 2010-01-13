@@ -32,8 +32,6 @@ import org.springframework.web.portlet.ModelAndView;
 @RequestMapping("VIEW")
 public class GoogleTranslateController {
 
-	private final String defaultApiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
-	
 	private static final String[] languages = new String[]{"sq", "ar", "bg", "zh", "ca",
 			"hr", "cs", "da", "nl", "en", "et", "fi", "fr", "gl", "de", "el",
 			"he", "hi", "hu", "id", "it", "ja", "ko", "lv", "lt", "ml", "no", 
@@ -45,7 +43,8 @@ public class GoogleTranslateController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();
-		map.put("key", preferences.getValue("key", this.defaultApiKey));
+		String key = preferences.getValue(EditGoogleApiKeyController.GOOGLE_API_KEY_PREF_NAME, null);
+		map.put("key", key);
 		map.put("languages", languages);
 		
 		return new ModelAndView("googleTranslate", map);
