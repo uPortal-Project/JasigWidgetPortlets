@@ -13,12 +13,17 @@
 
   <name>Jasig Widget Portlets</name>
   <description>Collection of small, simple widget-type portlets.</description>
-  <version>1.0.0-RC1</version>
+  <version>1.0.0-RC2</version>
 
+    <scm>
+        <connection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</connection>
+        <developerConnection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</developerConnection>
+        <url>http://developer.jasig.org/source/browse/jasigsvn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</url>
+    </scm>
 
   <properties>
     <spring.version>2.5.6</spring.version>
-    <resource-server.version>1.0.6</resource-server.version>
+    <resource-server.version>1.0.7</resource-server.version>
   </properties>
 
   <licenses>
@@ -39,28 +44,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-        <version>3.0.1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>1.4</version>
-        <type>jar</type>
-        <scope>compile</scope>
-      </dependency>
       <dependency>
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
@@ -154,7 +137,7 @@
       <dependency>
         <groupId>org.jasig</groupId>
         <artifactId>AjaxPortletSupport</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
       </dependency>
       <dependency>
         <groupId>org.jasig.resourceserver</groupId>
@@ -200,15 +183,6 @@
   <dependencies>
 
     <!-- ===== Compile Time Dependencies ============================== -->
-    <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>3.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
@@ -398,10 +372,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <connection>scm:svn:https://www.ja-sig.org/svn/jasig-parent/tags/rel-1.0.0-RC1</connection>
-    <developerConnection>scm:svn:https://www.ja-sig.org/svn/jasig-parent/tags/rel-1.0.0-RC1</developerConnection>
-    <url>http://developer.jasig.org/source/browse/jasigsvn/jasig-parent/tags/rel-1.0.0-RC1</url>
-  </scm>
 </project>

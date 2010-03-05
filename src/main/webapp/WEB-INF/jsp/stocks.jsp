@@ -26,9 +26,9 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/stock"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.3.1/jquery-1.3.1.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.6rc6/jquery-ui-1.6rc6.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/fluid/0.8/js/fluid-all-0.8.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.3.1/jquery-1.3.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.6rc6/jquery-ui-1.7.2-v2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/fluid/0.8/js/fluid-all-1.1.2.min.js"/>" type="text/javascript"></script>
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script type="text/javascript">
     google.load("feeds", "1");

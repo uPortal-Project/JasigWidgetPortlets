@@ -1,7 +1,9 @@
 <projectDescription>
   <name>jasig-widget-portlets</name>
   <comment>Collection of small, simple widget-type portlets.</comment>
-  <projects/>
+  <projects>
+    <project>AjaxPortletSupport</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.maven.ide.eclipse.maven2Builder</name>
