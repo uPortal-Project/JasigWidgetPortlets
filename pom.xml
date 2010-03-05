@@ -13,12 +13,12 @@
 
   <name>Jasig Widget Portlets</name>
   <description>Collection of small, simple widget-type portlets.</description>
-  <version>1.0.0-RC2-SNAPSHOT</version>
+  <version>1.0.0-RC2</version>
 
     <scm>
-        <connection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/trunk</connection>
-        <developerConnection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/trunk</developerConnection>
-        <url>http://developer.jasig.org/source/browse/jasigsvn/sandbox/JasigWidgetPortlets/trunk</url>
+        <connection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</connection>
+        <developerConnection>scm:svn:https://www.ja-sig.org/svn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</developerConnection>
+        <url>http://developer.jasig.org/source/browse/jasigsvn/sandbox/JasigWidgetPortlets/tags/rel-1.0.0-RC2</url>
     </scm>
 
   <properties>
