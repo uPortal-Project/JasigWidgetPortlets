@@ -27,7 +27,7 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <script src="<rs:resourceURL value="/rs/jquery/1.3.2/jquery-1.3.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.7.2/jquery-ui-1.7.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.7.2/jquery-ui-1.7.2-v2.min.js"/>" type="text/javascript"></script>
 
 <div id="${n}calendar-channel"></div>
 <div style="clear:both">&nbsp;</div>
