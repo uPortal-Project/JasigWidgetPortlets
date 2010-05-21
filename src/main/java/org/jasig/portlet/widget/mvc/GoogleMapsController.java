@@ -31,14 +31,25 @@ import org.springframework.web.portlet.ModelAndView;
 @Controller
 @RequestMapping("VIEW")
 public class GoogleMapsController {
+    
+    public static final String PREFERENCE_STARTING_LOCATION = "startingLocation";
+    public static final String PREFERENCE_STARTING_ZOOM = "startingZoom";
 
 	@RequestMapping
 	public ModelAndView getView(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		PortletPreferences preferences = request.getPreferences();
+		
+		// Google API key
 		String key = preferences.getValue(EditGoogleApiKeyController.GOOGLE_API_KEY_PREF_NAME, null);
 		map.put("key", key);
+		
+		// Optional starting location & zoom level
+		String startingLocation = preferences.getValue(PREFERENCE_STARTING_LOCATION, null);
+        map.put(PREFERENCE_STARTING_LOCATION, startingLocation);
+        String startingZoom = preferences.getValue(PREFERENCE_STARTING_ZOOM, "13");
+        map.put(PREFERENCE_STARTING_ZOOM, startingZoom);
 		
 		return new ModelAndView("googleMaps", map);
 	}

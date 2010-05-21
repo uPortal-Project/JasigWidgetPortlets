@@ -26,17 +26,32 @@
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script type="text/javascript">
-    google.load("maps", "2", {"callback" : ${n}initializeMap});
     var ${n} = {};
-	function ${n}initializeMap() {
+    ${n}.setStartingLocation = function(geoc, map) {
+        <c:choose>
+        <c:when test="${startingLocation != null}">
+            geoc.getLatLng("${startingLocation}", function(point) {
+                if (!point) {
+                    alert("${startingLocation}" + " not found");
+                } else {
+                    map.setCenter(point, ${startingZoom});
+                }
+            });
+        </c:when>
+        <c:otherwise>
+            map.setCenter(new GLatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude), ${startingZoom});
+        </c:otherwise>
+        </c:choose>
+    }
+	${n}.initializeMap = function() {
+        ${n}.geocoder = new google.maps.ClientGeocoder();
 	    ${n}.map = new google.maps.Map2(document.getElementById("${n}map_canvas"));
-	    ${n}.map.setCenter(new GLatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude), 11);
+	    ${n}.setStartingLocation(${n}.geocoder, ${n}.map);
 	    ${n}.map.setUIToDefault();
         ${n}.trafficInfo = new google.maps.TrafficOverlay({incidents:true});
         ${n}.trafficEnabled = false;
-        ${n}.geocoder = new google.maps.ClientGeocoder();
 	}
-	function ${n}toggleTraffic(input) {
+	${n}.toggleTraffic = function(input) {
 	   ${n}.trafficEnabled = input.checked;
 	   if (input.checked) {
            ${n}.map.addOverlay(${n}.trafficInfo);
@@ -44,7 +59,7 @@
            ${n}.map.removeOverlay(${n}.trafficInfo);
 	   }
 	}
-	function ${n}search(form) {
+	${n}.search = function(form) {
       if (${n}.geocoder) {
         ${n}.geocoder.getLatLng(
           form.location.value,
@@ -61,12 +76,13 @@
       }
       return false;
 	}
+    google.load("maps", "2", {"callback" : ${n}.initializeMap});
 </script>
 
 <div id="${n}map_canvas" style="width: 100%; height: 300px"></div>
 
-<p><input type="checkbox" value="traffic" onClick="${n}toggleTraffic(this);"/> Show Traffic</p>
-<form onsubmit="return ${n}search(this);">
+<p><input type="checkbox" value="traffic" onClick="${n}.toggleTraffic(this);"/> Show Traffic</p>
+<form onsubmit="return ${n}.search(this);">
     <p>
         <label class="portlet-form-field-label" for="${n}location">Go to:</label>
         <input class="portlet-form-input-field" id="${n}location" name="location" size="35"/>
