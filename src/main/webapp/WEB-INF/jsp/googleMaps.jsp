@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
@@ -25,7 +26,7 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
     var ${n} = {};
     ${n}.setStartingLocation = function(geoc, map) {
         <c:choose>
@@ -77,7 +78,7 @@
       return false;
 	}
     google.load("maps", "2", {"callback" : ${n}.initializeMap});
-</script>
+</rs:compressJs></script>
 
 <div id="${n}map_canvas" style="width: 100%; height: 300px"></div>
 

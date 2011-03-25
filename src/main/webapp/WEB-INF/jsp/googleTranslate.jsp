@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
@@ -26,7 +27,7 @@
 <c:set var="namespace"><portlet:namespace/></c:set>
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
  google.load("language", "1");
  function ${namespace}translate(form) {
    google.language.translate(form.source.value, form.fromLanguage.value, form.toLanguage.value, function(result) {
@@ -38,7 +39,7 @@
    });
    return false;
  }
-</script>
+</rs:compressJs></script>
 
 <form onsubmit="return ${namespace}translate(this);">
     <p>

@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -26,11 +27,11 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/stock"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.3.1/jquery-1.3.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.6rc6/jquery-ui-1.7.2-v2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/fluid/0.8/js/fluid-all-1.1.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/fluid/1.2/js/fluid-all-1.2.min.js"/>" type="text/javascript"></script>
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
     google.load("feeds", "1");
     var ${n} = { 
         jQuery: jQuery.noConflict(true)
@@ -100,7 +101,7 @@
         });
         
     });
-</script>
+</rs:compressJs></script>
 
 <style type="text/css">
 	tr.rising-stock td.stock-name { color:green }

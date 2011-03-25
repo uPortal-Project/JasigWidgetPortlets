@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
@@ -26,13 +27,13 @@
 <portlet:defineObjects/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.3.2/jquery-1.3.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.7.2/jquery-ui-1.7.2-v2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
 
 <div id="${n}calendar-channel"></div>
 <div style="clear:both">&nbsp;</div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {};
     ${n}.jQuery = jQuery.noConflict(true)
     ${n}.jQuery("#${n}calendar-channel").ready(function(){
@@ -42,4 +43,4 @@
             changeYear: false
         });
     }); 
-</script>
+</rs:compressJs></script>

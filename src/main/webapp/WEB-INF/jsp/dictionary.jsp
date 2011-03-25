@@ -18,6 +18,7 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
@@ -25,9 +26,9 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/dictionary"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.3.2/jquery-1.3.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.7.2/jquery-ui-1.7.2-v2.min.js"/>" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
+<script type="text/javascript"><rs:compressJs>
     var ${n} = {};
     ${n}.jQuery = jQuery.noConflict(true);
     ${n}.jQuery(function(){
@@ -50,7 +51,7 @@
         
     });
 
-</script>
+</rs:compressJs></script>
 
 <div id="${n}tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all search-container">
     <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">

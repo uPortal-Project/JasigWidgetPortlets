@@ -18,14 +18,16 @@
     under the License.
 
 --%>
+
 <%@ page contentType="text/html" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 <portlet:defineObjects/>
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script language="Javascript" type="text/javascript">
+<script language="Javascript" type="text/javascript"><rs:compressJs>
 //<![CDATA[
   google.load('search', '1.0');
   
@@ -65,5 +67,5 @@
   google.setOnLoadCallback(<portlet:namespace/>OnLoad, true);
 
 //]]>
-</script>
+</rs:compressJs></script>
 <div id="<portlet:namespace/>searchcontrol" style="width:100%;">Loading...</div>
