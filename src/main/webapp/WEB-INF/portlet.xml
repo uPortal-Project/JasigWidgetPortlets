@@ -19,6 +19,7 @@
     under the License.
 
 -->
+
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
@@ -113,7 +114,7 @@
 
     <portlet>
         <portlet-name>calendar</portlet-name>
-        <display-name xml:lang="en">Dictionary</display-name>
+        <display-name xml:lang="en">Calendar</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
@@ -129,6 +130,27 @@
             <title>Calendar</title>
             <short-title>Calendar</short-title>
             <keywords>Calendar</keywords>
+        </portlet-info>
+    </portlet>
+
+    <portlet>
+        <portlet-name>gadget</portlet-name>
+        <display-name xml:lang="en">Google Gadget</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleGadgetPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Gadget</title>
+            <short-title>Gadget</short-title>
+            <keywords>Gadget</keywords>
         </portlet-info>
     </portlet>
 

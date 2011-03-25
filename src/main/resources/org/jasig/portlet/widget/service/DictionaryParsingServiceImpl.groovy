@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import java.io.InputStream
 import groovy.xml.StreamingMarkupBuilder
 import org.jasig.portlet.widget.service.IDictionaryParsingService
