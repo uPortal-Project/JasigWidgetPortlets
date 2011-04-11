@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+	<ModulePrefs
+		title="Google Calendar Viewer"
+	    title_url ="http://www.google.com/calendar/"
+		directory_title="Google Calendar Viewer"
+		description="Google Calendar Viewer"
+		author="Alex Sherwin, Eugen Kremer, Ralph S."
+		author_email="ralph.feedback+googlecalendarviewer@gmail.com"
+		author_affiliation="Google Inc."
+		author_location="Brighton, MI"
+		thumbnail="http://ralph.feedback.googlepages.com/googlecalendarviewer_thumbnail.png"
+		screenshot="http://ralph.feedback.googlepages.com/googlecalendarviewer_screenshot.png"
+		category="tools"
+		scrolling="true"
+        singleton="false" 
+		render_inline="optional" />
+	<UserPref name="feed" display_name="Calendar Feed" required="true" default_value="http://www.google.com/calendar/feeds/ralph.feedback@gmail.com/public/basic" />
+	<UserPref name="highlight" display_name="Highlight Color" datatype="enum" default_value="#FF0000">
+		<EnumValue value="#00FF00" display_value="Light Green" />
+		<EnumValue value="#006600" display_value="Dark Green" />
+		<EnumValue value="#000000" display_value="Black" />
+		<EnumValue value="#FF0000" display_value="Red" />
+		<EnumValue value="#FFFF00" display_value="Gold" />
+	</UserPref>
+	<UserPref name="borderStyle" display_name="Border Style" datatype="enum" default_value="solid">
+		<EnumValue value="solid" display_value="Solid Border" />
+		<EnumValue value="dotted" display_value="Dotted Border" />
+		<EnumValue value="dashed" display_value="Dashed Border" />
+	</UserPref>
+	<UserPref name="borderSize" display_name="Border Size" datatype="enum" default_value="2">
+		<EnumValue value="1" display_value="Thin" />
+		<EnumValue value="2" display_value="Medium" />
+		<EnumValue value="3" display_value="Thick" />
+	</UserPref>
+	
+	<Content type="html">
+		<![CDATA[
+
+<style type="text/css">
+#tid__MODULE_ID__
+{
+font-size: 82%;
+}
+.clbl__MODULE_ID__
+{
+cursor:pointer;
+}
+.tc__MODULE_ID__
+{
+vertical-align:top;
+text-align:center;
+padding-left:5px; 
+padding-right:5px;
+}
+</style>
+<script type="text/javascript">
+
+// global variables
+var prefs__MODULE_ID__;
+var today__MODULE_ID__;
+var curYear__MODULE_ID__;
+var curMonth__MODULE_ID__;
+var curDay__MODULE_ID__;
+var eventData__MODULE_ID__;
+var editSelection__MODULE_ID__ = 0;
+
+// begin execution
+_IG_RegisterOnloadHandler(function () {
+	
+	// get preference data and set some needed variables
+	prefs__MODULE_ID__ = new _IG_Prefs(__MODULE_ID__);
+	today__MODULE_ID__ = new Date();
+	curYear__MODULE_ID__ = today__MODULE_ID__.getFullYear();
+	curMonth__MODULE_ID__ = today__MODULE_ID__.getMonth();
+	curDay__MODULE_ID__ = today__MODULE_ID__.getDay();
+	
+	// draw the calendar for the current month
+	drawCalendar__MODULE_ID__(today__MODULE_ID__.getFullYear(), today__MODULE_ID__.getMonth());
+});
+
+// move to the next month, re-create the html and replace the inner HTML of the calendar div
+function nextMonth__MODULE_ID__() {
+
+	if (curMonth__MODULE_ID__ < 11) curMonth__MODULE_ID__++;
+
+	else {
+
+		curMonth__MODULE_ID__ = 0;
+		curYear__MODULE_ID__++;
+	}
+
+	// close any edits that may have been going on
+	hideEditEvent__MODULE_ID__();
+	
+	// redraw the calendar
+	drawCalendar__MODULE_ID__(curYear__MODULE_ID__, curMonth__MODULE_ID__);
+}
+
+// move to the previous month, re-create the html and replace the inner HTML of the calendar div
+function prevMonth__MODULE_ID__() {
+
+	if (curMonth__MODULE_ID__ > 0) curMonth__MODULE_ID__--;
+	
+	else {
+	
+		curMonth__MODULE_ID__ = 11;
+		curYear__MODULE_ID__--;
+	}
+	
+	// close any edits that may have been going on
+	hideEditEvent__MODULE_ID__();
+	
+	// redraw the calendar
+	drawCalendar__MODULE_ID__(curYear__MODULE_ID__, curMonth__MODULE_ID__);
+}
+
+
+function displayGrid__MODULE_ID__(year, month) {
+
+	var cur_m = new Date(year, month);
+	var max_d = [ 31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+	var days = [ "Su", "M", "Tu", "W", "Th", "F", "Sa" ];
+	var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+	var i, day;
+	var eventRawData, splitRawData, tmpSplit;
+
+	// create new blank string to fill the calendar div with
+	var newInnerHTML = "";
+	
+	// create the table and containing div
+	newInnerHTML += '<table width=100% cellspacing=0 cellpadding=1 border=0>';
+	
+	// check for a leap year, set the max # of days for february in the max_d array
+	if (((cur_m.getFullYear() % 4) == 0) && (cur_m.getFullYear() % 100)) max_d[1] = 29;
+	else max_d[1] = 28;
+	
+	// print the name of the month and year
+	newInnerHTML += '<tr>';
+	
+	newInnerHTML += '<td colspan=1 align=center>';
+	newInnerHTML += '<input type=button onclick="prevMonth__MODULE_ID__()" value="&lt;" style="background-color: #FFFFFF; color: #000088; font-size: small; font-weight: bold; border-width: 0px; width: 100%;">';
+	newInnerHTML += '</td>';
+	
+	newInnerHTML += '<td colspan=5 align=center><font size=-1>';
+	newInnerHTML += months[cur_m.getMonth()];
+	newInnerHTML += ' ';
+	newInnerHTML += cur_m.getFullYear();
+	newInnerHTML += '</font></td>';
+
+	newInnerHTML += '<td colspan=1 align=center>';
+	newInnerHTML += '<input type=button onclick ="nextMonth__MODULE_ID__()" value="&gt;" style="background-color: #FFFFFF; color: #000088; font-size: small; font-weight: bold; border-width: 0px; width: 100%;">';
+	newInnerHTML += '</td>';
+	
+	newInnerHTML += '</tr>';
+	
+	// print the weekday headings
+	newInnerHTML += '<tr>';
+	for (i = 0; i < 7; i++) {
+	
+		newInnerHTML += '<td align=center style="background-color: #e5ecf9; color: #000088; font-weight: bold;"><font size=-1>';
+		newInnerHTML += days[i];
+		newInnerHTML += '</font></td>';
+	}
+	
+	newInnerHTML += '</tr>';
+	
+	// get weekday information
+	var weekday = cur_m.getDay();
+	var limit = max_d[cur_m.getMonth()];
+	var style, styleBg, styleFg, moverText;
+	
+	// start the html for the first row of the days
+	newInnerHTML += "<tr>";
+	
+	// print blank days
+	for (i = 0 ; i < weekday; i++) newInnerHTML += '<td>&nbsp;</td>';
+	
+	// print dates
+	for (day = 1 ; day <= limit ; day++) {
+	
+		// reset the variables being used
+		styleBg = "";
+		styleFg = "";
+		moverText = "";
+	
+		// check the day of the week and set appropriate colors
+		switch(weekday) {
+	
+			case 0:
+			case 6:	styleBg = 'background-color: #e5ecf9;';
+					styleFg = 'color: #000088; font-weight: bold;';
+					break;
+		}
+	
+		// check if the date being generated is today, set appropriate colors if it is
+		if (day == today__MODULE_ID__.getDate() && today__MODULE_ID__.getMonth() == cur_m.getMonth() && today__MODULE_ID__.getFullYear() == cur_m.getFullYear()) {
+	
+			styleBg = 'background-color: #000088;';
+			styleFg = 'color: #FFFFFF; font-weight: bold;';
+		}
+	
+		var dateStr = "", todayStr = "", y;
+		dateStr = dateStr.concat(cur_m.getFullYear(), '-', day); 
+		todayStr = todayStr.concat(String(today__MODULE_ID__.getFullYear()), '-', String(today__MODULE_ID__.getDate())); 
+		
+		// loop through all of the stored events
+		for (y = 0; y < eventData__MODULE_ID__.length; y++) {
+		
+			// if an event matches a day
+			if (dateStr == eventData__MODULE_ID__[y][0]) {
+			
+				// set the styles to highlight that day
+				styleFg += 'border: ' + prefs__MODULE_ID__.getString('borderStyle') + ' ' + prefs__MODULE_ID__.getString('highlight') + ' ' + prefs__MODULE_ID__.getString('borderSize') + 'px; font-weight: bold;';
+				
+			}
+		}
+	
+		// set the final style string
+		style = styleBg + styleFg;
+		
+		// construct the new html for the calendar table
+		newInnerHTML += '<td align=center width=14.2% onclick="showEditEvent__MODULE_ID__(' + day + ')" style="cursor: pointer; ' + style + '"><font size=-1>' + day + '</font></td>';
+	
+		weekday++;
+	
+		// check if its the end of a week to start a new row
+		if (weekday == 7) {
+	
+			weekday = 0;
+			newInnerHTML += '</tr><tr>';
+		}
+	}
+	
+	// finalize the html
+	newInnerHTML += '</table>';
+	_gel('div_calendar__MODULE_ID__').innerHTML = newInnerHTML;
+
+}
+
+function toggle(eln)
+{
+	var el = _gel(eln);
+	if(el!=null)
+	{
+		if (el.style.display=='none') el.style.display='inline';
+		else el.style.display='none';
+	}
+}
+
+function loadCalendar__MODULE_ID__(datadom)
+{
+	if (datadom == null || typeof(datadom) != "object" || datadom.firstChild == null) 
+	{
+		displayGrid__MODULE_ID__(curYear__MODULE_ID__, curMonth__MODULE_ID__);
+		_gel("calendar__MODULE_ID__").innerHTML = "";
+		return;
+	}
+	// grabs a full data field
+	var dataFull = /^(\d{4,4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)\./;
+	// grabs a date only data field
+	var dataOnly = /^(\d{4,4})-(\d\d)-(\d\d)/;
+	// get the Data!
+	var entries = new Array();
+	var k = 0;
+	var currDate = new Date();
+
+	var nentries = datadom.getElementsByTagName("entry");
+	
+	for(i=0; i<nentries.length;i++)
+	{
+		var entry = nentries[i];
+		var start = "";
+		var end = "";
+		var title = "";
+		var where = "";
+		var desc = "";
+		var md = null;
+		var tmp = null;
+		
+		
+		tmp = entry.getElementsByTagName("title");
+		if (tmp!=null && tmp.length>0)
+			title = tmp[0].firstChild.nodeValue;
+		
+		tmp = entry.getElementsByTagName("content");
+		if (tmp!=null && tmp.length>0 && tmp[0].firstChild!=null && tmp[0].firstChild.nodeValue!=null)
+			desc = tmp[0].firstChild.nodeValue;
+		
+		tmp = entry.getElementsByTagName("gd:where");
+		if (tmp!=null && tmp.length==0) tmp = entry.getElementsByTagName("where");
+		if (tmp!=null && tmp.length>0 && tmp[0].getAttribute('valueString')!=null)
+			where = tmp[0].getAttribute('valueString');
+		
+		tmp = entry.getElementsByTagName("gd:when");
+		if (tmp!=null && tmp.length==0) tmp = entry.getElementsByTagName("when");
+		if (tmp!=null && tmp.length>0 && tmp[0].getAttribute('startTime')!=null)
+		{
+			start = tmp[0].getAttribute('startTime');
+			var gr = dataFull.exec(start);
+			if (gr)
+			{
+				md = new Date(gr[1],gr[2]-1,gr[3],gr[4],gr[5],gr[6]);
+			}
+			else
+			{
+				gr = dataOnly.exec(start);
+				md = new Date(gr[1],gr[2]-1,gr[3]);
+			}
+		}
+		
+		if (title!="" && md!=null && md>currDate)
+		{
+			entries[k++] = [title,md,desc,where];
+		}
+	}
+
+
+	entries.sort(function(a,b) 
+					{
+						if (a[1] < b[1]) return -1;
+						if (a[1] > b[1]) return 1;
+						return 0;
+					});
+
+	// time to do some drawing.
+
+	var t = "<TABLE id=tid__MODULE_ID__ CELLSPACING=0 CELLPADDING=0 WIDTH='100%'>";
+	var d = currDate;
+	var k = 0;
+	var max_items = 1000; // prefs.getInt("MAX_ITEMS");
+	var lastTag = "";
+	var lastMonth = "";
+	var tagCount = 0;
+	var curMeetings = "";
+	var firstMeeting = "";
+	var yearString = "";
+
+	for(i in entries)
+	{
+		if (i > max_items-1) break;
+
+		var z = entries[i][1];
+		var name = entries[i][0];
+		var month = z.getMonth()+1;
+		var tag = z.getDate();
+		var rest = Math.floor((z-d)/60/60/24/1000);
+		var resttitle = "Days";
+		var desc = entries[i][2];
+		var where = entries[i][3];
+		yearString = z.getFullYear();
+		
+		if (rest==0)
+		{
+			var min = Math.floor((z-d)/1000/60);
+			var std = Math.floor(min/60);
+			min = min-(std*60);
+			rest = std+":"+min;
+			resttitle = "Hours:Minutes"
+		}			
+
+		if (lastTag != tag)
+		{
+			if (lastTag != "" && lastMonth == curMonth__MODULE_ID__+1)
+			{
+				t += "</TABLE>";
+				eventData__MODULE_ID__[tagCount] = new Array();
+				eventData__MODULE_ID__[tagCount][0] = yearString+"-"+lastTag;
+				eventData__MODULE_ID__[tagCount][1] = t;
+				if (lastTag == curDay__MODULE_ID__)
+					curMeetings = t;
+				if (tagCount == 0)
+					firstMeeting = t;
+				tagCount++;
+			}
+			lastTag = tag;
+			lastMonth = month;
+			t = "<TABLE id=tid__MODULE_ID__ CELLSPACING=0 CELLPADDING=0 WIDTH='100%'>";
+		}
+		t += "<TR>";
+		t += "<td  class='tc__MODULE_ID__' title='"+z.toLocaleString()+"'>"+month+"/"+tag+"/"+yearString+"</td>";
+		var ntt = i+"ext"+"__MODULE_ID__";//name to toggle
+		var ext = "<div id='"+ntt+"' style='display:none'>";
+		ext += "<b>When: </b>"+z.toLocaleString() +"<br>";
+		ext += (where!="")?"<b>Where: </b>"+where+"<br>":"";
+		ext += (desc!="")?"<b>Description: </b>"+desc:"";
+		ext += "</div>";
+		t += "<td title='Event'><div class='clbl__MODULE_ID__' onClick='javascript:toggle(\""+ntt+"\");'><div>"+name+"</div>"+ext+"</div></td>";
+		t += "<td class='tc__MODULE_ID__' title='"+resttitle+"'>"+rest+"</td>";
+		t += "</TR>";
+	}
+	
+	if (lastTag != "" && lastMonth == curMonth__MODULE_ID__+1)
+	{
+		t += "</TABLE>";
+		eventData__MODULE_ID__[tagCount] = new Array();
+		eventData__MODULE_ID__[tagCount][0] = yearString+"-"+lastTag;
+		eventData__MODULE_ID__[tagCount][1] = t;
+		if (lastTag == curDay__MODULE_ID__)
+			curMeetings = t;
+		if (tagCount == 0)
+			firstMeeting = t;
+	}
+
+	displayGrid__MODULE_ID__(curYear__MODULE_ID__, curMonth__MODULE_ID__);
+	if (curMeetings == "")
+		curMeetings = firstMeeting;
+	_gel("calendar__MODULE_ID__").innerHTML = curMeetings;
+		
+}
+
+function updateCalendar__MODULE_ID__()
+{
+	function makeRFCDate(delta)
+	{
+		var d = new Date((new Date())/1 + 1000*60*60*24*delta);
+		var mon = d.getMonth()+1; 
+		var day = d.getDate();
+
+		if (mon.toString().length == 1) mon = "0" + mon;
+		if (day.toString().length == 1) day = "0" + day;
+		
+		return d.getFullYear()+"-"+mon+"-"+day;
+	}
+	
+	var feed_url = prefs__MODULE_ID__.getString("feed");
+
+	if (feed_url == "")
+	{
+		_gel("calendar__MODULE_ID__").innerHTML =  "<div style='color:#000;text-align:center;padding:20px 0;'>No feed selected.<br>Please load up a feed.</div>";
+		return;
+	}
+
+	var start_min = makeRFCDate(0);
+	var start_max = makeRFCDate(60);
+	var full_url = feed_url.replace('/basic','/full')+ "?start-min="+start_min+"&start-max="+start_max;
+
+	eventData__MODULE_ID__ = new Array();
+	_IG_FetchXmlContent(full_url, loadCalendar__MODULE_ID__);
+}
+
+function drawCalendar__MODULE_ID__(year, month) {
+
+	updateCalendar__MODULE_ID__();
+}
+
+function showEventInfo__MODULE_ID__(dateStr) {
+
+	var dateInfo = dateStr.split('-'), i;
+	var dateText;
+	
+	for (i = 0; i < eventData__MODULE_ID__.length; i++) {
+
+		if (eventData__MODULE_ID__[i][0] == dateStr) {
+	
+			dateText = eventData__MODULE_ID__[i][1];
+		}
+	}
+	
+	_gel("calendar__MODULE_ID__").innerHTML = dateText;
+
+}
+
+
+// show the edit event info box
+function showEditEvent__MODULE_ID__(day) {
+
+	var i;
+	var dateStr = curYear__MODULE_ID__ + '-' + day;
+	
+	// clear the text area from any other selected dates
+	_gel('calendar__MODULE_ID__').value = "";
+	
+	// check to see if there is existing event data for this date, if so populate the text area
+	for (i = 0; i < eventData__MODULE_ID__.length; i++) {
+
+		// if match
+		if (eventData__MODULE_ID__[i][0] == dateStr) {
+		
+			// fill text area
+			_gel("calendar__MODULE_ID__").innerHTML = eventData__MODULE_ID__[i][1];
+		}
+	}
+	
+	// remember what date is being edited
+	editSelection__MODULE_ID__ = day;
+}
+
+// hide the edit event info box
+function hideEditEvent__MODULE_ID__() {
+
+	
+	// remove current selection for edit variable
+	editSelection__MODULE_ID__ = 0;
+	
+	// clear the text area
+	_gel('calendar__MODULE_ID__').value = '';
+}
+
+
+</script>
+
+<!-- Calendar div generated by JavaScript -->
+<div id="div_calendar__MODULE_ID__" align="center"></div>
+<div id="calendar__MODULE_ID__">
+	<div style='color:#ccc;text-align:center;padding:20px 0;'>
+		loading feed...
+	</div>
+</div>
+
+		]]>
+	</Content> 
+</Module>

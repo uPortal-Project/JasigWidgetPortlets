@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +59,7 @@ public class GoogleGadgetServiceTest {
     public void testGetCategories() throws IOException {
         
         Resource mainPage = context.getResource("org/jasig/portlet/widget/service/gadgetListingMainPage.html");
-        when(service.getStreamFromUrl(anyString())).thenReturn(mainPage.getInputStream());
+        doReturn(mainPage.getInputStream()).when(service).getStreamFromUrl(anyString());
         
         List<GadgetCategory> categories = service.getCategories();
         assertEquals(10, categories.size());
@@ -69,7 +70,7 @@ public class GoogleGadgetServiceTest {
     public void testListGadgets() throws IOException {
         
         Resource mainPage = context.getResource("org/jasig/portlet/widget/service/gadgetListingMainPage.html");
-        when(service.getStreamFromUrl(anyString())).thenReturn(mainPage.getInputStream());
+        doReturn(mainPage.getInputStream()).when(service).getStreamFromUrl(anyString());
         
         GadgetList list = service.getGadgets(null, null, 0);
         assertEquals(24, list.getGadgets().size());
@@ -86,7 +87,7 @@ public class GoogleGadgetServiceTest {
     public void testListGadgetsForCategory() throws IOException {
         
         Resource categoryPage = context.getResource("org/jasig/portlet/widget/service/gadgetListingFinanceCategory.html");
-        when(service.getStreamFromUrl(anyString())).thenReturn(categoryPage.getInputStream());
+        doReturn(categoryPage.getInputStream()).when(service).getStreamFromUrl(anyString());
 
         GadgetList list = service.getGadgets(null, "finance", 0);
         assertEquals(24, list.getGadgets().size());
@@ -103,7 +104,7 @@ public class GoogleGadgetServiceTest {
     public void testGetModule() throws IOException {
         
         Resource gadgetXml = context.getResource("org/jasig/portlet/widget/service/googlecalendarviewer.xml");
-        when(service.getStreamFromUrl(anyString())).thenReturn(gadgetXml.getInputStream());
+        doReturn(gadgetXml.getInputStream()).when(service).getStreamFromUrl(anyString());
 
         Module module = service.getModule("http://pretend");
         assertEquals("Google Calendar Viewer", module.getModulePrefs().getTitle());
