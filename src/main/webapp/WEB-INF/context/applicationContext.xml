@@ -49,6 +49,8 @@
     <bean class="org.jasig.portlet.widget.service.ViewHelperImpl" p:mobileDeviceRegexes-ref="mobileDeviceRegexes"/>
 	
 	<bean class="org.jasig.web.service.AjaxPortletSupportService"/>
+    
+    <bean class="org.jasig.portlet.widget.service.GoogleGadgetService"/>
 
 	<lang:groovy id="dictionaryParsingService" 
 		script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>

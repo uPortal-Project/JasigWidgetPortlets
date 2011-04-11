@@ -86,6 +86,11 @@
 	
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
+        <url-pattern>/ajax/gadgets</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
         <url-pattern>/ajax/youtube</url-pattern>
     </servlet-mapping>
     
