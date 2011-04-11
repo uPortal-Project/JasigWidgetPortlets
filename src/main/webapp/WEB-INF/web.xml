@@ -84,6 +84,11 @@
 		<url-pattern>/ajax/dictionary</url-pattern>
 	</servlet-mapping>
 	
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/ajax/youtube</url-pattern>
+    </servlet-mapping>
+    
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/ajax/json</url-pattern>

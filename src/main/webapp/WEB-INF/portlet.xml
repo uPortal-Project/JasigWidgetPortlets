@@ -154,6 +154,27 @@
         </portlet-info>
     </portlet>
 
+    <portlet>
+        <portlet-name>youtube</portlet-name>
+        <display-name xml:lang="en">YouTube</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/youtubePortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>YouTube</title>
+            <short-title>YouTube</short-title>
+            <keywords>YouTube</keywords>
+        </portlet-info>
+    </portlet>
+
     <!--portlet>
         <portlet-name>stocks</portlet-name>
         <display-name xml:lang="en">Stocks</display-name>
