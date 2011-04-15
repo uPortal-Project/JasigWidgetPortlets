@@ -31,14 +31,16 @@
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.js"/>" type="text/javascript"></script>
 <script src="/ResourceServingWebapp/rs/fluid/1.3/js/fluid-all-1.3.js" type="text/javascript"></script>
 
-<div id="${n}">
-<ul data-role="listview">
-    <li class="video">
-        <img class="img"/>
-        <h3><a href="javascript:;" class="video-title"></a></h3>
-        <p class="description"></p>
-    </li>
-</ul>
+<div id="${n}" class="portlet ptl-newsreader view-news">
+    <div data-role="content" class="portlet-content">
+        <ul data-role="listview" class="feed">
+            <li class="video">
+                <img class="img"/>
+                <h3><a href="javascript:;" class="video-title"></a></h3>
+                <p class="description"></p>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script type="text/javascript">
