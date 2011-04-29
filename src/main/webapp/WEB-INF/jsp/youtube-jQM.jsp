@@ -31,13 +31,15 @@
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.js"/>" type="text/javascript"></script>
 <script src="/ResourceServingWebapp/rs/fluid/1.3/js/fluid-all-1.3.js" type="text/javascript"></script>
 
-<div id="${n}" class="portlet ptl-newsreader view-news">
+<div id="${n}" class="portlet">
     <div data-role="content" class="portlet-content">
         <ul data-role="listview" class="feed">
             <li class="video">
-                <img class="img"/>
-                <h3><a href="javascript:;" class="video-title"></a></h3>
-                <p class="description"></p>
+                <a href="javascript:;" class="video-link">
+                    <img class="img"/>
+                    <h3 class="video-title"></h3>
+                    <p class="description"></p>
+                </a>
             </li>
         </ul>
     </div>
@@ -53,21 +55,21 @@
         var fluid = ${n}.fluid;
         $.get('<c:url value="/ajax/youtube"><c:param name="user" value="${usernames[0]}"/></c:url>', {},
             function (data) {
-                console.log(data);
                 var tree = { children: [] };
                 var cutpoints = [
                     { id: "video:", selector: ".video" },
+                    { id: "link", selector: ".video-link" },
                     { id: "title", selector: ".video-title" },
                     { id: "description", selector: ".description" },
                     { id: "image", selector: ".img" }
                 ];
                 
                 $(data.data.items).each(function (idx, item){
-                    console.log(item.player.mobile);
                     tree.children.push({
                         ID: "video:",
                         children: [
-                            { ID: "title", target: item.player["default"], linktext: item.title },
+                            { ID: "link", target: item.player["default"] },
+                            { ID: "title", value: item.title },
                             { ID: "description", value: item.description },
                             { ID: "image", 
                                 decorators: [
