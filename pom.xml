@@ -301,20 +301,20 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>com.google.code.maven-license-plugin</groupId>
+                    <groupId>com.mycila.maven-license-plugin</groupId>
                     <artifactId>maven-license-plugin</artifactId>
-                    <version>1.4.0</version>
                     <configuration>
-                        <basedir>${basedir}</basedir>
-                        <header>${jasig-short-license-url}</header>
                         <aggregate>true</aggregate>
                         <excludes>
                             <exclude>LICENSE</exclude>
                             <exclude>NOTICE</exclude>
                             <exclude>docs/**</exclude>
+                            <exclude>**/*.channel</exclude>
+                            <exclude>**/*.portlet.xml</exclude>
                         </excludes>
                         <mapping>
                             <tld>XML_STYLE</tld>
+                            <xjb>XML_STYLE</xjb>
                         </mapping>
                     </configuration>
                 </plugin>
