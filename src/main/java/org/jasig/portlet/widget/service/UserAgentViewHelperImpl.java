@@ -29,7 +29,7 @@ import javax.portlet.PortletRequest;
  * @author Jen Bourey
  * @version $Revision$
  */
-public class ViewHelperImpl implements IViewHelper {
+public class UserAgentViewHelperImpl implements IViewHelper {
 
     private List<Pattern> mobileDeviceRegexes = null;
     
