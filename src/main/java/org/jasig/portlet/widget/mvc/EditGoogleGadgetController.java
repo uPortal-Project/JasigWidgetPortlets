@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
 
 @Controller
-@RequestMapping("EDIT")
+@RequestMapping("CONFIG")
 public class EditGoogleGadgetController {
 	
     private GoogleGadgetService gadgetService;
