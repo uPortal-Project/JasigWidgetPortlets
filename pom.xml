@@ -24,7 +24,7 @@
 
     <properties>
         <spring.version>2.5.6.SEC02</spring.version>
-        <resource-server.version>1.0.14</resource-server.version>
+        <resource-server.version>1.0.16</resource-server.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
     </properties>
 
@@ -422,8 +422,8 @@
                             <groupId>org.jasig.resourceserver</groupId>
                             <artifactId>resource-server-content</artifactId>
                             <includes>
-                                <include>rs/fluid/1.2/js/</include>
-                                <include>rs/jquery/1.4.2/</include>
+                                <include>rs/fluid/1.4-bea0041/js/</include>
+                                <include>rs/jquery/1.5/</include>
                                 <include>rs/jqueryui/1.8/</include>
                             </includes>
                         </overlay>

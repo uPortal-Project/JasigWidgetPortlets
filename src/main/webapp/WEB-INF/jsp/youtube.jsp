@@ -27,9 +27,9 @@
 <portlet:defineObjects/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.5/jquery-1.5.js"/>" type="text/javascript"></script>
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.js"/>" type="text/javascript"></script>
-<script src="/ResourceServingWebapp/rs/fluid/1.3/js/fluid-all-1.3.js" type="text/javascript"></script>
+<script src="/ResourceServingWebapp/rs/fluid/1.4-bea0041/js/fluid-all-1.4-bea0041.js" type="text/javascript"></script>
 
 <div id="${n}" class="portlet">
 <div class="fl-pager">
@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {};
     ${n}.jQuery = jQuery.noConflict(true)
     ${n}.fluid = fluid;
@@ -127,6 +127,7 @@
                                       
                 var pagerOptions = {
                     dataModel: data.data.items,
+                    annotateColumnRange: "title",
                     columnDefs: columnDefs,
                     bodyRenderer: {
                         type: "fluid.pager.selfRender",
@@ -161,4 +162,4 @@
             }, "json"
         );
     }); 
-</script>
+</rs:compressJs></script>

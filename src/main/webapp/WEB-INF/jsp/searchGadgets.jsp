@@ -29,9 +29,9 @@
     <portlet:param name="gadgetUrl" value="GADGETURL"/>
 </portlet:renderURL>
 
-<script type="text/javascript" src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>"></script>
+<script type="text/javascript" src="<rs:resourceURL value="/rs/jquery/1.5/jquery-1.5.min.js"/>"></script>
 <script type="text/javascript" src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>"></script>
-<script type="text/javascript" src="<rs:resourceURL value="/rs/fluid/1.2/js/fluid-all-1.2.min.js"/>"></script>
+<script type="text/javascript" src="<rs:resourceURL value="/rs/fluid/1.4-bea0041/js/fluid-all-1.4-bea0041.min.js"/>"></script>
 
 <style type="text/css">
 ul.gadget-listings li {
@@ -98,7 +98,7 @@ ul.gadget-listings img {
 </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
      var ${n} = {};
     ${n}.jQuery = jQuery.noConflict(true);
     ${n}.fluid = fluid;
@@ -119,6 +119,7 @@ ul.gadget-listings img {
             });
             var options = {
                 dataModel: gadgets,
+                annotateColumnRange: "link",
                 columnDefs: [
                     { 
                         key: "link",
@@ -165,4 +166,4 @@ ul.gadget-listings img {
             pager = fluid.pager($("#${n}gadgetPager"), options);
          });
     });
-</script>
+</rs:compressJs></script>
