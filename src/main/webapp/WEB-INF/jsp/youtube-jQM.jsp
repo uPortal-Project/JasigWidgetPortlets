@@ -27,8 +27,8 @@
 <portlet:defineObjects/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.5/jquery-1.5.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
 <script src="/ResourceServingWebapp/rs/fluid/1.4-bea0041/js/fluid-all-1.4-bea0041.min.js" type="text/javascript"></script>
 
 <div id="${n}" class="portlet">
@@ -49,7 +49,7 @@
     var ${n} = ${n} || {};
     ${n}.jQuery = jQuery.noConflict(true)
     ${n}.fluid = fluid;
-    fluid_1_3 = null;
+    fluid_1_4 = null;
     ${n}.jQuery(document).ready(function(){
         var $ = ${n}.jQuery;
         var fluid = ${n}.fluid;
