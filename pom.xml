@@ -23,7 +23,7 @@
 
     <properties>
         <spring.version>2.5.6.SEC02</spring.version>
-        <resource-server.version>1.0.17</resource-server.version>
+        <resource-server.version>1.0.21</resource-server.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
     </properties>
 
