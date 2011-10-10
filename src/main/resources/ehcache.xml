@@ -29,7 +29,13 @@
         memoryStoreEvictionPolicy="LFU"/>
     
     <cache name="definitionCache"
-        maxElementsInMemory="5000"
+        maxElementsInMemory="10800"
+        eternal="true"
+        overflowToDisk="false"
+        memoryStoreEvictionPolicy="LRU"/>
+    
+    <cache name="youTubeCache"
+        maxElementsInMemory="10800"
         eternal="true"
         overflowToDisk="false"
         memoryStoreEvictionPolicy="LRU"/>

@@ -31,7 +31,7 @@
 
 <script type="text/javascript" src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>"></script>
 <script type="text/javascript" src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>"></script>
-<script type="text/javascript" src="<rs:resourceURL value="/rs/fluid/1.4-bea0041/js/fluid-all-1.4-bea0041.min.js"/>"></script>
+<script type="text/javascript" src="<rs:resourceURL value="/rs/fluid/1.4-bea0041/js/fluid-all-1.4-00b5b5e.min.js"/>"></script>
 
 <style type="text/css">
 ul.gadget-listings li {
@@ -74,8 +74,6 @@ ul.gadget-listings img {
           <li>
             <ul class="fl-pager-links flc-pager-links" style="margin:0; display:inline">
               <li class="flc-pager-pageLink"><a href="javascript:;">1</a></li>
-              <li class="flc-pager-pageLink-disabled">2</li>
-              <li class="flc-pager-pageLink"><a href="javascript:;">3</a></li>
             </ul>
           </li>
           <li class="flc-pager-next"><a href="javascript:;">next &gt;</a></li>
@@ -125,7 +123,7 @@ ul.gadget-listings img {
                         key: "link",
                         valuebinding: "*.configureUrl",
                         components: {
-                            target: '${ gadgetUrl }'.replace("GADGETURL", '${"${*.configUrl}"}'),
+                            target: '${ gadgetUrl }'.replace('&amp;', '&').replace("GADGETURL", '${"${*.configUrl}"}'),
                             linktext: '${"${*.name}"}'
                         }
                     },

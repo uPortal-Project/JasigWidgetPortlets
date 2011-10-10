@@ -21,7 +21,8 @@ package org.jasig.portlet.widget.servlet.mvc;
 
 import java.util.Collections;
 
-import org.jasig.web.view.mvc.ProxyView;
+import org.jasig.portlet.widget.service.YouTubeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,16 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/ajax/youtube")
 public class YouTubeController {
 
+    private YouTubeService service;
+
+    @Autowired
+    public void setYouTubeService(YouTubeService service) {
+        this.service = service;
+    }
+
     @RequestMapping
     public ModelAndView getFeed(@RequestParam("user") String user) {
-        String url = "http://gdata.youtube.com/feeds/api/videos?author=" + user + "&v=2&alt=jsonc";
-        return new ModelAndView("proxyView", Collections.singletonMap(ProxyView.URL, url));
+        String response = service.getYouTubeResponse(user);
+        return new ModelAndView("/string", Collections.singletonMap("response", response));
     }
 }

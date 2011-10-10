@@ -44,6 +44,8 @@
     
     <bean class="org.jasig.portlet.widget.service.GoogleGadgetService"/>
 
+    <bean class="org.jasig.portlet.widget.service.YouTubeService"/>
+
 	<lang:groovy id="dictionaryParsingService" 
 		script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>
 
@@ -55,10 +57,12 @@
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
 		p:configLocation="classpath:ehcache.xml"/>
 	
-	<!-- Cache for parsed Moodle course data -->
 	<bean id="definitionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
 		p:cacheManager-ref="cacheManager" p:cacheName="definitionCache"/>
 	
+    <bean id="youTubeCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+        p:cacheManager-ref="cacheManager" p:cacheName="youTubeCache"/>
+    
 	<!-- 
 	 | View resolvers, look for a named view bean before going to JSP resolution
 	 +-->
