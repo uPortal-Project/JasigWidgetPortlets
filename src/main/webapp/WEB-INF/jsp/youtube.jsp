@@ -29,7 +29,7 @@
 
 <script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.js"/>" type="text/javascript"></script>
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.js"/>" type="text/javascript"></script>
-<script src="/ResourceServingWebapp/rs/fluid/1.4-bea0041/js/fluid-all-1.4-00b5b5e.js" type="text/javascript"></script>
+<script src="/ResourceServingWebapp/rs/fluid/1.4-00b5b5e/js/fluid-all-1.4-00b5b5e.js" type="text/javascript"></script>
 
 <div id="${n}" class="portlet">
 <div class="fl-pager">
