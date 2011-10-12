@@ -25,6 +25,7 @@ This project includes:
   Commons Lang under The Apache Software License, Version 2.0
   commons-beanutils under Apache License, Version 2.0
   Ehcache Core under The Apache Software License, Version 2.0
+  Ehcache Spring Annotations - Core under Apache 2
   Ehcache Web Filters under The Apache Software License, Version 2.0
   ezmorph under The Apache Software License, Version 2.0
   Groovy under Apache License, Version 2.0
@@ -62,5 +63,4 @@ This project includes:
   Spring Framework: Web MVC under The Apache Software License, Version 2.0
   Spring Framework: Web MVC Portlet under The Apache Software License, Version 2.0
   standard under Apache License, Version 2.0
-  yuicompressor under BSD License
 
