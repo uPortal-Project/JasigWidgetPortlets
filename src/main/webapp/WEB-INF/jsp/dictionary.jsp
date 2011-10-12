@@ -37,9 +37,13 @@
 	         var $ = ${n}.jQuery;
 	         $("#${n}defs").html("");
 	         $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(json){
-		         $(form).parent().find("div.defContainer")
-		             .append($(document.createElement("div")).html(json.definition));
-	            }, "json");
+	        	 if (json.definition.length) {
+		           $(form).parent().find("div.defContainer").append($(document.createElement("hr")));
+		           $(form).parent().find("div.defContainer")
+	               .append($(document.createElement("div")).html(json.definition));
+	        	 }
+
+	        	 }, "json");
 	         return false;
 	    };
 
@@ -47,6 +51,9 @@
             ${n}.jQuery("#${n}tabs").tabs();
             ${n}.jQuery("#${n}dictionaryTab > form").submit(function(){ return ${n}searchDictionary(this); });
             ${n}.jQuery("#${n}thesaurusTab > form").submit(function(){ return ${n}searchDictionary(this); });
+            <!-- Register the reset button's behaviour -->
+            ${n}.jQuery("#${n}resetDictionary").click(function() { ${n}.jQuery("#${n}dictionaryTab > div.defContainer").html(""); });
+            ${n}.jQuery("#${n}resetThesaurus").click(function() { ${n}.jQuery("#${n}thesaurusTab > div.defContainer").html(""); });
         });
         
     });
@@ -67,7 +74,10 @@
 		<form>
 		    <input type="hidden" name="dict" value="wn"/>
 		    <input class="portlet-form-input-field" name="word"/> 
-		    <input class="portlet-form-button" type="submit" value="Go!"/>
+                    <span class="buttons">
+		        <input class="portlet-form-button button primary" type="submit" value="Go!"/>
+                        <input type="reset" class="portlet-form-button button" id="${n}resetDictionary" value="Reset">
+                    </span>
 		</form>
 		<div class="defContainer"></div>
 	</div>
@@ -76,7 +86,10 @@
         <form>
             <input type="hidden" name="dict" value="moby-thes"/> 
             <input class="portlet-form-input-field" name="word"/>
-            <input class="portlet-form-button" type="submit" value="Go!"/>
+            <span class="buttons">
+                <input class="portlet-form-button button primary" type="submit" value="Go!"/>
+                <input type="reset" class="portlet-form-button button" id="${n}resetThesaurus" value="Reset">
+            </span>
         </form>
         <div class="defContainer"></div>
 	</div>
