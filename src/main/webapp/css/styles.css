@@ -1,0 +1,67 @@
+/**
+ * Licensed to Jasig under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work
+ * for additional information regarding copyright ownership.
+ * Jasig licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a
+ * copy of the License at:
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/* tip portlet */
+#portalTip {
+    background-image: -moz-linear-gradient(top,white,#eee 65px);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(white),to(#eee),color-stop(0.1,white));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#eee')";
+    background-image: linear-gradient(top,white,#eee 65px);
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    padding-left: 12px;
+}
+#portalTip .portal-tip-inner {
+    background: url(../images/icon-tip.png) left center no-repeat;
+    padding: 10px 10px 10px 24px;
+}
+#portalTip p {
+    margin: 0;
+    font-weight: bold;
+}
+
+/*emergency alert*/
+#emergencyAlert {
+    padding: 36px 36px 36px 190px;
+    background: url(../images/icon-alert.png) 36px center no-repeat;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    color: #fff;
+}
+#emergencyAlert .titlebar {
+    display: block;
+}
+#emergencyAlert .title {
+    border: none;
+    font-size: 200%;
+    font-weight: bold;
+    color: #fff;
+}
+#emergencyAlert a {
+    color: #B2CCE1;
+}
+#emergencyAlert a:hover {
+    color: #fff;
+}
