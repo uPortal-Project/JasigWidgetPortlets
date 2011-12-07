@@ -24,6 +24,7 @@ This project includes:
   Commons IO under The Apache Software License, Version 2.0
   Commons Lang under The Apache Software License, Version 2.0
   commons-beanutils under Apache License, Version 2.0
+  dom4j under BSD License
   Ehcache Core under The Apache Software License, Version 2.0
   Ehcache Spring Annotations - Core under Apache 2
   Ehcache Web Filters under The Apache Software License, Version 2.0
@@ -33,8 +34,11 @@ This project includes:
   Hamcrest Core under BSD style
   HttpClient under Apache License
   HttpCore under Apache License
+  icu4j under MIT License
   Jasig Widget Portlets under JA-SIG Collaborative Licence
   JAXB2 Basics - Runtime under BSD-Style License
+  jaxen under Apache style license
+  jdom under Apache style license
   JLine under BSD
   json-lib under The Apache Software License, Version 2.0
   Json-lib4Spring under The Apache Software License, Version 2.0
@@ -63,4 +67,9 @@ This project includes:
   Spring Framework: Web MVC under The Apache Software License, Version 2.0
   Spring Framework: Web MVC Portlet under The Apache Software License, Version 2.0
   standard under Apache License, Version 2.0
+  xalan under Apache License, Version 2.0
+  xercesImpl under Apache License, Version 2.0
+  XML Commons External Components XML APIs under The Apache Software License, Version 2.0
+  xmlParserAPIs under Apache License, Version 2.0
+  xom under LGPL
 
