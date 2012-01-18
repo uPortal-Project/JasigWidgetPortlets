@@ -30,8 +30,6 @@
     
     <bean class="org.jasig.portlet.widget.mvc.GoogleMapsController"/>
     
-    <bean class="org.jasig.portlet.widget.mvc.EditGoogleApiKeyController"/>
-    
     <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors"><bean class="org.jasig.portlet.widget.mvc.MinimizedStateHandlerInterceptor"/></property>
     </bean>

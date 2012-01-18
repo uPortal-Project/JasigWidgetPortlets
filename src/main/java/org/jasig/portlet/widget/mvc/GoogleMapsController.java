@@ -42,10 +42,6 @@ public class GoogleMapsController {
 		
 		PortletPreferences preferences = request.getPreferences();
 		
-		// Google API key
-		String key = preferences.getValue(EditGoogleApiKeyController.GOOGLE_API_KEY_PREF_NAME, null);
-		map.put("key", key);
-		
 		// Optional starting location & zoom level
 		String startingLocation = preferences.getValue(PREFERENCE_STARTING_LOCATION, null);
         map.put(PREFERENCE_STARTING_LOCATION, startingLocation);
