@@ -76,6 +76,17 @@
 		
     <!-- Shared by Emergency Alerts and Emergency Alerts Admin -->
     <bean class="org.jasig.portlet.widget.service.xml.ClasspathXmlAlertService"/>
-	
+    
+    <!--
+     | Always declare an 'exceptionResolver' bean with a 'defaultErrorView' 
+     | because, in addition to other uses, it protects the portlet from 
+     | failing when a bad request (due to a bug or malicious user) doesn't 
+     | match any declared @RequestMapping. When this happens, the portlet 
+     | throws an Exception and takes itself out of service until a portal 
+     | restart. THIS CONDITION AFFECTS ALL USERS!
+     +-->
+    <bean id="exceptionResolver" class="org.springframework.web.portlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error"/>
+    </bean>
 
 </beans>
