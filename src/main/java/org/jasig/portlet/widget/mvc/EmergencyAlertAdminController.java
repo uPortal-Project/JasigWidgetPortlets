@@ -25,12 +25,11 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
+import org.jasig.portlet.widget.service.IAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
-
-import org.jasig.portlet.widget.service.IAlertService;
 
 @Controller
 @RequestMapping("VIEW")

@@ -246,6 +246,48 @@
         </portlet-info>
     </portlet>
 
+    <portlet>
+        <portlet-name>slideshare</portlet-name>
+        <display-name xml:lang="en">SlideShare</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/slidesharePortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>SlideShare</title>
+            <short-title>SlideShare</short-title>
+            <keywords>SlideShare</keywords>
+        </portlet-info>
+    </portlet>
+
+    <portlet>
+        <portlet-name>flickr</portlet-name>
+        <display-name xml:lang="en">Flickr</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/flickrPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Flickr</title>
+            <short-title>Flickr</short-title>
+            <keywords>Flickr</keywords>
+        </portlet-info>
+    </portlet>
+
     <!--portlet>
         <portlet-name>stocks</portlet-name>
         <display-name xml:lang="en">Stocks</display-name>

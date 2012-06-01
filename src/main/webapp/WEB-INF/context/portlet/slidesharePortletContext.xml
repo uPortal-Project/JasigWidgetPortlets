@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Licensed to Jasig under one or more contributor license
@@ -19,24 +20,18 @@
 
 -->
 
-<jaxb:bindings
+<beans xmlns="http://www.springframework.org/schema/beans" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
-    jaxb:version="2.1"
->
-
-    <jaxb:bindings>
-        <jaxb:globalBindings>
-            <jaxb:serializable/>
-        </jaxb:globalBindings>
-    </jaxb:bindings>
-
-    <jaxb:bindings schemaLocation="../resources/xsd/google-gadget.xsd">
-        <jaxb:schemaBindings>
-            <jaxb:package name="org.jasig.portlet.widget.gadget.model" />
-        </jaxb:schemaBindings>
-    </jaxb:bindings>
-
-</jaxb:bindings>
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+    
+    <context:annotation-config/>
+    
+    <bean class="org.jasig.portlet.widget.mvc.SlideShareController"/>
+    
+    <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors"><bean class="org.jasig.portlet.widget.mvc.MinimizedStateHandlerInterceptor"/></property>
+    </bean>
+    
+</beans>

@@ -31,7 +31,7 @@ public class CalendarController {
 
 	@RequestMapping()
 	public ModelAndView view() throws Exception {		
-		return new ModelAndView("calendar", Collections.<Object,Object>emptyMap());
+		return new ModelAndView("calendar", Collections.<String,String>emptyMap());
 	}
 
 }

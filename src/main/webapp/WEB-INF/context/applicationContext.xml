@@ -22,12 +22,17 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
     xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:lang="http://www.springframework.org/schema/lang"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
+
+    <context:property-placeholder location="classpath:configuration.properties"/>
+    <context:annotation-config/>
 
 	<!--
 	 | Message source for this context, loaded from localized "messages_xx" files
@@ -46,8 +51,39 @@
 
     <bean class="org.jasig.portlet.widget.service.YouTubeService"/>
 
+    <bean class="org.jasig.portlet.widget.service.FlickrService"/>
+
+    <bean class="org.jasig.portlet.widget.service.SlideShareService"/>
+
 	<lang:groovy id="dictionaryParsingService" 
 		script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <util:list>
+                <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <bean class="org.springframework.http.MediaType">
+                                <constructor-arg value="text" />
+                                <constructor-arg value="plain" />
+                            </bean>
+                            <bean class="org.springframework.http.MediaType">
+                                <constructor-arg value="text" />
+                                <constructor-arg value="javascript" />
+                            </bean>
+                            <bean class="org.springframework.http.MediaType">
+                                <constructor-arg value="application" />
+                                <constructor-arg value="javascript" />
+                            </bean>
+                            <util:constant static-field="org.springframework.http.MediaType.APPLICATION_JSON"/>
+                        </list>
+                     </property>
+                </bean>
+            </util:list>
+        </property>
+    </bean>
 
 	<!--
 	 | CACHE CONFIGUATION

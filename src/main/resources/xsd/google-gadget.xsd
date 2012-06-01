@@ -20,7 +20,11 @@
 
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+
   <xs:element name="Module">
     <xs:complexType>
       <xs:sequence>
@@ -244,4 +248,40 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:complexType>
+  
+      <xs:element name="Tag">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Count" type="xs:int"/>
+                <xs:element ref="Slideshow" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Slideshow">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ID" type="xs:string"/>
+                <xs:element name="Title" type="xs:string"/>
+                <xs:element name="Description" type="xs:string"/>
+                <xs:element name="Status" type="xs:string"/>
+                <xs:element name="Username" type="xs:string"/>
+                <xs:element name="URL" type="xs:string"/>
+                <xs:element name="ThumbnailURL" type="xs:string"/>
+                <xs:element name="ThumbnailSmallURL" type="xs:string"/>
+                <xs:element name="Embed" type="xs:string"/>
+                <xs:element name="Created" type="xs:string"/>
+                <xs:element name="Updated" type="xs:string"/>
+                <xs:element name="Language" type="xs:string"/>
+                <xs:element name="Format" type="xs:string"/>
+                <xs:element name="Download" type="xs:string"/>
+                <xs:element name="DownloadUrl" type="xs:string"/>
+                <xs:element name="SlideshowType" type="xs:string"/>
+                <xs:element name="InContest" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+        
+  
 </xs:schema>

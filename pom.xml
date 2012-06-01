@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jasig.parent</groupId>
         <artifactId>jasig-parent</artifactId>
-        <version>30</version>
+        <version>33</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -24,8 +24,9 @@
     <properties>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
-        <spring.version>2.5.6.SEC02</spring.version>
-        <resource-server.version>1.0.21</resource-server.version>
+        <jackson.version>1.9.4</jackson.version>
+        <spring.version>3.1.0.RELEASE</spring.version>
+        <resource-server.version>1.0.23</resource-server.version>
     </properties>
 
     <licenses>
@@ -59,6 +60,11 @@
                         <artifactId>spring-expression</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.6</version>
             </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
@@ -106,7 +112,7 @@
             <dependency>
                 <groupId>javax.portlet</groupId>
                 <artifactId>portlet-api</artifactId>
-                <version>1.0</version>
+                <version>2.0</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -118,15 +124,10 @@
                 <artifactId>servlet-api</artifactId>
                 <version>2.5</version>
             </dependency>
-           <dependency>
-               <groupId>jaxen</groupId>
-               <artifactId>jaxen</artifactId>
-               <version>1.1.1</version>
-           </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.4</version>
+                <version>4.8.2</version>
             </dependency>
             <dependency>
                 <groupId>log4j</groupId>
@@ -168,6 +169,16 @@
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>1.6.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jasig</groupId>
@@ -273,6 +284,10 @@
             <artifactId>ehcache-spring-annotations</artifactId>
         </dependency>
         <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
@@ -295,10 +310,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jaxen</groupId>
-            <artifactId>jaxen</artifactId>
         </dependency>
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -324,6 +335,14 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
@@ -552,4 +571,60 @@
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+        <profile>
+            <id>localdev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.portals.pluto</groupId>
+                        <artifactId>maven-pluto-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>assemble</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <classifier>localdev</classifier>
+                            <warName>${project.artifactId}</warName>
+                            <webXml>${project.build.directory}/pluto-resources/web.xml</webXml>
+                            <overlays>
+                                <overlay>
+                                    <groupId>org.jasig.resourceserver</groupId>
+                                    <artifactId>resource-server-content</artifactId>
+                                    <includes>
+                                        <include>rs/fluid/1.4.0/js/</include>
+                                        <include>rs/jquery/1.6.1/</include>
+                                        <include>rs/jqueryui/1.8.13/</include>
+                                    </includes>
+                                </overlay>
+                            </overlays>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-uportal-plugin</artifactId>
+                        <groupId>org.jasig.portal</groupId>
+                        <configuration>
+                            <contextName>${pom.artifactId}</contextName>
+                            <artifactId>${pom.artifactId}</artifactId>
+                            <artifactGroupId>${pom.groupId}</artifactGroupId>
+                            <artifactVersion>${pom.version}</artifactVersion>
+                            <artifactClassifier>localdev</artifactClassifier>
+                            <removeExistingDirectories>true</removeExistingDirectories>
+                            <extractWars>true</extractWars>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
 </project>

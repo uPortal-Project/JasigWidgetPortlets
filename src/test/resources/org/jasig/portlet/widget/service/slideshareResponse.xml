@@ -1,0 +1,23 @@
+<Tag>
+    <Name>tag</Name>
+    <Count>1</Count>
+    <Slideshow>
+        <ID>1</ID>
+        <Title>Title</Title>
+        <Description>Description</Description>
+        <Status>2</Status>
+        <Username>username}</Username>
+        <URL>url</URL>
+        <ThumbnailURL>thumbnailUrl</ThumbnailURL>
+        <ThumbnailSmallURL>smallThumbnailUrl</ThumbnailSmallURL>
+        <Embed>embedcode</Embed>
+        <Created>created</Created>
+        <Updated>updated</Updated>
+        <Language>en</Language>
+        <Format>ppt</Format>
+        <Download>1</Download>
+        <DownloadUrl>downloadUrl</DownloadUrl>
+        <SlideshowType>0</SlideshowType>
+        <InContest>0</InContest>
+    </Slideshow>
+</Tag>
