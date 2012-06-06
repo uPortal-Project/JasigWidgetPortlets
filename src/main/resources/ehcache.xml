@@ -36,6 +36,18 @@
     
     <cache name="youTubeCache"
         maxElementsInMemory="10800"
+        eternal="false"
+        overflowToDisk="false"
+        memoryStoreEvictionPolicy="LRU"/>
+    
+    <cache name="imageListCache"
+        maxElementsInMemory="5"
+        eternal="true"
+        overflowToDisk="false"
+        memoryStoreEvictionPolicy="LRU"/>
+    
+    <cache name="slideshowsCache"
+        maxElementsInMemory="5"
         eternal="true"
         overflowToDisk="false"
         memoryStoreEvictionPolicy="LRU"/>
