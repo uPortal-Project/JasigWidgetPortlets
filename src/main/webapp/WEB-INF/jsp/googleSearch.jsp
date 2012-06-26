@@ -26,7 +26,7 @@
 <%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 <portlet:defineObjects/>
 
-<script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
+<script src="//www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script language="Javascript" type="text/javascript"><rs:compressJs>
 //<![CDATA[
   google.load('search', '1.0');
