@@ -61,13 +61,8 @@ public final class ClasspathXmlAlertService extends AbstractXmlAlertService impl
      */
 
     @Override
-    protected synchronized Document getFeedFromSource(PortletRequest req) {
-        
-        if (!super.isFeedExpired()) {
-            // Get out -- another thread took care of it
-            return null;
-        }
-        
+    protected Document loadDocument(PortletRequest req) {
+
         if (log.isInfoEnabled()) {
             log.info("Updating feed from external source");
         }

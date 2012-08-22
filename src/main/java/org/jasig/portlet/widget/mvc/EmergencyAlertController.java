@@ -20,8 +20,10 @@
 package org.jasig.portlet.widget.mvc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
 
+import org.jasig.portlet.widget.service.IAlert;
 import org.jasig.portlet.widget.service.IAlertService;
 
 @Controller
@@ -44,20 +47,23 @@ public final class EmergencyAlertController {
 
     public static final String VIEW_NO_CURRENT_ALERT = "no-alert";
     public static final String VIEW_SHOW_CURRENT_ALERT = "show-alert";
+
+    private static final String AUTO_ADVANCE_PREFERENCE = "autoAdvance";
     
     @RequestMapping()
     public ModelAndView showAlert(PortletRequest req) {
         
-        String viewName = VIEW_NO_CURRENT_ALERT;  // default
-        Map<String,Object> model = new HashMap<String,Object>(); 
-        
-        Map<String,String> feedMap = service.fetch(req);
-        if (!feedMap.isEmpty()) {
-            viewName = VIEW_SHOW_CURRENT_ALERT;
-            model.putAll(feedMap);
+        List<IAlert> feed = service.fetch(req);
+        if (!feed.isEmpty()) {
+            Map<String,Object> model = new HashMap<String,Object>(); 
+            model.put("feed", feed);
+            PortletPreferences prefs = req.getPreferences();            
+            boolean autoAdvance = Boolean.valueOf(prefs.getValue(AUTO_ADVANCE_PREFERENCE, "true"));
+            model.put("autoAdvance", autoAdvance);
+            return new ModelAndView(VIEW_SHOW_CURRENT_ALERT, model);
         }
         
-        return new ModelAndView(viewName, model);
+        return new ModelAndView(VIEW_NO_CURRENT_ALERT);  // default
 
     }
 

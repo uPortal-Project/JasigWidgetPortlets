@@ -19,29 +19,24 @@
 
 package org.jasig.portlet.widget.service;
 
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-public interface IAlertService {
+public interface IAlert {
     
     /**
-     * IMPORTANT -- might be null.  A null response means the the value is 
-     * currently UNSPECIFIED (and the behavior will be chosen by 
-     * PortletPreferences).
-     * 
-     * @return true, false, or null (unspecified)
+     * Provides the header text for the alert.  May contain HTML markup, which 
+     * should not be entity encoded.
      */
-    Boolean isEnabled();
-    
-    void setEnabled(Boolean b);
+    String getHeader();
     
     /**
-     * Get the current alerts, if any.
-     * 
-     * @param req
-     * @return
+     * Provides the body text for the alert.  May contain HTML markup, which 
+     * should not be entity encoded.
      */
-    List<IAlert> fetch(PortletRequest req);
+    String getBody();
+    
+    /**
+     * Provides a link to further information about this alter if available, 
+     * otherwise null. 
+     */
+    String getUrl();
 
 }

@@ -17,32 +17,15 @@
  * under the License.
  */
 
-/* tip portlet */
-#portalTip {
-    background-image: -moz-linear-gradient(top,white,#eee 65px);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(white),to(#eee),color-stop(0.1,white));
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#eee')";
-    background-image: linear-gradient(top,white,#eee 65px);
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    width: 50%;
-    margin: 0 auto;
-    margin-bottom: 1em;
-    padding-left: 12px;
-}
-#portalTip .portal-tip-inner {
-    background: url(../images/icon-tip.png) left center no-repeat;
-    padding: 10px 10px 10px 24px;
-}
-#portalTip p {
-    margin: 0;
-    font-weight: bold;
-}
-
 /*emergency alert*/
-#emergencyAlert {
+.emergency-alert {
+	position: relative;
+	height: 190px;
+}
+.emergency-alert .view-alert {
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 36px 36px 36px 190px;
     background: url(../images/icon-alert.png) 36px center no-repeat;
     -webkit-border-radius: 0px;
@@ -50,18 +33,34 @@
     border-radius: 0px;
     color: #fff;
 }
-#emergencyAlert .titlebar {
+.emergency-alert .view-alert .titlebar {
     display: block;
 }
-#emergencyAlert .title {
+.emergency-alert .view-alert .title {
     border: none;
     font-size: 200%;
     font-weight: bold;
     color: #fff;
 }
-#emergencyAlert a {
+.emergency-alert .view-alert a {
     color: #B2CCE1;
 }
-#emergencyAlert a:hover {
+.emergency-alert .view-alert a:hover {
     color: #fff;
+}
+.emergency-alert .view-alert .alerts-pager {
+    float: right;
+}
+.emergency-alert .view-alert .alerts-pager li {
+    display: inline;
+	list-style-type: none;
+}
+.emergency-alert .view-alert .alerts-pager li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: larger;
+    cursor: pointer;
+}
+.emergency-alert .view-alert .alerts-pager li a.disabled {
+    color: #ccc;
 }

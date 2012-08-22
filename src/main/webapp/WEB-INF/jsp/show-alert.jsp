@@ -24,19 +24,33 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
-<link type="text/css" rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="<c:url value="/css/alert.css"/>"/>
 
-<div id="emergencyAlert" class="portlet view-alert" style="display: none;" role="section">
-    <!-- Portlet Titlebar -->
-    <div class="titlebar portlet-titlebar" role="sectionhead">
-        <h2 class="title" role="heading"><c:out value="${alertHead}"/></h2>
-    </div>
+<div id="${n}emergencyAlert" class="emergency-alert" style="display: none;">
 
-    <!-- Portlet Body -->
-    <div class="content portlet-content" role="main">
-        <p><c:out value="${alertMsg}"/></p>
-        <c:out value="${alertLink}" escapeXml="false"/>                                     
-    </div>
+	<c:forEach items="${feed}" var="alert" varStatus="status">
+		<div class="portlet view-alert"<c:if test="${!status.first}"> style="display: none;"</c:if> role="section">
+            
+		    <!-- Portlet Titlebar -->
+		    <div class="titlebar portlet-titlebar" role="sectionhead">
+                <c:if test="${fn:length(feed) > 1}">
+                    <ul class="alerts-pager">
+                        <li><a title="Previous" href="javascript:void(0);" class="alerts-previous<c:if test="${status.first}"> disabled</c:if>">&#171;</a></li>
+                        <li><a title="Next" href="javascript:void(0);" class="alerts-next<c:if test="${status.last}"> disabled</c:if>">&#187;</a></li>
+                    </ul>
+                </c:if>
+		        <h2 class="title" role="heading"><c:out value="${alert.header}" escapeXml="false"/></h2>
+		    </div>
+		
+		    <!-- Portlet Body -->
+		    <div class="content portlet-content" role="main">
+		        <p><c:out value="${alert.body}" escapeXml="false"/></p>
+		        <c:out value="${alert.url}" escapeXml="false"/>                                     
+		    </div>
+		</div>
+	</c:forEach>
+
 </div>
 
 <script type="text/javascript">
@@ -46,7 +60,39 @@
 
     ${n}.jQuery(function(){
         var $ = ${n}.jQuery;
-        $("#emergencyAlert").slideDown("slow");
+        
+        var intervalId = -1;
+
+        var advance = function() {
+            var outgoingAlert = $('#${n}emergencyAlert .view-alert').filter(':visible');
+            var incomingAlert = outgoingAlert.next();
+            if (incomingAlert.size() == 0) {
+            	// Cycle to the beginning...
+            	incomingAlert = $('#${n}emergencyAlert .view-alert').filter(':first');
+            }
+            outgoingAlert.toggle('slide', { direction: 'left' });
+            incomingAlert.toggle('slide', { direction: 'right' });
+        };
+        $('#${n}emergencyAlert .alerts-next').filter(':not(.disabled)').click(function() {
+        	advance();
+        	window.clearInterval(intervalId);
+        });
+        
+        var recede = function() {
+            var outgoingAlert = $('#${n}emergencyAlert .view-alert').filter(':visible');
+            var incomingAlert = outgoingAlert.prev();
+            outgoingAlert.toggle('slide', { direction: 'right' });
+            incomingAlert.toggle('slide', { direction: 'left' });
+        };
+        $('#${n}emergencyAlert .alerts-previous').filter(':not(.disabled)').click(function() {
+        	recede();
+            window.clearInterval(intervalId);
+        });
+        
+        $('#${n}emergencyAlert').slideDown('slow');
+
+        <c:if test="${autoAdvance}">intervalId = window.setInterval(advance, 10000);</c:if>
+        
     });
 
 </script>

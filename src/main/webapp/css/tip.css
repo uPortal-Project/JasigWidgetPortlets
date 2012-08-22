@@ -17,31 +17,26 @@
  * under the License.
  */
 
-package org.jasig.portlet.widget.service;
-
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-public interface IAlertService {
-    
-    /**
-     * IMPORTANT -- might be null.  A null response means the the value is 
-     * currently UNSPECIFIED (and the behavior will be chosen by 
-     * PortletPreferences).
-     * 
-     * @return true, false, or null (unspecified)
-     */
-    Boolean isEnabled();
-    
-    void setEnabled(Boolean b);
-    
-    /**
-     * Get the current alerts, if any.
-     * 
-     * @param req
-     * @return
-     */
-    List<IAlert> fetch(PortletRequest req);
-
+/* tip portlet */
+#portalTip {
+    background-image: -moz-linear-gradient(top,white,#eee 65px);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(white),to(#eee),color-stop(0.1,white));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#eee')";
+    background-image: linear-gradient(top,white,#eee 65px);
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    padding-left: 12px;
+}
+#portalTip .portal-tip-inner {
+    background: url(../images/icon-tip.png) left center no-repeat;
+    padding: 10px 10px 10px 24px;
+}
+#portalTip p {
+    margin: 0;
+    font-weight: bold;
 }

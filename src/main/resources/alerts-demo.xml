@@ -18,15 +18,27 @@
     under the License.
 
 -->
-
-<Alert>
-    <AlertFlag>1</AlertFlag>
-    <AlertHead>Hamburgler Spotted on Campus</AlertHead>
-    <AlertMsg>
-        BE ADVISED:  a suspicious character dressed in old-timey prison stripes 
-        and repeating <em>"gobble gobble"</em> was reported in the vicinity of 
-        Angel Hall.  This individual has a record of crimes against fast food 
-        and should be considered dangerous.
-    </AlertMsg>
-    <AlertLink><a href="http://www.jasig.org">Jasig Home Page</a></AlertLink>
-</Alert>
+<alerts>
+    <Alert>
+        <AlertFlag>1</AlertFlag>
+        <AlertHead>Hamburgler Spotted on Campus</AlertHead>
+        <AlertMsg>
+            BE ADVISED:  a suspicious character dressed in old-timey prison stripes 
+            and repeating <em>"gobble gobble"</em> was reported in the vicinity of 
+            Angel Hall.  This individual has a record of crimes against fast food 
+            and should be considered dangerous.
+        </AlertMsg>
+        <AlertLink><a href="http://www.jasig.org">Jasig Home Page</a></AlertLink>
+    </Alert>
+    <Alert>
+        <AlertFlag>1</AlertFlag>
+        <AlertHead>Raining Cats &amp; Dogs</AlertHead>
+        <AlertMsg>
+            WARNING:  Central Campus is currently under a <strong>Dangerous Weather 
+            Advisory</strong>.  Students and non-emergency staff are encouraged to 
+            stay indoors.  Individuals who must travel should use caution and carry 
+            Milkbone <sup>TM</sup> biscuits and catnip at all times.  
+        </AlertMsg>
+        <AlertLink><a href="http://www.jasig.org">Jasig Home Page</a></AlertLink>
+    </Alert>
+</alerts>

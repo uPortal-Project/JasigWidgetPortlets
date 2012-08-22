@@ -19,126 +19,78 @@
 
 package org.jasig.portlet.widget.service.xml;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
-import org.jasig.portlet.widget.service.IAlertService;
+import org.dom4j.Node;
+import org.jasig.portlet.widget.service.AbstractCachingAlertService;
+import org.jasig.portlet.widget.service.BasicAlert;
+import org.jasig.portlet.widget.service.IAlert;
 
-public abstract class AbstractXmlAlertService implements IAlertService {
+public abstract class AbstractXmlAlertService extends AbstractCachingAlertService {
 
-    private static final String XPATH_FLAG = "//AlertFlag[text() = '1']";
-    private static final String XPATH_HEAD = "//AlertHead";
-    private static final String XPATH_MESSAGE = "//AlertMsg";
-    private static final String XPATH_LINK = "//AlertLink/*";
+    private static final String XPATH_ALERT = "//Alert";
+    private static final String XPATH_ALERT_ENABLED_FLAG = ".//AlertFlag[text() = '1']";
+    private static final String XPATH_HEAD = ".//AlertHead";
+    private static final String XPATH_BODY = ".//AlertMsg/node()";
+    private static final String XPATH_URL = ".//AlertLink/*";
     
-    private static final long MILLISECONDS_IN_TWO_MINUTES = 2L * 60L * 1000L;
-    public static final String ENABLED_BY_DEFAULT_PREFERENCE = "AbstractXmlAlertService.enabledByDefault";
-
     // Instance Members.
-    private Boolean enabled = null;
-    private long cacheTimeout = MILLISECONDS_IN_TWO_MINUTES;
-    private volatile long whenGotten = 0L;
-    private final Map<String, String> feed = new ConcurrentHashMap<String, String>();
     private final Log log = LogFactory.getLog(getClass());
 
     /*
-     * Public API.
+     * Protected API.
      */
-
-    /**
-     * Important -- may be null.
-     */
-    @Override
-    public final Boolean isEnabled() {
-        return enabled;
-    }
     
-    @Override
-    public final void setEnabled(Boolean b) {
-        this.enabled = b;
-    }
-    
-    public final void setCacheTimeout(long cacheTimeout) {
-        this.cacheTimeout = cacheTimeout;
-    }
-
-    /**
-     * Return the current alert, if there is one, or <code>null</code> otherwise.
-     */
-    @Override
-    public final Map<String, String> fetch(final PortletRequest req) {
+    protected final List<IAlert> getFeedFromSource(PortletRequest req) {
         
-        PortletPreferences prefs = req.getPreferences();
-        
-        // Provide a means to disable the system
-        boolean doFetch = enabled != null
-                    ? enabled
-                    : Boolean.valueOf(prefs.getValue(ENABLED_BY_DEFAULT_PREFERENCE, "true"));
-        if (!doFetch) return Collections.emptyMap();
+        final List<IAlert> rslt = new ArrayList<IAlert>();
 
-        // The alerts system is active;  refresh if required
-        if (isFeedExpired()) {
-            if (log.isDebugEnabled()) {
-                log.debug("About to start a thread to refreash the feed");
+        final Document doc = loadDocument(req);
+        if (log.isDebugEnabled()) {
+            final String xml = doc != null 
+                            ? "\n" + doc.asXML() 
+                            : "  [null]";
+            log.debug("Received the following Alert XML:" + xml);
+        }
+
+        if (doc != null) {
+            
+            @SuppressWarnings("unchecked")
+            final List<Node> nodes = doc.selectNodes(XPATH_ALERT); 
+            for (Node n : nodes) {
+                if (n.selectSingleNode(XPATH_ALERT_ENABLED_FLAG) != null) {
+                    final String head = n.valueOf(XPATH_HEAD);
+                    final StringBuilder body = new StringBuilder();
+                    @SuppressWarnings("unchecked")
+                    final List<Node> bodyContent = n.selectNodes(XPATH_BODY);
+                    for (Node b : bodyContent) {
+                        body.append(b.asXML());
+                    }
+                    String url = null;  // default
+                    final Node urlNode = n.selectSingleNode(XPATH_URL);
+                    if (urlNode != null && urlNode.asXML().trim().length() != 0) {
+                        url = urlNode.asXML().trim();
+                    }
+                    IAlert alert = new BasicAlert(head, body.toString(), url);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Adding the following alert:  " + alert);
+                    } 
+                    rslt.add(alert);
+                }
             }
             
-            // Fetch in a separate Thread & return what we already have
-            Thread refreshThread = new Thread() {
-                public void run() {
-                    try {
-                        Document doc = getFeedFromSource(req);
-                        if (log.isDebugEnabled()) {
-                            String xml = doc != null 
-                                            ? "\n" + doc.asXML() 
-                                            : "  [null]";
-                            log.debug("Received the following Alert XML:" + xml);
-                        }
-                        // Any valid response from the service means clear 
-                        // the existing alert and show new info
-                        feed.clear();  
-                        if (doc != null && doc.selectSingleNode(XPATH_FLAG) != null) {
-                            String alertHead = doc.valueOf(XPATH_HEAD);
-                            feed.put("alertHead", alertHead);
-                            String alertMsg = doc.valueOf(XPATH_MESSAGE);
-                            feed.put("alertMsg", alertMsg);
-                            String alertLink = doc.selectSingleNode(XPATH_LINK).asXML();
-                            feed.put("alertLink", alertLink);
-                        }
-                    } catch (Exception e) {
-                        // Catch-all for any other problem
-                        log.error("Failed to update the Alert Feed", e);
-                    }
-                    // Even if we failed, don't try move than the TTL value
-                    whenGotten = System.currentTimeMillis();
-                }
-            };
-            refreshThread.setDaemon(true);
-            refreshThread.start();
         }
         
-        return Collections.unmodifiableMap(feed);
-
+        return rslt;
+        
     }
-
-    /*
-     * Implementation
-     */
     
-    protected abstract Document getFeedFromSource(PortletRequest req);
-
-    protected final boolean isFeedExpired() {
-        final long whenExpires = whenGotten + cacheTimeout;
-        // Even if the feed is bad, we don't want to request it more 
-        // often than the TTL;  constantly requesting a bad feed leads 
-        // to 'Too many open files' and makes the portal unusable. 
-        return System.currentTimeMillis() > whenExpires;
-    }
+    protected abstract Document loadDocument(PortletRequest req);
 
 }

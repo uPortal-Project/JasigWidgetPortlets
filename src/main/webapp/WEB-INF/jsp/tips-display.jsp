@@ -20,7 +20,7 @@
 --%>
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<link href="<c:url value="/css/styles.css"/>" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/css/tip.css"/>" rel="stylesheet" type="text/css" />
 
 <div id="portalTip">
     <div class="portal-tip-inner">

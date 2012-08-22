@@ -42,7 +42,11 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>AbstractXmlAlertService.enabledByDefault</name>
+                <name>autoAdvance</name>
+                <value>true</value>
+            </preference>
+            <preference>
+                <name>AbstractCachingAlertService.enabledByDefault</name>
                 <value>true</value>
             </preference>
             <preference>
