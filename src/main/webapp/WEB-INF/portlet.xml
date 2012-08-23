@@ -50,12 +50,20 @@
                 <value>true</value>
             </preference>
             <preference>
+                <name>AbstractCachingAlertService.maxItems</name>
+                <value>4</value>
+            </preference>
+            <preference>
                 <name>HttpXmlAlertService.feedUrl</name>
                 <value>USE WITH HttpXmlAlertService (e.g. 'http://www.my.edu/alertFeed')</value>
             </preference>
             <preference>
                 <name>ClasspathXmlAlertService.feedLocation</name>
                 <value>USE WITH ClasspathXmlAlertService (e.g. 'classpath:/alerts-demo.xml')</value>
+            </preference>
+            <preference>
+                <name>RomeAlertService.url</name>
+                <value>USE WITH RomeAlertService (e.g. 'http://some.feed.rss')</value>
             </preference>
         </portlet-preferences>
     </portlet>

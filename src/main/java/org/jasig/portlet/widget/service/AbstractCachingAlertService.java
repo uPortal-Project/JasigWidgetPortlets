@@ -34,6 +34,7 @@ import org.jasig.portlet.widget.service.IAlertService;
 public abstract class AbstractCachingAlertService implements IAlertService {
     
     public static final String ENABLED_BY_DEFAULT_PREFERENCE = "AbstractCachingAlertService.enabledByDefault";
+    public static final String MAX_ITEMS_PREFERENCE = "AbstractCachingAlertService.maxItems";
 
     private static final long MILLISECONDS_IN_TWO_MINUTES = 2L * 60L * 1000L;
     private static final Object LOCK = new Object(); 
@@ -79,6 +80,8 @@ public abstract class AbstractCachingAlertService implements IAlertService {
                     ? enabled
                     : Boolean.valueOf(prefs.getValue(ENABLED_BY_DEFAULT_PREFERENCE, "true"));
         if (!doFetch) return Collections.emptyList();
+        
+        final int maxItems = Integer.parseInt(prefs.getValue(MAX_ITEMS_PREFERENCE, "4"));
 
         // The alerts system is active;  refresh if required
         if (isFeedExpired()) {
@@ -97,6 +100,9 @@ public abstract class AbstractCachingAlertService implements IAlertService {
                                 whenGotten = System.currentTimeMillis();
 
                                 List<IAlert> list = getFeedFromSource(req);
+                                if (list.size() > maxItems) {
+                                    list = list.subList(0, maxItems);
+                                }
 
                                 // Any valid response from the service means
                                 // clear the existing alert and show new info
