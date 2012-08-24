@@ -16,9 +16,9 @@
     <version>1.0.3-SNAPSHOT</version>
 
     <scm>
-        <connection>scm:svn:https://source.jasig.org/portlets/JasigWidgetPortlets/trunk</connection>
-        <developerConnection>scm:svn:https://source.jasig.org/portlets/JasigWidgetPortlets/trunk</developerConnection>
-        <url>http://developer.jasig.org/source/browse/jasigsvn/svn/portlets/JasigWidgetPortlets/trunk</url>
+        <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
+        <developerConnection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</developerConnection>
+        <url>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</url>
     </scm>
 
     <properties>
