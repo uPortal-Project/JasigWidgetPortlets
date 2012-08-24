@@ -13,7 +13,7 @@
 
     <name>Jasig Widget Portlets</name>
     <description>Collection of small, simple widget-type portlets.</description>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
 
     <scm>
         <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
