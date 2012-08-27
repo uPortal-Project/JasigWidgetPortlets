@@ -91,7 +91,7 @@
         
         $('#${n}emergencyAlert').slideDown('slow');
 
-        <c:if test="${autoAdvance}">intervalId = window.setInterval(advance, 10000);</c:if>
+        <c:if test="${autoAdvance && fn:length(feed) > 1}">intervalId = window.setInterval(advance, 10000);</c:if>
         
     });
 
