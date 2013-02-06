@@ -19,6 +19,9 @@
 
 package org.jasig.portlet.widget.service;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public interface IAlert {
     
     /**

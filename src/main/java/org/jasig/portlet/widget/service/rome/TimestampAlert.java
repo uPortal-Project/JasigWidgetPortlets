@@ -21,6 +21,9 @@ package org.jasig.portlet.widget.service.rome;
 
 import org.jasig.portlet.widget.service.BasicAlert;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public class TimestampAlert extends BasicAlert implements Comparable<TimestampAlert> {
     
     // Instance Members.

@@ -34,10 +34,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 /**
- * Especially useful for demo data.  Not sure how seful otherwise.
- * 
- * @author awills
- *
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
  */
 public final class ClasspathXmlAlertService extends AbstractXmlAlertService implements ApplicationContextAware {
     

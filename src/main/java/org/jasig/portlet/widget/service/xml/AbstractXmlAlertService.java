@@ -32,6 +32,9 @@ import org.jasig.portlet.widget.service.AbstractCachingAlertService;
 import org.jasig.portlet.widget.service.BasicAlert;
 import org.jasig.portlet.widget.service.IAlert;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public abstract class AbstractXmlAlertService extends AbstractCachingAlertService {
 
     private static final String XPATH_ALERT = "//Alert";

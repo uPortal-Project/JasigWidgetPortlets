@@ -37,6 +37,9 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public class RomeAlertService extends AbstractCachingAlertService {
 
     public static final String URL_PREFERENCE = "RomeAlertService.url";

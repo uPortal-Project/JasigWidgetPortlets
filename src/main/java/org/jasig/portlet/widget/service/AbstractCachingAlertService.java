@@ -28,9 +28,10 @@ import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasig.portlet.widget.service.IAlert;
-import org.jasig.portlet.widget.service.IAlertService;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public abstract class AbstractCachingAlertService implements IAlertService {
     
     public static final String ENABLED_BY_DEFAULT_PREFERENCE = "AbstractCachingAlertService.enabledByDefault";

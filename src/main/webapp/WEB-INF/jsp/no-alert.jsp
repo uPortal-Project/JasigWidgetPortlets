@@ -19,4 +19,6 @@
 
 --%>
 
+<%-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  --%>
+
 <!-- Alert Integration:  If there were an active alert, it would be here. -->

@@ -25,6 +25,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
 
+    <!-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  -->
     <portlet>
         <portlet-name>emergency-alerts</portlet-name>
         <display-name>Emergency Alert Portlet</display-name>
@@ -68,6 +69,7 @@
         </portlet-preferences>
     </portlet>
     
+    <!-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  -->
     <portlet>
         <portlet-name>emergency-alerts-admin</portlet-name>
         <display-name>Emergency Alert Admin Portlet</display-name>

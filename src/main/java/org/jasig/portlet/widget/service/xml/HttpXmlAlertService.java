@@ -34,6 +34,9 @@ import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public final class HttpXmlAlertService extends AbstractXmlAlertService {
     
     private static final String URL_PREFERENCE = "HttpXmlAlertService.feedUrl";

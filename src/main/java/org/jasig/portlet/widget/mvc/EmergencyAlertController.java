@@ -34,6 +34,9 @@ import org.springframework.web.portlet.ModelAndView;
 import org.jasig.portlet.widget.service.IAlert;
 import org.jasig.portlet.widget.service.IAlertService;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 @Controller
 @RequestMapping("VIEW")
 public final class EmergencyAlertController {

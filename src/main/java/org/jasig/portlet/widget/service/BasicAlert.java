@@ -21,6 +21,9 @@ package org.jasig.portlet.widget.service;
 
 import org.springframework.util.Assert;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public class BasicAlert implements IAlert {
 
     // Instance Members.

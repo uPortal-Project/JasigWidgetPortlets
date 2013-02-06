@@ -19,6 +19,8 @@
 
 --%>
 
+<%-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  --%>
+
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
 <c:set var="n"><portlet:namespace/></c:set>

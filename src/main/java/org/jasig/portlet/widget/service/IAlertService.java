@@ -23,6 +23,9 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
+/**
+ * @deprecated This portlet was moved to the Apereo NotificationPortlet project.
+ */
 public interface IAlertService {
     
     /**
