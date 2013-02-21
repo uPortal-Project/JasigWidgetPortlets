@@ -38,7 +38,7 @@ public class YouTubeService {
     
     @Cacheable(cacheName="youTubeCache")
     public String getYouTubeResponse(String userName) {
-        String url = "http://gdata.youtube.com/feeds/api/videos?author=" + userName + "&v=2&alt=jsonc";
+        String url = "http://gdata.youtube.com/feeds/api/videos?author=" + userName + "&v=2&alt=jsonc&orderby=published";
         HttpClient client = new HttpClient();
         GetMethod get = null;
 
