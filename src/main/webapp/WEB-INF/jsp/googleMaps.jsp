@@ -33,17 +33,17 @@
 <script type="text/javascript">
     var ${n} = {};
     ${n}.jQuery = jQuery.noConflict(true);
-    
     ${n}.setStartingLocation = function(geoc, map) {
         <c:choose>
         <c:when test="${startingLocation != null}">
-          geoc.geocode("${startingLocation}", function(point) {
-          if (!point) {
-            alert("${startingLocation}" + " not found");
-          } else {
-            map.setCenter(point, ${startingZoom});
-          }
-        });
+		geoc.geocode( { 'address': "${startingLocation}"}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+				map.setZoom(${startingZoom});
+			} else {
+				alert('Geocode was not successful for the following reason: ' + status);
+			}
+		});
         </c:when>
         <c:otherwise>
           map.setCenter("new york");
