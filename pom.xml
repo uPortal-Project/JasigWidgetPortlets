@@ -22,6 +22,7 @@
     </scm>
 
     <properties>
+        <icu4j.version>51.1</icu4j.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <spring.version>2.5.6.SEC02</spring.version>
@@ -59,6 +60,11 @@
                         <artifactId>spring-expression</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.ibm.icu</groupId>
+                <artifactId>icu4j</artifactId>
+                <version>${icu4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
