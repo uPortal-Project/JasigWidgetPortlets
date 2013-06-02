@@ -26,7 +26,7 @@
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <spring.version>2.5.6.SEC02</spring.version>
-        <resource-server.version>1.0.21</resource-server.version>
+        <resource-server.version>1.0.29</resource-server.version>
     </properties>
 
     <licenses>
@@ -60,7 +60,12 @@
                         <artifactId>spring-expression</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>13.0</version>
+			</dependency>
             <dependency>
                 <groupId>com.ibm.icu</groupId>
                 <artifactId>icu4j</artifactId>
@@ -191,10 +196,10 @@
                 <artifactId>resource-server-utils</artifactId>
                 <version>${resource-server.version}</version>
                 <exclusions>
-                    <exclusion>
+					<exclusion>
                         <groupId>net.sf.ehcache</groupId>
                         <artifactId>ehcache</artifactId>
-                    </exclusion>
+					</exclusion>
                     <exclusion>
                         <groupId>org.springframework</groupId>
                         <artifactId>spring-core</artifactId>
@@ -229,7 +234,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
+				<version>${spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -558,8 +563,8 @@
                             <groupId>org.jasig.resourceserver</groupId>
                             <artifactId>resource-server-content</artifactId>
                             <includes>
-                                <include>rs/fluid/1.4-00b5b5e/js/</include>
-                                <include>rs/jquery/1.6.1/</include>
+								<include>rs/fluid/1.4.0/</include>
+                                <include>rs/jquery/1.9.1/</include>
                                 <include>rs/jqueryui/1.8.13/</include>
                             </includes>
                         </overlay>
