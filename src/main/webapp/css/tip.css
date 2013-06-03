@@ -40,3 +40,21 @@
     margin: 0;
     font-weight: bold;
 }
+
+#portalTip a {
+    float:right;
+}
+
+#portalTip #nextTip
+{
+    background:url('/ResourceServingWebapp/rs/jqueryui/1.8.13/theme/smoothness/images/ui-icons_222222_256x240.png');
+    background-position:-113px -193px;
+    display:block;
+    width:14px;
+    height:14px;
+}
+
+#portalTip #nextTip span
+{
+    display:none;
+}

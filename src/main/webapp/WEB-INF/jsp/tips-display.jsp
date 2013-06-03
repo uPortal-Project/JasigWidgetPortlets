@@ -19,11 +19,12 @@
 
 --%>
 
-<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<link href="<c:url value="/css/tip.css"/>" rel="stylesheet" type="text/css" />
+<jsp:directive.include file="/WEB-INF/jsp/nextTip.jsp"/>
+<rs:aggregatedResources path="/resources.xml"/>
 
 <div id="portalTip">
     <div class="portal-tip-inner">
-        <p><spring:message code="tips.prefix"/><c:out value="${displayedTip}"/></p>
-    </div>
+        <p id="tip-p"><spring:message code="tips.prefix"/><c:out value="${displayedTip}"/></p>
+        <a id="nextTip" href="#" alt="Next tip"><span>Next Tip</span></a>
+	</div>
 </div>

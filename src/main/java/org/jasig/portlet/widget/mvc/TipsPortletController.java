@@ -53,7 +53,9 @@ public final class TipsPortletController {
         
         Random random = new Random(System.currentTimeMillis());
         int choiceTipIndex = random.nextInt(tips.length);
-        
+       
+    	model.put("allTips", tips);
+        model.put("displayedTipIndex", choiceTipIndex);
         model.put("displayedTip", (choiceTipIndex + 1) + ":  " + tips[choiceTipIndex]);        
         return new ModelAndView(VIEWNAME, model);
 
