@@ -41,21 +41,20 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>jasig-widgets.root</param-value>
+		<param-value>jasig-widgets.webapp.root</param-value>
 	</context-param>
-	
-	<listener>
-		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-	</listener>
-
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+    <!-- Must be the first listener so the webAppRootKey gets set for logback -->
+    <listener>
+        <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+    </listener>
+    <!-- Needed to remove JMX registration and allow for classloader GC -->
+    <listener>
+        <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+    </listener>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
 
 	<servlet>
 		<servlet-name>ViewRendererServlet</servlet-name>
