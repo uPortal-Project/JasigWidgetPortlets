@@ -31,30 +31,30 @@
     margin: 0 auto;
     margin-bottom: 1em;
     padding-left: 12px;
+    position: relative;
 }
 #portalTip .portal-tip-inner {
     background: url(../images/icon-tip.png) left center no-repeat;
-    padding: 10px 10px 10px 24px;
+    padding: 10px 20px 10px 24px;
 }
 #portalTip p {
     margin: 0;
     font-weight: bold;
 }
 
-#portalTip a {
-    float:right;
-}
-
-#portalTip #nextTip
+#portalTip #tip-nextTip
 {
     background:url('/ResourceServingWebapp/rs/jqueryui/1.8.13/theme/smoothness/images/ui-icons_222222_256x240.png');
     background-position:-113px -193px;
-    display:block;
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
     width:14px;
     height:14px;
 }
 
-#portalTip #nextTip span
+#portalTip #tip-nextTip span
 {
     display:none;
 }
