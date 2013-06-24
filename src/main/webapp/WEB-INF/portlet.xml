@@ -282,6 +282,29 @@
         </portlet-info>
     </portlet-->
 
+    <portlet>
+        <portlet-name>SimpleJspPortlet</portlet-name>
+        <display-name>SimpleJspPortlet</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/simpleJspPortletContext.xml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>SimpleJspPortlet</title>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>SimpleJspPortletController.jspName</name>
+                <value>simple-jsp-instructions</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <custom-portlet-mode>
         <description>Allows the portlet to render a preferences edit UI during publishing</description>
         <portlet-mode>config</portlet-mode>
