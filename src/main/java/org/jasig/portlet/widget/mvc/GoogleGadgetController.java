@@ -23,18 +23,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
 public class GoogleGadgetController {
 	
-	@RequestMapping
-	public ModelAndView showGadget(PortletRequest request) {
+	@RenderMapping
+	public ModelAndView showGadget(RenderRequest request) {
         PortletPreferences preferences = request.getPreferences();
         String configuredUrl = preferences.getValue("configuredUrl", null);
         Map<String, Object> model = new HashMap<String, Object>();

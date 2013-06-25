@@ -73,10 +73,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:order="10" p:cache="true" p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
-		
-    <!-- Shared by Emergency Alerts and Emergency Alerts Admin -->
-    <bean class="org.jasig.portlet.widget.service.xml.ClasspathXmlAlertService"/>
-    
+
     <!--
      | Always declare an 'exceptionResolver' bean with a 'defaultErrorView' 
      | because, in addition to other uses, it protects the portlet from 

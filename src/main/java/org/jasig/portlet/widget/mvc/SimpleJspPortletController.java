@@ -24,6 +24,7 @@ import javax.portlet.PortletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
@@ -38,7 +39,7 @@ public final class SimpleJspPortletController {
     public static final String JSP_NAME_PREFERENCE = "SimpleJspPortletController.jspName";
     public static final String INSTRUCTIONS_VIEW = "simple-jsp-instructions";
 
-    @RequestMapping()
+    @RenderMapping()
     public String doView(PortletRequest req) {
 
         final PortletPreferences prefs = req.getPreferences();

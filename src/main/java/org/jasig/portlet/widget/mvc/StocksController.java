@@ -19,7 +19,6 @@
 
 package org.jasig.portlet.widget.mvc;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,59 +29,49 @@ import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasig.web.service.AjaxPortletSupportService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
 public class StocksController {
-	
-	private final Log log = LogFactory.getLog(StocksController.class);
+    
+    private final Log log = LogFactory.getLog(StocksController.class);
 
-	private final String defaultApiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
-	
-	private final String[] defaultStocks = new String[]{"yhoo","goog"};
-	
-	@Autowired
-	private AjaxPortletSupportService ajaxPortletSupportService;
-	
-	public void setAjaxPortletSupportService(
-			AjaxPortletSupportService ajaxPortletSupportService) {
-		this.ajaxPortletSupportService = ajaxPortletSupportService;
-	}
-	
-	@RequestMapping()
-	public ModelAndView viewStocks(RenderRequest request) throws Exception {
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		PortletPreferences preferences = request.getPreferences();
-		map.put("key", preferences.getValue("key", this.defaultApiKey));
-		map.put("stocks", preferences.getValues("stocks", this.defaultStocks));
-		
-		return new ModelAndView("stocks", map);
-	}
-	
-	@RequestMapping(params = "action=savePreferences")
-	protected void handleAjaxRequestInternal(ActionRequest request,
-			ActionResponse response) throws Exception {
-		
-		Map<String,Object> model = new HashMap<String,Object>();
-		try {
-			// save the preferences
-			PortletPreferences preferences = request.getPreferences();
-			preferences.setValues("stocks", request.getParameterValues("stocks"));
-			preferences.store();
-			model = Collections.<String,Object>singletonMap("status", "success");
+    private final String defaultApiKey = "ABQIAAAA1LMBgN_YMQm8gHtNDD0PHBT8V3EeC0kvvMKhUfRICeG0j5XTvxR7twPk2H016LpKy1O2yngKoCTt6g";
+    
+    private final String[] defaultStocks = new String[]{"yhoo","goog"};
 
-		} catch (RuntimeException e) {
-			log.error("Error storing stocks preferences", e);
-			model = Collections.<String,Object>singletonMap("status", "failure");
-		}
+    @RenderMapping()
+    public ModelAndView viewStocks(RenderRequest request) throws Exception {
+        Map<String,Object> map = new HashMap<String,Object>();
+        
+        PortletPreferences preferences = request.getPreferences();
+        map.put("key", preferences.getValue("key", this.defaultApiKey));
+        map.put("stocks", preferences.getValues("stocks", this.defaultStocks));
+        
+        return new ModelAndView("stocks", map);
+    }
+    
+    @ActionMapping(params = "action=savePreferences")
+    protected void handleAjaxRequestInternal(ActionRequest request,
+            ActionResponse response) throws Exception {
 
-		ajaxPortletSupportService.redirectAjaxResponse("ajax/json", model, request, response);
-	}
+        try {
+            // save the preferences
+            PortletPreferences preferences = request.getPreferences();
+            preferences.setValues("stocks", request.getParameterValues("stocks"));
+            preferences.store();
+
+        } catch (RuntimeException e) {
+            log.error("Error storing stocks preferences", e);
+        }
+        
+        response.sendRedirect("success.json");
+
+    }
 
 }

@@ -19,19 +19,17 @@
 
 package org.jasig.portlet.widget.mvc;
 
-import java.util.Collections;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
 public class CalendarController {
 
-	@RequestMapping()
-	public ModelAndView view() throws Exception {		
-		return new ModelAndView("calendar", Collections.<Object,Object>emptyMap());
-	}
+    @RenderMapping()
+    public String view() throws Exception {     
+        return "calendar";
+    }
 
 }

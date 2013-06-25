@@ -43,6 +43,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("CONFIG")
@@ -55,13 +57,13 @@ public class EditGoogleGadgetController {
         this.gadgetService = googleGadgetService;
     }
     
-    @RequestMapping()
+    @RenderMapping()
     public ModelAndView getSearchView(RenderRequest request) {
         List<GadgetCategory> categories = gadgetService.getCategories();
         return new ModelAndView("searchGadgets", Collections.<String,Object>singletonMap("categories", categories));
     }
     
-    @RequestMapping(params = "action=configure")
+    @RenderMapping(params = "action=configure")
     public ModelAndView getConfigurationView(@RequestParam(value = "gadgetUrl") String gadgetUrl) {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("gadgetUrl", gadgetUrl);
@@ -72,7 +74,7 @@ public class EditGoogleGadgetController {
         return new ModelAndView("configureGadget", model);      
     }
     
-    @RequestMapping(params = "action=saveConfiguration")
+    @ActionMapping(params = "action=saveConfiguration")
     public void saveConfiguration(@RequestParam("gadgetUrl") String gadgetUrl,
             @RequestParam("width") int width,
             @RequestParam("height") int height,

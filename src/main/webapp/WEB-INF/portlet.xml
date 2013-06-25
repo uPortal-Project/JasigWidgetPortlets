@@ -25,68 +25,6 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
 
-    <!-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  -->
-    <portlet>
-        <portlet-name>emergency-alerts</portlet-name>
-        <display-name>Emergency Alert Portlet</display-name>
-        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/alertPortletContext.xml</value>
-        </init-param>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Emergency Alert Portlet</title>
-        </portlet-info>
-        <portlet-preferences>
-            <preference>
-                <name>autoAdvance</name>
-                <value>true</value>
-            </preference>
-            <preference>
-                <name>AbstractCachingAlertService.enabledByDefault</name>
-                <value>true</value>
-            </preference>
-            <preference>
-                <name>AbstractCachingAlertService.maxItems</name>
-                <value>4</value>
-            </preference>
-            <preference>
-                <name>HttpXmlAlertService.feedUrl</name>
-                <value>USE WITH HttpXmlAlertService (e.g. 'http://www.my.edu/alertFeed')</value>
-            </preference>
-            <preference>
-                <name>ClasspathXmlAlertService.feedLocation</name>
-                <value>USE WITH ClasspathXmlAlertService (e.g. 'classpath:/alerts-demo.xml')</value>
-            </preference>
-            <preference>
-                <name>RomeAlertService.url</name>
-                <value>USE WITH RomeAlertService (e.g. 'http://some.feed.rss')</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-    
-    <!-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  -->
-    <portlet>
-        <portlet-name>emergency-alerts-admin</portlet-name>
-        <display-name>Emergency Alert Admin Portlet</display-name>
-        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/alertAdminPortletContext.xml</value>
-        </init-param>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Emergency Alert Admin Portlet</title>
-        </portlet-info>
-    </portlet>
-
     <portlet>
         <portlet-name>google-search</portlet-name>
         <display-name xml:lang="en">Google Search</display-name>

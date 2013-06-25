@@ -29,6 +29,7 @@ import javax.portlet.PortletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
@@ -41,20 +42,20 @@ public final class TipsPortletController {
     private static final String TIPS_PREFERENCE = "tips";
     private static final String VIEWNAME = "tips-display";
 
-    @RequestMapping()
+    @RenderMapping()
     public ModelAndView doView(PortletRequest req) {
-        
+
         final PortletPreferences prefs = req.getPreferences();
         String[] tips = prefs.getValues(TIPS_PREFERENCE, new String[] {
             "Please add user tips by creating a portlet preference named 'tips' and adding your suggestions as values"
         });
-        
+
         final Map<String,Object> model = new HashMap<String,Object>();
-        
+
         Random random = new Random(System.currentTimeMillis());
         int choiceTipIndex = random.nextInt(tips.length);
-       
-    	model.put("allTips", tips);
+
+        model.put("allTips", tips);
         model.put("displayedTipIndex", choiceTipIndex);
         model.put("displayedTip", (choiceTipIndex + 1) + ":  " + tips[choiceTipIndex]);        
         return new ModelAndView(VIEWNAME, model);

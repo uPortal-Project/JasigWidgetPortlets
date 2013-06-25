@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
@@ -36,7 +37,7 @@ public class GoogleMapsController {
     public static final String PREFERENCE_STARTING_LOCATION = "startingLocation";
     public static final String PREFERENCE_STARTING_ZOOM = "startingZoom";
 
-	@RequestMapping
+	@RenderMapping
 	public ModelAndView getView(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		

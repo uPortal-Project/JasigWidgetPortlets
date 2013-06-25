@@ -28,6 +28,7 @@ import javax.portlet.RenderRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
@@ -39,7 +40,7 @@ public class GoogleTranslateController {
 			"pl", "pt", "ro", "ru", "es", "sr", "sk", "sl", "sv", "th", "tr", 
 			"uk", "vi"};
 	
-	@RequestMapping()
+	@RenderMapping()
 	public ModelAndView getView(RenderRequest request) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		

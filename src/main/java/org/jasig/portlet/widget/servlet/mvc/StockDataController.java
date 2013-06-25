@@ -36,7 +36,7 @@ public class StockDataController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView getStockQuotes(HttpServletRequest request) throws Exception {
-		Map<Object, Object> map = new HashMap<Object, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String stock = request.getParameter("stock");
 		String url = "http://quote.yahoo.com/d/quotes.csv?s=" + stock +"&f=sl1d1t1c1ohgvj1pp2wern";

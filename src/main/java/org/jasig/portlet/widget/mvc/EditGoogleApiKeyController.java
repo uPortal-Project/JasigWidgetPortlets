@@ -28,13 +28,14 @@ import javax.portlet.PortletModeException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
-import javax.portlet.RenderResponse;
 import javax.portlet.ValidatorException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("CONFIG")
@@ -42,12 +43,12 @@ public class EditGoogleApiKeyController {
 	
 	public static final String GOOGLE_API_KEY_PREF_NAME = "googleApiKey";
 
-	@RequestMapping
-	public String getFormView(RenderResponse response) {
+	@RenderMapping
+	public String getFormView() {
 		return "editGoogleApiKey";
 	}
 
-	@RequestMapping(params = "action=updateKey")
+	@ActionMapping(params = "action=updateKey")
 	public void updateKey(ActionRequest request, ActionResponse response,
 			@RequestParam(value = GOOGLE_API_KEY_PREF_NAME) String key)
 			throws PortletModeException, ReadOnlyException, ValidatorException, IOException {

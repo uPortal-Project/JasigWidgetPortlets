@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 /**
  * @author Jen Bourey
@@ -40,18 +41,18 @@ import org.springframework.web.portlet.ModelAndView;
 public class YouTubeController {
 
     private IViewHelper viewHelper;
-    
+
     @Autowired(required = true)
     public void setViewHelper(IViewHelper viewHelper) {
         this.viewHelper = viewHelper;
     }
 
-    @RequestMapping
+    @RenderMapping
     public ModelAndView getYouTubeView(PortletRequest request) {
         Map<String, Object> model = new HashMap<String, Object>();
         PortletPreferences prefs = request.getPreferences();
         model.put("usernames", prefs.getValues("usernames", new String[]{"uPortal"}));
-        
+
         String viewName;
         if (viewHelper.isMobile(request)) {
             viewName = "youtube-jQM";

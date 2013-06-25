@@ -19,18 +19,19 @@
 
 package org.jasig.portlet.widget.mvc;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
 public class DictionaryController {
 
-	@RequestMapping
-	public String view(PortletRequest request) throws Exception {
+	@RenderMapping
+	public String view(RenderRequest request) throws Exception {
 		PortletSession session = request.getPortletSession();
 		session.setAttribute("hasDictionarySession", true, PortletSession.APPLICATION_SCOPE);
 		return "dictionary";
