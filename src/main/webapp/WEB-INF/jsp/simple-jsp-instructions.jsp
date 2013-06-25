@@ -19,6 +19,8 @@
 
 --%>
 
+<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
+
 <div>
     <h2>How To Create a Simple JSP Portlet</h2>
 
@@ -35,4 +37,10 @@
         <li>Publish a new portlet based on the <code>/jasig-widget-portlets/SimpleJspPortlet</code> definition</li>
         <li>Be sure to provide the name of your JSP file, not including the file extension, as the <code>SimpleJspPortletController.jspName</code> preference (<i>e.g.</i> 'myPage')</li>
     </ol>
+    
+    <h3>Cook Book Examples:</h3>
+
+    <ul>
+        <li>Here is <a href="<portlet:actionURL><portlet:param name="redirect" value="http://www.apereo.org"/></portlet:actionURL>">a link to Apereo.org</a> that creates an entry in uPortal statistics every time a user clicks it.</li>
+    </ul>
 </div>

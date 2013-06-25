@@ -19,28 +19,38 @@
 
 package org.jasig.portlet.widget.mvc;
 
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
+import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
 public final class SimpleJspPortletController {
 
+    public static final String JSP_NAME_PREFERENCE = "SimpleJspPortletController.jspName";
+    public static final String INSTRUCTIONS_VIEW = "simple-jsp-instructions";
+
     // Instance Members.
+    private final Log log = LogFactory.getLog(getClass());
 
     /*
      * Public API.
      */
 
-    public static final String JSP_NAME_PREFERENCE = "SimpleJspPortletController.jspName";
-    public static final String INSTRUCTIONS_VIEW = "simple-jsp-instructions";
-
     @RenderMapping()
-    public String doView(PortletRequest req) {
+    public String doView(RenderRequest req) {
 
         final PortletPreferences prefs = req.getPreferences();
         final String jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
@@ -54,6 +64,29 @@ public final class SimpleJspPortletController {
          */
 
         return jspName;
+
+    }
+    
+    /**
+     * This method allows JSPs used with this portlet to provide links that 
+     * track user interactions in uPortal Statistics.  Use an actionURL with a 
+     * 'redirect' parameter.
+     * @throws IOException 
+     */
+    @ActionMapping
+    public void sendRedirect(@RequestParam("redirect") String redirect, ActionRequest req, ActionResponse res) throws IOException {
+
+        if (StringUtils.isBlank(redirect)) {
+            String msg = "Parameter 'redirect' cannot be blank";
+            throw new IllegalArgumentException(msg);
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Redirecting user '" + req.getRemoteUser() + 
+                        "' to the following URL:  " + redirect);
+        }
+
+        res.sendRedirect(redirect);
 
     }
 
