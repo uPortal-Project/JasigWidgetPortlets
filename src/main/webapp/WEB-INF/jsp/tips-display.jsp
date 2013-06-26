@@ -36,7 +36,7 @@
 
         var allTips = [];
         <c:forEach var="tip" items="${allTips}">
-                allTips.push("${tip}");
+                allTips.push("${fn:replace(tip, '"', '\\"')}");
         </c:forEach>
 
         var a = document.getElementById("tip-nextTip");
