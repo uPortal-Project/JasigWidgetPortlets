@@ -49,7 +49,8 @@
                 displayedTipIndex = 0;
 
             displayedTip = allTips[displayedTipIndex];
-            p.innerHTML = "Tip #"+(displayedTipIndex+1)+": "+displayedTip;
+            tipPrefix = '<spring:message code="tips.prefix"/>';
+            p.innerHTML = tipPrefix+(displayedTipIndex+1)+": "+displayedTip;
         }
     }, false);
 </script>
