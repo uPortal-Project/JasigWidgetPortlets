@@ -32,7 +32,7 @@
     </p>
 
     <ol>
-        <li>In your JasigWidgetortlets overlay (preferred) or project source code, create a new JSP file in the /src/main/webapp/WEB-INF/jsp directory (<i>e.g.</i> <code>/src/main/webapp/WEB-INF/jsp/myPage.jsp</code>)</li>
+        <li>In your JasigWidgetPortlets overlay (preferred) or project source code, create a new JSP file in the /src/main/webapp/WEB-INF/jsp directory (<i>e.g.</i> <code>/src/main/webapp/WEB-INF/jsp/myPage.jsp</code>)</li>
         <li>Put any content you like in the JSP file (follow community best practices for for using HTML, JavaScript, and CSS)</li>
         <li>Publish a new portlet based on the <code>/jasig-widget-portlets/SimpleJspPortlet</code> definition</li>
         <li>Be sure to provide the name of your JSP file, not including the file extension, as the <code>SimpleJspPortletController.jspName</code> preference (<i>e.g.</i> 'myPage')</li>
