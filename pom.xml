@@ -475,8 +475,11 @@
                             <exclude>docs/**</exclude>
                             <exclude>**/*.channel</exclude>
                             <exclude>**/*.portlet.xml</exclude>
+                            <exclude>**/*.json</exclude>
                             <exclude>src/test/resources/org/jasig/portlet/widget/service/*.html</exclude>
                             <exclude>src/test/resources/org/jasig/portlet/widget/service/googlecalendarviewer.xml</exclude>
+                            <exclude>.idea/**</exclude>  <!-- Exclude intelliJ Idea working folders -->
+                            <exclude>overlays/**</exclude>  <!-- Exclude intelliJ Idea working folders -->
                         </excludes>
                         <mapping>
                             <tld>XML_STYLE</tld>
