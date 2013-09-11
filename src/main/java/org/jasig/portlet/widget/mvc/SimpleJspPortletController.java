@@ -52,16 +52,20 @@ public final class SimpleJspPortletController {
     @RenderMapping()
     public String doView(RenderRequest req) {
 
-        final PortletPreferences prefs = req.getPreferences();
-        final String jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+        String jspName = req.getParameter("nextJspPage");
+        if (jspName == null) {
 
-        /*
-         * TODO:  In the future, we'll likely want to provide JSPs with access 
-         * to things like...
-         * 
-         *   - Specific beans defined in the context
-         *   - The portlet USER_INFO map
-         */
+            final PortletPreferences prefs = req.getPreferences();
+            jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+
+            /*
+             * TODO:  In the future, we'll likely want to provide JSPs with access
+             * to things like...
+             *
+             *   - Specific beans defined in the context
+             *   - The portlet USER_INFO map
+             */
+        }
 
         return jspName;
 
