@@ -21,8 +21,9 @@
 #portalTip {
     background-image: -moz-linear-gradient(top,white,#eee 65px);
     background-image: -webkit-gradient(linear,left top,left bottom,from(white),to(#eee),color-stop(0.1,white));
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#eee')";
     background-image: linear-gradient(top,white,#eee 65px);
+    background-image: -ms-linear-gradient(top, rgba(238,238,238,1) 1%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eeeeee'); 
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
     border: 1px solid #ccc;
