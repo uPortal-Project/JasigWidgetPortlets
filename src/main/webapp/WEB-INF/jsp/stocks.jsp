@@ -19,17 +19,14 @@
 
 --%>
 
-<%@ page contentType="text/html" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
-<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
+<%@ include file="/WEB-INF/jsp/include.jsp"%>
+
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/stock"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/fluid/1.2/js/fluid-all-1.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
+
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script type="text/javascript"><rs:compressJs>
     google.load("feeds", "1");
