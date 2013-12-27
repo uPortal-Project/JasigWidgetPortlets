@@ -19,18 +19,13 @@
 
 --%>
 
-<%@ page contentType="text/html" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
-<portlet:defineObjects/>
+<%@ include file="/WEB-INF/jsp/include.jsp"%>
 
 <script src="//www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script language="Javascript" type="text/javascript"><rs:compressJs>
 //<![CDATA[
   google.load('search', '1.0');
-  
+
   function <portlet:namespace/>OnLoad() {
 
     // create a tabbed mode search control
