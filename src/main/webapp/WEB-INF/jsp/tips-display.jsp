@@ -19,17 +19,17 @@
 
 --%>
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
-<rs:aggregatedResources path="/resources.xml"/>
+
+<link type="text/css" rel="stylesheet" href="<c:url value="/css/tip.css"/>"/>
 
 <div id="portalTip">
     <div class="portal-tip-inner">
         <p id="tip-p"><spring:message code="tips.prefix"/><c:out value="${displayedTip}"/></p>
         <a id="tip-nextTip" href="#" alt="Next tip"><span><spring:message code="tips.next"/></span></a>
-	</div>
+    </div>
 </div>
 
 <script type="text/javascript">
-
     window.addEventListener('load', function() {
         var displayedTipIndex = parseInt("${displayedTipIndex}");
         var displayedTip = "${displayedTip}";

@@ -592,7 +592,7 @@
                             <groupId>org.jasig.resourceserver</groupId>
                             <artifactId>resource-server-content</artifactId>
                             <includes>
-								<include>rs/fluid/1.4.0/</include>
+                                <include>rs/fluid/1.4.0/</include>
                                 <include>rs/jquery/1.9.1/</include>
                                 <include>rs/jqueryui/1.8.13/</include>
                             </includes>
