@@ -20,16 +20,19 @@
 package org.jasig.portlet.widget.mvc;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
@@ -52,6 +55,7 @@ public final class SimpleJspPortletController {
     @RenderMapping()
     public String doView(RenderRequest req) {
 
+        // Choose a JSP based on a portlet preference
         String jspName = req.getParameter("nextJspPage");
         if (jspName == null) {
 
@@ -63,14 +67,14 @@ public final class SimpleJspPortletController {
              * to things like...
              *
              *   - Specific beans defined in the context
-             *   - The portlet USER_INFO map
+             *   - Arbitrary portlet preferences
              */
         }
 
         return jspName;
 
     }
-    
+
     /**
      * This method allows JSPs used with this portlet to provide links that 
      * track user interactions in uPortal Statistics.  Use an actionURL with a 
@@ -92,6 +96,13 @@ public final class SimpleJspPortletController {
 
         res.sendRedirect(redirect);
 
+    }
+
+    @ModelAttribute("userInfo")
+    public Map<String,String> addUserInfoToModel(PortletRequest req) {
+        @SuppressWarnings("unchecked")
+        Map<String,String> rslt = (Map<String, String>) req.getAttribute(PortletRequest.USER_INFO);
+        return rslt;
     }
 
 }

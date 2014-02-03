@@ -247,5 +247,10 @@
         <description>Allows the portlet to render a preferences edit UI during publishing</description>
         <portlet-mode>config</portlet-mode>
     </custom-portlet-mode>    
-    
+
+    <user-attribute>
+        <description>Username attribute name for uPortal user</description>
+        <name>user.login.id</name>
+    </user-attribute>
+
 </portlet-app>
