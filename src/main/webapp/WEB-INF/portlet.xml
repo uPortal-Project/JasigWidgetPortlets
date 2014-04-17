@@ -20,10 +20,10 @@
 
 -->
 
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0"
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
-                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+    version="2.0">
 
     <portlet>
         <portlet-name>google-search</portlet-name>
@@ -239,6 +239,56 @@
             <preference>
                 <name>SimpleJspPortletController.jspName</name>
                 <value>simple-jsp-instructions</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet>
+        <portlet-name>app-launcher</portlet-name>
+        <display-name>App Launcher Portlet</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/appLauncherPortletContext.xml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+            <portlet-mode>config</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>App Launcher Portlet</title>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>AppLauncherPortletController.iconSizePixels</name>
+                <value>200</value>
+            </preference>
+            <!-- Defined here for convenience in the PortletManager;  all of the
+                 following must match the defaults in AppDefinition.java EXACTLY
+                 or the isBlank() method will not work properly. -->
+            <preference>
+                <name>AppDefinition.appUrl</name>
+                <value>http://www.apereo.org</value>
+            </preference>
+            <preference>
+                <name>AppDefinition.displayStrategy</name>
+                <value>iframe</value>
+            </preference>
+            <preference>
+                <name>AppDefinition.iconUrl</name>
+            </preference>
+            <preference>
+                <name>AppDefinition.linkTitle</name>
+                <value>Launch in a new window</value>
+            </preference>
+            <preference>
+                <name>AppDefinition.title</name>
+                <value>Apereo Foundation</value>
+            </preference>
+            <preference>
+                <name>AppDefinition.subtitle</name>
+                <value>Serving the academic mission</value>
             </preference>
         </portlet-preferences>
     </portlet>
