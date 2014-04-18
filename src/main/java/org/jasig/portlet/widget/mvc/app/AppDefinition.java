@@ -60,7 +60,7 @@ public class AppDefinition implements Serializable {
         APP_URL("appUrl", "http://www.apereo.org") {
             @Override
             public boolean validate(String value) {
-                return VALID_URL_PATTERN.matcher(value).matches();
+                return value != null && VALID_URL_PATTERN.matcher(value).matches();
             }
         },
         DISPLAY_STRATEGY("displayStrategy", DisplayStrategies.IFRAME.getCode()) {
