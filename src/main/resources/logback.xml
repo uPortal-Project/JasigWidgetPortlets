@@ -90,7 +90,7 @@
   <!-- 
    | Turn up logging for portlet specific package
    +-->
-  <logger name="org.jasig.portlet.courses" additivity="false" level="DEBUG">
+  <logger name="org.jasig.portlet.widget" additivity="false" level="DEBUG">
     <appender-ref ref="LOG" />
   </logger>
 </configuration>

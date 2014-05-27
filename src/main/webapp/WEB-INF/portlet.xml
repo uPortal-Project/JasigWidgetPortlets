@@ -240,7 +240,117 @@
                 <name>SimpleJspPortletController.jspName</name>
                 <value>simple-jsp-instructions</value>
             </preference>
+            <!--
+             | Security roles to test the user for as a convenience to allow the JSP to do basic security conditions
+             | such as <c:if test=${isFaculty}></c:if> for role-sensitive menu operations or other needs.  Each role
+             | listed here is checked and an "is"+roleName is added to the model sent to the JSP.  Each role
+             | specified here must ALSO be specified in a <security-role-ref> element in the portlet.xml.
+             +-->
+            <preference>
+                <name>SimpleJspPortletController.securityRolesToTest</name>
+                <value>Students</value>
+                <value>Faculty</value>
+                <value>Staff</value>
+            </preference>
         </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>Faculty</role-name>
+            <role-link>Faculty</role-link>
+        </security-role-ref>
+
+        <security-role-ref>
+            <role-name>Staff</role-name>
+            <role-link>Staff</role-link>
+        </security-role-ref>
+
+        <security-role-ref>
+            <role-name>Students</role-name>
+            <role-link>Students</role-link>
+        </security-role-ref>
+
+    </portlet>
+
+    <portlet>
+        <portlet-name>PluggableDataJspPortlet</portlet-name>
+        <display-name>PluggableDataJspPortlet</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/pluggableDataJspPortletContext.xml,/WEB-INF/context/portlet/pluggableDataJspPortletContextOverrides.xml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>PluggableDataPortlet</title>
+        </portlet-info>
+        <portlet-preferences>
+            <!-- Name of the JSP (without the .jsp extension) for the controller to invoke after obtaining data. -->
+            <preference>
+                <name>PluggableDataJspPortlet.Controller.jspName</name>
+                <value>simple-jsp-instructions</value>
+            </preference>
+            <!--
+             | When pluggableDataJspPortletContext.xml is configured to have the controller invoke the
+             | CachingConfigurableDataServiceImpl decorator service bean (default true), this is the ID of the
+             | spring bean implementing PluggableDataDao for CachingConfigurableDataServiceImpl to invoke to
+             | obtain the data.
+             +-->
+            <preference>
+                <name>PluggableDataPortlet.Service.datasourceBeanName</name>
+                <value></value>
+            </preference>
+            <!--
+             | When using CachingConfigurableDataServiceImpl (default), the name of the cache to cache the data fetched
+             | from the PluggableDataDao bean implementation.  By default uses the cache named pluggableDataCache,
+             | but you can define other cache names in ehcache.xml with whatever retention characteristics are needed
+             | and configure each PluggableDataJspPortlet instance to use a different cache.  By default the cache
+             | key includes the user's login ID (if configured) and the PluggableDataPortlet.Service.datasourceBeanName
+             | so multiple PluggableDataJspPortlet instance could share the same cache if desired.
+             +-->
+            <preference>
+                <name>PluggableDataPortlet.Service.cacheName</name>
+                <value>pluggableDataCache</value>
+            </preference>
+            <!--
+             | When using CachingConfigurableDataServiceImpl (default), determines whether the portlet's cache is
+             | global or per-user (default).  See PluggableDataPortlet.Service.cacheName.
+             +-->
+            <preference>
+                <name>PluggableDataPortlet.Service.datasourcePerUserCache</name>
+                <value>true</value>
+            </preference>
+            <!--
+             | Security roles to test the user for as a convenience to allow the JSP to do basic security conditions
+             | such as <c:if test=${isFaculty}></c:if> for role-sensitive menu operations or other needs.  Each role
+             | listed here is checked and an "is"+roleName is added to the model sent to the JSP.  Each role
+             | specified here must ALSO be specified in a <security-role-ref> element in the portlet.xml.
+             +-->
+            <preference>
+                <name>PluggableDataJspPortlet.Controller.securityRolesToTest</name>
+                <value>Students</value>
+                <value>Faculty</value>
+                <value>Staff</value>
+            </preference>
+        </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>Faculty</role-name>
+            <role-link>Faculty</role-link>
+        </security-role-ref>
+
+        <security-role-ref>
+            <role-name>Staff</role-name>
+            <role-link>Staff</role-link>
+        </security-role-ref>
+
+        <security-role-ref>
+            <role-name>Students</role-name>
+            <role-link>Students</role-link>
+        </security-role-ref>
+
     </portlet>
 
     <portlet>

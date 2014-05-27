@@ -23,11 +23,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
         xsi:schemaLocation="
                 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+
     <context:annotation-config/>
-    <bean class="org.jasig.portlet.widget.mvc.SimpleJspPortletController"/>
+    <bean class="org.jasig.portlet.widget.mvc.PluggableDataJspPortletController"
+        p:service-ref="cachingConfigurableDataServiceImpl"/>
+    <bean id="cachingConfigurableDataServiceImpl"
+          class="org.jasig.portlet.widget.service.CachingConfigurableDataServiceImpl"/>
+
+    <!--
+     | Place user-specified beans in the pluggableDataJspPortletContextOverrides.xml file.  That is the file you will
+     | overlay at a site.  You configure the portlet preferences to refer to the beans in the overrides file by name.
+     | See portlet.xml for more details.
+     +-->
 
 </beans>
