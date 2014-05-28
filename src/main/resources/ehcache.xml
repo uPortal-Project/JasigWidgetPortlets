@@ -39,5 +39,11 @@
         eternal="true"
         overflowToDisk="false"
         memoryStoreEvictionPolicy="LRU"/>
-    
+
+    <cache name="pluggableDataCache"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToLiveSeconds="600"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU"/>
 </ehcache>

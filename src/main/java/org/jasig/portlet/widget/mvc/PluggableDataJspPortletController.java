@@ -20,6 +20,7 @@
 package org.jasig.portlet.widget.mvc;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -27,10 +28,16 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONSerializer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jasig.portlet.widget.dao.PluggableDataDao;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,14 +45,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 @Controller
 @RequestMapping("VIEW")
-public class SimpleJspPortletController {
+public class PluggableDataJspPortletController {
 
-    public static final String JSP_NAME_PREFERENCE = "SimpleJspPortletController.jspName";
-    public static final String PREF_SECURITY_ROLE_NAMES = "SimpleJspPortletController.securityRolesToTest";
-    public static final String INSTRUCTIONS_VIEW = "simple-jsp-instructions";
+    public static final String PREF_JSP_NAME = "PluggableDataJspPortlet.Controller.jspName";
+    public static final String PREF_EXPOSE_DATA_AS_JSON = "PluggableDataJspPortlet.Controller.asJson";
+    public static final String PREF_SECURITY_ROLE_NAMES = "PluggableDataJspPortlet.Controller.securityRolesToTest";
+    public static final String INSTRUCTIONS_VIEW = "pluggableData-jsp-instructions";
+
+    PluggableDataDao service;
 
     // Instance Members.
     private final Log log = LogFactory.getLog(getClass());
@@ -59,19 +70,30 @@ public class SimpleJspPortletController {
 
         addSecurityRoleChecksToModel(req, model);
 
+        List<? extends Object> data = service.getData(req);
+        model.addAttribute("data", data);
+
+        boolean asJson = Boolean.valueOf(req.getPreferences().getValue(PREF_EXPOSE_DATA_AS_JSON, "false"));
+        if (asJson) {
+            // WARNING:  Graph must not be cyclic or JSONSerializer will fail; e.g. a node can't point to
+            // another node in the graph.
+            JSON jsonData = JSONSerializer.toJSON(data);
+            model.addAttribute("jsonData", jsonData.toString(4));
+        }
+
         // Choose a JSP based on a portlet preference
         String jspName = req.getParameter("nextJspPage");
         if (jspName == null) {
 
             final PortletPreferences prefs = req.getPreferences();
-            jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+            jspName = prefs.getValue(PREF_JSP_NAME, INSTRUCTIONS_VIEW);
 
             /*
-             * TODO:  In the future, we'll likely want to provide JSPs with access
-             * to things like...
-             *
+             * TODO:  In the future, we'll likely want to provide JSPs with access to things like...
              *   - Specific beans defined in the context
-             *   - Arbitrary portlet preferences
+             *
+             * Arbitrary portlet preferences are already available via defineObjects tag as portletPreferences
+             * and portletPreferencesValues.
              */
         }
 
@@ -80,13 +102,14 @@ public class SimpleJspPortletController {
     }
 
     /**
-     * This method allows JSPs used with this portlet to provide links that 
-     * track user interactions in uPortal Statistics.  Use an actionURL with a 
-     * 'redirect' parameter.
-     * @throws IOException 
+     * This method allows JSPs used with this portlet to provide links that track user interactions in uPortal
+     * Statistics.  Use an actionURL with a 'redirect' parameter.  Not needed as much now that Google Analytics
+     * integration tends to supplant uPortal statistics tracking.
+     * @throws java.io.IOException
      */
     @ActionMapping
-    public void sendRedirect(@RequestParam("redirect") String redirect, ActionRequest req, ActionResponse res) throws IOException {
+    public void sendRedirect(@RequestParam("redirect") String redirect, ActionRequest req, ActionResponse res)
+            throws IOException {
 
         if (StringUtils.isBlank(redirect)) {
             String msg = "Parameter 'redirect' cannot be blank";
@@ -100,6 +123,19 @@ public class SimpleJspPortletController {
 
         res.sendRedirect(redirect);
 
+    }
+
+    /**
+     * Invoke the service to obtain the data (which would be cached if using the default
+     * CachingConfigurableDataServiceImpl) and return the results as JSON.
+     */
+    @ResourceMapping
+    public String getData(ResourceRequest req, ResourceResponse resp, Model model) {
+
+        addSecurityRoleChecksToModel(req, model);
+        List<? extends Object> data = service.getData(req);
+        model.addAttribute("data", data);
+        return "jsonView";
     }
 
     @ModelAttribute("userInfo")
@@ -121,5 +157,10 @@ public class SimpleJspPortletController {
         for (int i = 0; i < securityRoles.length; i++) {
             model.addAttribute("is"+securityRoles[i], req.isUserInRole(securityRoles[i]));
         }
+    }
+
+    @Required
+    public void setService(PluggableDataDao service) {
+        this.service = service;
     }
 }

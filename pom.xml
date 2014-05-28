@@ -24,10 +24,12 @@
 
     <properties>
         <icu4j.version>51.1</icu4j.version>
+        <hsqldb.version>2.3.2</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <logbackVersion>1.0.12</logbackVersion>
         <sl4jVersion>1.7.5</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
+        <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>3.2.3.RELEASE</spring.version>
         <resource-server.version>1.0.29</resource-server.version>
     </properties>
@@ -155,9 +157,19 @@
                 <version>1.6.4</version>
             </dependency>
             <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jasig</groupId>
                 <artifactId>AjaxPortletSupport</artifactId>
                 <version>1.0.9</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jasig.portlet.utils</groupId>
+                <artifactId>portlet-jdbc-util</artifactId>
+                <version>${portletUtils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jasig.resourceserver</groupId>
@@ -213,6 +225,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -333,8 +350,16 @@
             <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jasig</groupId>
             <artifactId>AjaxPortletSupport</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.portlet.utils</groupId>
+            <artifactId>portlet-jdbc-util</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jasig.resourceserver</groupId>
@@ -364,6 +389,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
