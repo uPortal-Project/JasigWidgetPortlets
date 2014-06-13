@@ -381,6 +381,10 @@
                 <name>AppDefinition.appUrl</name>
                 <value>http://www.apereo.org</value>
             </preference>
+            <!-- Display Strategy to use.  Possible values:
+                 - iframe
+                 - newWindow
+                 See AppDefinition.DisplayStrategy for authoritative list of values. -->
             <preference>
                 <name>AppDefinition.displayStrategy</name>
                 <value>iframe</value>
