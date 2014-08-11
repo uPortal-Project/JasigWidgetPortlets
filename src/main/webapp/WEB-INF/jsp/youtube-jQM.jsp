@@ -22,9 +22,10 @@
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/fluid/1.4.0/js/fluid-all-1.4.0.min.js"/>" type="text/javascript"></script>
+<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+    <rs:aggregatedResources path="/resources.xml"/>
+    <script src="<rs:resourceURL value="/rs/fluid/1.5.0/js/fluid-custom.min.js"/>" type="text/javascript"></script>
+</c:if>
 
 <div id="${n}" class="portlet">
     <div data-role="content" class="portlet-content">
@@ -42,9 +43,18 @@
 
 <script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {};
-    ${n}.jQuery = jQuery.noConflict(true)
-    ${n}.fluid = fluid;
-    fluid_1_4 = null;
+<c:choose>
+    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+        ${n}.jQuery = jQuery.noConflict(true)
+        ${n}.fluid = fluid;
+        fluid = null;
+        fluid_1_4 = null;
+    </c:when>
+    <c:otherwise>
+        ${n}.jQuery = up.jQuery;
+        ${n}.fluid = up.fluid;
+    </c:otherwise>
+</c:choose>
     ${n}.jQuery(document).ready(function(){
         var $ = ${n}.jQuery;
         var fluid = ${n}.fluid;

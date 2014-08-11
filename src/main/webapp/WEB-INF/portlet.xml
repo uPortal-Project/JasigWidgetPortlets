@@ -45,6 +45,12 @@
             <short-title>Search</short-title>
             <keywords>Google Search</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet>
@@ -66,6 +72,12 @@
             <short-title>Map</short-title>
             <keywords>Google Maps</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet>
@@ -109,6 +121,12 @@
             <short-title>Dictionary</short-title>
             <keywords>Dictionary</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet>
@@ -130,6 +148,12 @@
             <short-title>Calendar</short-title>
             <keywords>Calendar</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <portlet>
@@ -196,6 +220,12 @@
             <short-title>YouTube</short-title>
             <keywords>YouTube</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>true</value>  <!-- Set to false after fixing WIDGPT-51 -->
+            </preference>
+        </portlet-preferences>
     </portlet>
 
     <!--portlet>
@@ -218,6 +248,12 @@
             <short-title>Stocks</short-title>
             <keywords>Yahoo Yahoo! Stocks Finance</keywords>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
     </portlet-->
 
     <portlet>
@@ -403,6 +439,10 @@
             <preference>
                 <name>AppDefinition.subtitle</name>
                 <value>Serving the academic mission</value>
+            </preference>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
             </preference>
         </portlet-preferences>
     </portlet>

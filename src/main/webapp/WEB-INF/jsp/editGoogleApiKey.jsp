@@ -19,10 +19,7 @@
 
 --%>
 
-<%@ page contentType="text/html" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
-<portlet:defineObjects/>
+<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
 <portlet:actionURL var="formUrl"><portlet:param name="action" value="updateKey"/></portlet:actionURL>

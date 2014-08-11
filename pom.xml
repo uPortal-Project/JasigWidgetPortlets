@@ -27,6 +27,7 @@
         <hsqldb.version>2.3.2</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <logbackVersion>1.0.12</logbackVersion>
+        <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.5</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <portletUtils.version>1.1.0</portletUtils.version>
@@ -147,9 +148,9 @@
                 <version>4.1</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.pluto</groupId>
+                <groupId>org.apache.portals.pluto</groupId>
                 <artifactId>pluto-taglib</artifactId>
-                <version>1.1.5</version>
+                <version>${pluto.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
@@ -438,7 +439,7 @@
 
         <!-- Needed for taglib reference -->
         <dependency>
-            <groupId>org.apache.pluto</groupId>
+            <groupId>org.apache.portals.pluto</groupId>
             <artifactId>pluto-taglib</artifactId>
             <scope>provided</scope>
         </dependency>
@@ -622,8 +623,7 @@
                             <artifactId>resource-server-content</artifactId>
                             <includes>
                                 <include>rs/fluid/1.4.0/</include>
-                                <include>rs/jquery/1.6.1/</include>
-                                <include>rs/jqueryui/1.8.13/</include>
+                                <include>rs/fluid/1.5.0/</include>
                             </includes>
                         </overlay>
                     </overlays>
