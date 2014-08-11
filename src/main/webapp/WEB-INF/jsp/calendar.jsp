@@ -19,23 +19,26 @@
 
 --%>
 
-<%@ page contentType="text/html" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
-<portlet:defineObjects/>
+<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
+<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+    <rs:aggregatedResources path="/resources.xml"/>
+</c:if>
 
 <div id="${n}calendar-channel"></div>
 <div style="clear:both">&nbsp;</div>
 
 <script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {};
-    ${n}.jQuery = jQuery.noConflict(true)
+<c:choose>
+    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+        ${n}.jQuery = jQuery.noConflict(true)
+    </c:when>
+    <c:otherwise>
+        ${n}.jQuery = up.jQuery;
+    </c:otherwise>
+</c:choose>
     ${n}.jQuery("#${n}calendar-channel").ready(function(){
         ${n}.jQuery('#${n}calendar-channel').datepicker({
             inline:true,

@@ -23,11 +23,20 @@
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
+<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+    <rs:aggregatedResources path="/resources.xml"/>
+</c:if>
 
 <script type="text/javascript">
-    var ${n} = ${n} || {}; // create a unique variable for our JS namespace
-    ${n}.jQuery = jQuery.noConflict(true); // assign jQuery to this namespace
+    var ${n} = {}; // create a unique variable for our JS namespace
+<c:choose>
+    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+        ${n}.jQuery = jQuery.noConflict(true)
+    </c:when>
+    <c:otherwise>
+        ${n}.jQuery = up.jQuery;
+    </c:otherwise>
+</c:choose>
 
     ${n}.jQuery(function () {
         var $ = ${n}.jQuery; //reassign $ for normal use of jQuery

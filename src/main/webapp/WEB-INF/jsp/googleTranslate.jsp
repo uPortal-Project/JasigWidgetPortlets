@@ -19,11 +19,7 @@
 
 --%>
 
-<%@ page contentType="text/html" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
+<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 <c:set var="namespace"><portlet:namespace/></c:set>
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>

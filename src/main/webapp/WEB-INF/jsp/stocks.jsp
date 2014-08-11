@@ -24,14 +24,22 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/stock"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.6.1/jquery-1.6.1.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
+<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+    <rs:aggregatedResources path="/resources.xml"/>
+</c:if>
+<script src="//www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 
-<script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
 <script type="text/javascript"><rs:compressJs>
     google.load("feeds", "1");
     var ${n} = { 
+<c:choose>
+    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
         jQuery: jQuery.noConflict(true)
+    </c:when>
+    <c:otherwise>
+        jQuery: up.jQuery;
+    </c:otherwise>
+</c:choose>
     };
     ${n}.jQuery(function(){
         var $ = ${n}.jQuery;
