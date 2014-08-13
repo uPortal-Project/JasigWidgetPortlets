@@ -20,6 +20,7 @@ This project includes:
   ant-launcher under Apache License, Version 2.0
   AOP alliance under Public Domain
   Apache Log4j under The Apache Software License, Version 2.0
+  Apache Pluto Portlet Tag Library under The Apache Software License, Version 2.0
   Codec under Apache License, Version 2.0
   Collections under The Apache Software License, Version 2.0
   Commons IO under The Apache Software License, Version 2.0
@@ -53,11 +54,9 @@ This project includes:
   Log4j Implemented Over SLF4J under Apache Software Licenses
   Logback Classic Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
   Logback Core Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
-  Logging under The Apache Software License, Version 2.0
   Mockito under The MIT License
   Objenesis under MIT License
   org.apache.tools.ant under Apache License, Version 2.0
-  Pluto Portlet Tag Library under The Apache Software License, Version 2.0
   Portlet JDBC Utilities under Apache License Version 2.0
   Resource Server API under Apache License Version 2.0
   Resource Server Content under Apache License Version 2.0
