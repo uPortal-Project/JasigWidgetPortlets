@@ -151,7 +151,7 @@
         <portlet-preferences>
             <preference>
                 <name>includeJsLibs</name>
-                <value>false</value>
+                <value>true</value>
             </preference>
         </portlet-preferences>
     </portlet>
