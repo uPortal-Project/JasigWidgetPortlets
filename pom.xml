@@ -32,7 +32,7 @@
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>3.2.3.RELEASE</spring.version>
-        <resource-server.version>1.0.29</resource-server.version>
+        <resource-server.version>1.0.42</resource-server.version>
     </properties>
 
     <licenses>
@@ -622,6 +622,10 @@
                             <groupId>org.jasig.resourceserver</groupId>
                             <artifactId>resource-server-content</artifactId>
                             <includes>
+                                <include>rs/jquery/1.8.3/</include>
+                                <include>rs/jquery/1.10.2/</include>
+                                <include>rs/jquery-migrate/</include>
+                                <include>rs/jqueryui/1.10.3/</include>
                                 <include>rs/fluid/1.4.0/</include>
                                 <include>rs/fluid/1.5.0/</include>
                             </includes>

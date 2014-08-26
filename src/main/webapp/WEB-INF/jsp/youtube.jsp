@@ -24,11 +24,9 @@
 
 <c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
     <%-- Use jQuery 1.8.3 until https://issues.jasig.org/browse/WIDGPT-51 is fixed --%>
-    <script src="//code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="//code.jquery.com/ui/1.8.13/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="<rs:resourceURL value="/rs/jquery/1.8.3/jquery-1.8.3.min.js"/>" type="text/javascript"></script>
+    <script src="<rs:resourceURL value="/rs/jqueryui/1.10.3/jquery-ui-1.10.3.min.js"/>" type="text/javascript"></script>
     <script src="<rs:resourceURL value="/rs/fluid/1.4.0/js/fluid-all-1.4.0.min.js"/>" type="text/javascript"></script>
-    <%--<rs:aggregatedResources path="/resources.xml"/>--%>
-    <%--<script src="<rs:resourceURL value="/rs/fluid/1.5.0/js/fluid-custom.min.js"/>" type="text/javascript"></script>--%>
 </c:if>
 
 <div id="${n}" class="portlet">
