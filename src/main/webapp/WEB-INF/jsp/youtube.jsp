@@ -72,7 +72,7 @@
         ${n}.jQuery = jQuery.noConflict(true)
         ${n}.fluid = fluid;
         fluid = null;
-        fluid_1_4 = null;
+        fluid_1_4 = null; // Still using fluid 1.4 so don't set fluid_1_5
     </c:when>
     <c:otherwise>
         ${n}.jQuery = up.jQuery;
