@@ -40,8 +40,8 @@ import org.springframework.expression.TypedValue;
  */
 public class DefaultPropertyAccessor implements PropertyAccessor {
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    private String leading = "${";
-    private String trailing = "}";
+    private String leading;
+    private String trailing;
 
     public DefaultPropertyAccessor(final String leading, final String trailing) {
         this.leading = leading;

@@ -23,7 +23,8 @@ import javax.portlet.PortletRequest;
 
 
 /**
- * Process expressions.
+ * Process expressions.  Implementations should provide ability to
+ * substitute tokens or context into a string value.
  *
  * @author Josh Helmer, jhelmer@unicon.net
  */

@@ -32,6 +32,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.BeanResolver;
@@ -72,7 +73,7 @@ public class SpringELProcessor implements IExpressionProcessor, BeanFactoryAware
      *
      * @param properties the properties loader
      */
-    @Autowired
+    @Required
     public void setProperties(final Properties properties) {
         this.properties = properties;
     }
