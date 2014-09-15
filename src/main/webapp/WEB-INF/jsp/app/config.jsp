@@ -77,6 +77,16 @@
                 <div class="field-error bg-danger"><spring:message code="app-launcher.appUrl.invalid"/></div>
             </div>
         </div>
+        <div class="instructions form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <spring:message code="app-launcher.appUrl.instructions"/>
+                <ul>
+                    <li><spring:message code="app-launcher.appUrl.instructions.ex1"/></li>
+                    <li><spring:message code="app-launcher.appUrl.instructions.ex2"/></li>
+                    <li><spring:message code="app-launcher.appUrl.instructions.ex3"/></li>
+                </ul>
+            </div>
+        </div>
         <div class="form-group displayStrategy">
             <label for="displayStrategy" class="col-sm-2 control-label"><spring:message code="app-launcher.displayStrategy"/></label>
             <div class="col-sm-10">
