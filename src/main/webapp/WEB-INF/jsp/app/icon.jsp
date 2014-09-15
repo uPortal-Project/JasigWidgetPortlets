@@ -25,7 +25,7 @@
 
 <c:set var="linkHref">
     <c:choose>
-        <c:when test="${appDefinition.displayStrategy == 'newWindow'}">${appDefinition.appUrl}</c:when>
+        <c:when test="${appDefinition.displayStrategy == 'newWindow'}">${appUrl}</c:when>
         <c:otherwise><portlet:renderURL windowState="DETACHED"/></c:otherwise>
     </c:choose>
 </c:set>
