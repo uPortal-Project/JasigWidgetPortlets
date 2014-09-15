@@ -29,8 +29,7 @@
     height: 1200px;
 }
 </style>
-
-<iframe id="${n}frame" src="<c:out value="${appDefinition.appUrl}"/>">
+<iframe id="${n}frame" src="<c:out value="${appUrl}"/>">
     This browser does not support inline frames.<br/> 
     <a href="<c:out value="${appDefinition.appUrl}"/>" target="_blank">Click here to view content</a> in a separate window.
 </iframe>

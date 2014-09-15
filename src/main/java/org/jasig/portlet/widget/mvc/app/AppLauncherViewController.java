@@ -23,6 +23,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
 
+import org.jasig.portlet.widget.service.IExpressionProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,15 @@ public class AppLauncherViewController {
 
     private static final String PREFERENCE_ICON_SIZE_PIXELS = "AppLauncherPortletController.iconSizePixels";
     private static final String DEFAULT_ICON_SIZE_PIXELS = "200";
+
+    private IExpressionProcessor expressionProcessor;
+
+
+    @Autowired
+    public void setExpressionProcessor(final IExpressionProcessor expressionProcessor) {
+        this.expressionProcessor = expressionProcessor;
+    }
+
 
     @RenderMapping()
     public String view(PortletRequest req) throws Exception {
@@ -61,4 +72,13 @@ public class AppLauncherViewController {
         return AppDefinition.fromPortletPreferences(req);
     }
 
+    @ModelAttribute("appUrl")
+    public String getAppUrl(PortletRequest req) throws WindowStateException {
+        AppDefinition def = getAppDefinition(req);
+
+        String configuredUrl = def.getAppUrl();
+        String processedUrl = expressionProcessor.process(configuredUrl, req);
+
+        return processedUrl;
+    }
 }
