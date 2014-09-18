@@ -61,20 +61,36 @@
     background-size: contain;
 }
 #${n}app .app-title {
-    color: #000;
-    font: 1.5em bold;
+    color: #fff;
+    font: 1.4em bold;
+    margin-bottom: 3px;
 }
 #${n}app .app-subtitle {
-    color: #666;
+    color: #eee;
+}
+.app-launcher-item {
+    height: 300px;
+    max-height: 300px;
+    width: 100%;
+    position: relative;
+}
+.app-icon-text {
+    background-color:rgba(50, 50, 50, 0.45);
+    padding: 15px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 </style>
 
-<div id="${n}app">
+<div id="${n}app" class="app-launcher-item">
     <a class="app-link" href="<c:out value="${linkHref}"/>"<c:out value="${targetAttribute}"/> title="<c:out value="${appDefinition.linkTitle}"/>">
         <span class="app-component app-icon-wrapper">
             <span class="app-icon"></span>
         </span>
-        <span class="app-component app-title"><c:out value="${appDefinition.title}"/></span>
-        <span class="app-component app-subtitle"><c:out value="${appDefinition.subtitle}"/></span>
+        <div class="app-icon-text">
+            <span class="app-component app-title"><c:out value="${appDefinition.title}"/></span>
+            <span class="app-component app-subtitle"><c:out value="${appDefinition.subtitle}"/></span>
+        </div>
     </a>
 </div>
