@@ -81,6 +81,19 @@
     position: absolute;
     bottom: 0;
 }
+@media (max-width: 969px) {
+    .app-launcher-item {
+        height: 200px;
+        max-height: 200px;
+    }
+    #${n}app .app-icon {
+    display: inline-block;
+        width: <c:out value="${(iconSizePixels/2)}"/>px;
+        height: <c:out value="${(iconSizePixels/2)}"/>px;
+        background: url('${iconUrl}') center no-repeat;
+        background-size: contain;
+    }
+}
 </style>
 
 <div id="${n}app" class="app-launcher-item">
