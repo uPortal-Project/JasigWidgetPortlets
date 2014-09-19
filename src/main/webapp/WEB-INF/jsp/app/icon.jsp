@@ -81,7 +81,7 @@
     position: absolute;
     bottom: 0;
 }
-@media (max-width: 969px) {
+@media (max-width: 1170px) {
     .app-launcher-item {
         height: 200px;
         max-height: 200px;
