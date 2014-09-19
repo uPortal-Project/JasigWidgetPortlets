@@ -43,6 +43,12 @@
 </c:set>
 
 <style>
+#${n}app .app-launcher-item {
+    height: 300px;
+    max-height: 300px;
+    width: 100%;
+    position: relative;
+}
 #${n}app .app-component {
     display: block;
     width: 100%;
@@ -60,34 +66,34 @@
     background: url('${iconUrl}') center no-repeat;
     background-size: contain;
 }
-#${n}app .app-title {
-    color: #fff;
-    font: 1.4em bold;
-    margin-bottom: 3px;
-}
-#${n}app .app-subtitle {
-    color: #eee;
-}
-.app-launcher-item {
-    height: 300px;
-    max-height: 300px;
-    width: 100%;
-    position: relative;
-}
-.app-icon-text {
+#${n}app .app-icon-text {
     background-color:rgba(50, 50, 50, 0.45);
-    padding: 15px;
+    padding: 12px;
     width: 100%;
     position: absolute;
     bottom: 0;
 }
+#${n}app .app-title {
+    color: #fff;
+    font: 1.4em bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+}
+#${n}app .app-subtitle {
+    height: 3em;
+    max-height: 3em;
+    color: #eee;
+    overflow: hidden;
+}
 @media (max-width: 1170px) {
-    .app-launcher-item {
+    #${n}app .app-launcher-item {
         height: 200px;
         max-height: 200px;
     }
     #${n}app .app-icon {
-    display: inline-block;
+        display: inline-block;
         width: <c:out value="${(iconSizePixels/2)}"/>px;
         height: <c:out value="${(iconSizePixels/2)}"/>px;
         background: url('${iconUrl}') center no-repeat;
@@ -96,14 +102,16 @@
 }
 </style>
 
-<div id="${n}app" class="app-launcher-item">
-    <a class="app-link" href="<c:out value="${linkHref}"/>"<c:out value="${targetAttribute}"/> title="<c:out value="${appDefinition.linkTitle}"/>">
-        <span class="app-component app-icon-wrapper">
-            <span class="app-icon"></span>
-        </span>
-        <div class="app-icon-text">
-            <span class="app-component app-title"><c:out value="${appDefinition.title}"/></span>
-            <span class="app-component app-subtitle"><c:out value="${appDefinition.subtitle}"/></span>
-        </div>
-    </a>
+<div id="${n}app">
+    <div class="app-launcher-item">
+        <a class="app-link" href="<c:out value="${linkHref}"/>"<c:out value="${targetAttribute}"/> title="<c:out value="${appDefinition.linkTitle}"/>">
+            <span class="app-component app-icon-wrapper">
+                <span class="app-icon"></span>
+            </span>
+            <div class="app-icon-text">
+                <span class="app-component app-title"><c:out value="${appDefinition.title}"/></span>
+                <span class="app-component app-subtitle"><c:out value="${appDefinition.subtitle}"/></span>
+            </div>
+        </a>
+    </div>
 </div>
