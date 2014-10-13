@@ -28,10 +28,11 @@
 </c:if>
 
 <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
-<script type="text/javascript" src="${context}/js/googleDrive.js"></script>
+<script type="text/javascript" src="${context}/js/googleDrive.min.js"></script>
 <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"
         data-app-key="svx3wflscr0966q"></script>
-<script type="text/javascript" src="${context}/js/dropbox.js"></script>
+<script type="text/javascript" src="${context}/js/dropbox.min.js"></script>
+<script type="text/javascript" src="${context}/js/skydrive.js"></script>
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
@@ -47,6 +48,9 @@
             </li>
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
                 <button id="dropbox" onclick="dropboxLoad()"/>
+            </li>
+            <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <button id="skydrive" onclick="signInUser()()"/>
             </li>
         </ul>
     </div>
