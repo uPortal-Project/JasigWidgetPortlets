@@ -21,9 +21,9 @@
 -->
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-    version="2.0">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             version="2.0">
 
     <portlet>
         <portlet-name>google-search</portlet-name>
@@ -79,7 +79,32 @@
             </preference>
         </portlet-preferences>
     </portlet>
-
+    <portlet>
+        <portlet-name>google-drive</portlet-name>
+        <display-name xml:lang="en">Google Drive</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/googleDrivePortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Google Drive</title>
+            <short-title>Drive</short-title>
+            <keywords>Google Drive</keywords>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
     <portlet>
         <portlet-name>google-translate</portlet-name>
         <display-name xml:lang="en">Translate</display-name>
@@ -177,7 +202,7 @@
             <keywords>Gadget</keywords>
         </portlet-info>
     </portlet>
-    
+
     <portlet>
         <portlet-name>tips</portlet-name>
         <display-name>Tips Portlet</display-name>
@@ -223,7 +248,8 @@
         <portlet-preferences>
             <preference>
                 <name>includeJsLibs</name>
-                <value>true</value>  <!-- Set to false after fixing WIDGPT-51 -->
+                <value>true</value>
+                <!-- Set to false after fixing WIDGPT-51 -->
             </preference>
         </portlet-preferences>
     </portlet>
@@ -313,7 +339,9 @@
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/pluggableDataJspPortletContext.xml,/WEB-INF/context/portlet/pluggableDataJspPortletContextOverrides.xml</value>
+            <value>
+                /WEB-INF/context/portlet/pluggableDataJspPortletContext.xml,/WEB-INF/context/portlet/pluggableDataJspPortletContextOverrides.xml
+            </value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -450,7 +478,7 @@
     <custom-portlet-mode>
         <description>Allows the portlet to render a preferences edit UI during publishing</description>
         <portlet-mode>config</portlet-mode>
-    </custom-portlet-mode>    
+    </custom-portlet-mode>
 
     <user-attribute>
         <description>Username attribute name for uPortal user</description>
