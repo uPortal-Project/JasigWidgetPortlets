@@ -36,24 +36,28 @@
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
+
+<link rel="stylesheet" href='<c:url value="/css/googleDrive.css"/>' type="text/css"/>
+
 <c:set var="n"><portlet:namespace/></c:set>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
 
-<div id="${n}container" class="bootstrap-styles">
-    <div class="container">
+<div id="${n}container" class="cloudDrive bootstrap-styles">
+    <div class="container-fluid cloudDrive-options">
         <ul class="row">
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
-                <button id="goggleDrive" onclick="onApiLoad()"/>
+                <button id="googleDrive" onclick="onApiLoad()"/>
             </li>
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
                 <button id="dropbox" onclick="dropboxLoad()"/>
             </li>
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
-                <button id="skydrive" onclick="signInUser()()"/>
+                <button id="onedrive" onclick="signInUser()()"/>
             </li>
         </ul>
     </div>
-
 </div>
+
+
 
