@@ -32,15 +32,43 @@ import java.util.Map;
 @Controller
 @RequestMapping("VIEW")
 public class GoogleDriveController {
-
+    public static String GOOGLE_API_KEY = "googleDriveAPIKey";
+    public static String DROPBOX_API_KEY = "dropboxAPIKey";
+    public static String ONEDRIVE_API_KEY = "oneboxAPIKey";
+    private static String GOOGLE_DRIVE_ENABLED = "googleDriveEnabled";
+    private static String DROPBOX_ENABLED = "dropboxEnabled";
+    private static String ONEDRIVE_ENABLED = "oneDriveEnabled";
+    private static String DEFAULT_VALUE = "default";
 
     @RenderMapping()
     public ModelAndView handleRenderRequest(RenderRequest request) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
+        PortletPreferences prefs = request.getPreferences();
 
-        PortletPreferences preferences = request.getPreferences();
-        String key = preferences.getValue(EditGoogleApiKeyController.GOOGLE_API_KEY_PREF_NAME, null);
-        map.put("key", key);
+        final String googleDriveAPIKey = prefs.getValue(GOOGLE_API_KEY,DEFAULT_VALUE);
+
+        if(googleDriveAPIKey.equals(DEFAULT_VALUE)) {
+            map.put(GOOGLE_DRIVE_ENABLED,false);
+        } else {
+            map.put(GOOGLE_API_KEY,googleDriveAPIKey);
+            map.put(GOOGLE_DRIVE_ENABLED,true);
+        }
+
+        final String dropboxAPIKey = prefs.getValue(DROPBOX_API_KEY,DEFAULT_VALUE);
+        if(DROPBOX_API_KEY.equals(DEFAULT_VALUE)) {
+            map.put(DROPBOX_ENABLED,false);
+        } else {
+            map.put(DROPBOX_API_KEY,dropboxAPIKey);
+            map.put(DROPBOX_ENABLED,true);
+        }
+
+        final String oneDriveAPIKey = prefs.getValue(ONEDRIVE_API_KEY,DEFAULT_VALUE);
+        if(ONEDRIVE_API_KEY.equals(DEFAULT_VALUE)) {
+            map.put(ONEDRIVE_ENABLED,false);
+        } else {
+            map.put(ONEDRIVE_API_KEY,oneDriveAPIKey);
+            map.put(ONEDRIVE_ENABLED,true);
+        }
 
 
         return new ModelAndView("googleDrive", map);
