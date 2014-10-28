@@ -105,7 +105,7 @@
             </preference>
             <preference>
                 <name>googleDriveAPIKey</name>
-                <value>2551330326-ij1p55d6nl87drbl5627o1grvp6qc34e.apps.googleusercontent.com</value>
+                <value>'2551330326-ij1p55d6nl87drbl5627o1grvp6qc34e.apps.googleusercontent.com'</value>
             </preference>
             <preference>
                 <name>dropboxAPIKey</name>

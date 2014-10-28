@@ -48,7 +48,7 @@
     <div class="container-fluid cloudDrive-options">
         <c:choose>
             <c:when test="${googleDriveEnabled}">
-                <button id="googleDrive" class="btn btn-lg btn-default" onclick="onApiLoad(${googleApiKey})"
+                <button id="googleDrive" class="btn btn-lg btn-default" onclick="onApiLoad(${googleDriveAPIKey})"
                         title="<spring:message code="cloudDrive-Google.tooltip"/>"/>
             </c:when>
         </c:choose>
