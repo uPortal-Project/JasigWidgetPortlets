@@ -3,16 +3,16 @@
  */
 
 
-function onApiLoad() {
-    gapi.load('auth', {'callback': onAuthApiLoad});
+function onApiLoad(clientId) {
+    gapi.load('auth', {'callback': function() {
+        window.gapi.auth.authorize({
+            'client_id': clientId,
+            'scope': ['https://www.googleapis.com/auth/drive']
+        }, handleAuthResult);
+    }});
     gapi.load('picker');
 }
-function onAuthApiLoad() {
-    window.gapi.auth.authorize({
-        'client_id': '2551330326-ij1p55d6nl87drbl5627o1grvp6qc34e.apps.googleusercontent.com',
-        'scope': ['https://www.googleapis.com/auth/drive']
-    }, handleAuthResult);
-}
+
 var oauthToken;
 function handleAuthResult(authResult) {
     if (authResult && !authResult.error) {
@@ -22,8 +22,8 @@ function handleAuthResult(authResult) {
 }
 function createPicker() {
     var picker = new google.picker.PickerBuilder()
-        .addView(new google.picker.DocsUploadView())
         .addView(new google.picker.DocsView())
+        .addView(new google.picker.DocsUploadView())
         .setOAuthToken(oauthToken)
         .setDeveloperKey('')
         .setCallback(pickerCallback)
