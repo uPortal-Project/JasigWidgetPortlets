@@ -55,7 +55,7 @@ public class GoogleDriveController {
         }
 
         final String dropboxAPIKey = prefs.getValue(DROPBOX_API_KEY,DEFAULT_VALUE);
-        if(DROPBOX_API_KEY.equals(DEFAULT_VALUE)) {
+        if(dropboxAPIKey.equals(DEFAULT_VALUE)) {
             map.put(DROPBOX_ENABLED,false);
         } else {
             map.put(DROPBOX_API_KEY,dropboxAPIKey);
@@ -63,7 +63,7 @@ public class GoogleDriveController {
         }
 
         final String oneDriveAPIKey = prefs.getValue(ONEDRIVE_API_KEY,DEFAULT_VALUE);
-        if(ONEDRIVE_API_KEY.equals(DEFAULT_VALUE)) {
+        if(oneDriveAPIKey.equals(DEFAULT_VALUE)) {
             map.put(ONEDRIVE_ENABLED,false);
         } else {
             map.put(ONEDRIVE_API_KEY,oneDriveAPIKey);
