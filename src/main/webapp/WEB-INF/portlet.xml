@@ -103,6 +103,14 @@
                 <name>includeJsLibs</name>
                 <value>false</value>
             </preference>
+            <preference>
+                <name>googleDriveAPIKey</name>
+                <value>2551330326-ij1p55d6nl87drbl5627o1grvp6qc34e.apps.googleusercontent.com</value>
+            </preference>
+            <preference>
+                <name>dropboxAPIKey</name>
+                <value>svx3wflscr0966q</value>
+            </preference>
         </portlet-preferences>
     </portlet>
     <portlet>
