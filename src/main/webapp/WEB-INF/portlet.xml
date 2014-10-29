@@ -105,11 +105,11 @@
             </preference>
             <preference>
                 <name>googleDriveAPIKey</name>
-                <value>'2551330326-ij1p55d6nl87drbl5627o1grvp6qc34e.apps.googleusercontent.com'</value>
+                <value>'someGoogleAPIKEY'</value>
             </preference>
             <preference>
                 <name>dropboxAPIKey</name>
-                <value>svx3wflscr0966q</value>
+                <value>someDropBoxAPIKEY</value>
             </preference>
         </portlet-preferences>
     </portlet>
