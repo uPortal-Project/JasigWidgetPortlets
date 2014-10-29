@@ -1,7 +1,3 @@
-/**
- * Created by tefreestone on 10/9/14.
- */
-
 
 function onApiLoad(clientId) {
     gapi.load('auth', {'callback': function() {
