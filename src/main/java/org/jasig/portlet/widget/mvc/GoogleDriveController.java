@@ -34,10 +34,8 @@ import java.util.Map;
 public class GoogleDriveController {
     public static String GOOGLE_API_KEY = "googleDriveAPIKey";
     public static String DROPBOX_API_KEY = "dropboxAPIKey";
-    public static String ONEDRIVE_API_KEY = "oneboxAPIKey";
     private static String GOOGLE_DRIVE_ENABLED = "googleDriveEnabled";
     private static String DROPBOX_ENABLED = "dropboxEnabled";
-    private static String ONEDRIVE_ENABLED = "oneDriveEnabled";
     private static String DEFAULT_VALUE = "default";
 
     @RenderMapping()
@@ -60,14 +58,6 @@ public class GoogleDriveController {
         } else {
             map.put(DROPBOX_API_KEY,dropboxAPIKey);
             map.put(DROPBOX_ENABLED,true);
-        }
-
-        final String oneDriveAPIKey = prefs.getValue(ONEDRIVE_API_KEY,DEFAULT_VALUE);
-        if(oneDriveAPIKey.equals(DEFAULT_VALUE)) {
-            map.put(ONEDRIVE_ENABLED,false);
-        } else {
-            map.put(ONEDRIVE_API_KEY,oneDriveAPIKey);
-            map.put(ONEDRIVE_ENABLED,true);
         }
 
 

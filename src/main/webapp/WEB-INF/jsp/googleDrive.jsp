@@ -27,12 +27,13 @@
     <rs:aggregatedResources path="/resources.xml"/>
 </c:if>
 
-<script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+<script type="text/javascript" src="///apis.google.com/js/api.js?onload=onApiLoad"></script>
 <script type="text/javascript" src="${context}/js/googleDrive.min.js"></script>
-<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"
+<script type="text/javascript" src="///www.dropbox.com/static/api/1/dropins.js" id="dropboxjs"
         data-app-key="${dropboxAPIKey}"></script>
+<script type="text/javascript" src="https://app.box.com/js/static/select.js"></script>
+
 <script type="text/javascript" src="${context}/js/dropbox.min.js"></script>
-<script type="text/javascript" src="${context}/js/onedrive.js"></script>
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
@@ -56,12 +57,6 @@
             <c:when test="${dropboxEnabled}">
                 <button id="dropbox" class="btn btn-lg btn-default" onclick="dropboxLoad()"
                         title="<spring:message code="cloudDrive-Dropbox.tooltip"/>"/>
-            </c:when>
-        </c:choose>
-        <c:choose>
-            <c:when test="${oneDriveEnabled}">
-                <button id="onedrive" class="btn btn-lg btn-default" onclick="signInUser()"
-                        title="<spring:message code="cloudDrive-OneDrive.tooltip"/>"/>
             </c:when>
         </c:choose>
     </div>
