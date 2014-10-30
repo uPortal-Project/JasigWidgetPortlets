@@ -81,7 +81,7 @@
     </portlet>
     <portlet>
         <portlet-name>cloud-drive</portlet-name>
-        <display-name xml:lang="en">Google Drive</display-name>
+        <display-name xml:lang="en">Cloud Storage</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
