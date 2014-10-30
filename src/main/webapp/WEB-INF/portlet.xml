@@ -80,12 +80,12 @@
         </portlet-preferences>
     </portlet>
     <portlet>
-        <portlet-name>google-drive</portlet-name>
+        <portlet-name>cloud-drive</portlet-name>
         <display-name xml:lang="en">Google Drive</display-name>
         <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/googleDrivePortletContext.xml</value>
+            <value>/WEB-INF/context/portlet/cloudDrivePortletContext.xml</value>
         </init-param>
         <expiration-cache>0</expiration-cache>
         <supports>
@@ -94,9 +94,9 @@
         </supports>
         <supported-locale>en</supported-locale>
         <portlet-info>
-            <title>Google Drive</title>
+            <title>Cloud Storage</title>
             <short-title>Drive</short-title>
-            <keywords>Google Drive</keywords>
+            <keywords>Google Drive Dropbox</keywords>
         </portlet-info>
         <portlet-preferences>
             <preference>

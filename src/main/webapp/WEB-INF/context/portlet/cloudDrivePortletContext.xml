@@ -28,7 +28,7 @@
     
     <context:annotation-config/>
     
-    <bean class="org.jasig.portlet.widget.mvc.GoogleDriveController"/>
+    <bean class="org.jasig.portlet.widget.mvc.CloudDriveController"/>
     
     <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors"><bean class="org.jasig.portlet.widget.mvc.MinimizedStateHandlerInterceptor"/></property>

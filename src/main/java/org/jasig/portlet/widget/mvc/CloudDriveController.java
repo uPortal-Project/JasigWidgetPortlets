@@ -19,6 +19,8 @@
 
 package org.jasig.portlet.widget.mvc;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.ModelAndView;
@@ -31,13 +33,14 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("VIEW")
-public class GoogleDriveController {
+public class CloudDriveController {
     public static String GOOGLE_API_KEY = "googleDriveAPIKey";
     public static String DROPBOX_API_KEY = "dropboxAPIKey";
     private static String GOOGLE_DRIVE_ENABLED = "googleDriveEnabled";
     private static String DROPBOX_ENABLED = "dropboxEnabled";
     private static String DEFAULT_VALUE = "default";
 
+    private final Log log = LogFactory.getLog(getClass());
     @RenderMapping()
     public ModelAndView handleRenderRequest(RenderRequest request) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -47,6 +50,9 @@ public class GoogleDriveController {
 
         if(googleDriveAPIKey.equals(DEFAULT_VALUE)) {
             map.put(GOOGLE_DRIVE_ENABLED,false);
+            if(log.isDebugEnabled()) {
+                log.debug("GoogleDrive is not enabled.");
+            }
         } else {
             map.put(GOOGLE_API_KEY,googleDriveAPIKey);
             map.put(GOOGLE_DRIVE_ENABLED,true);
@@ -55,13 +61,16 @@ public class GoogleDriveController {
         final String dropboxAPIKey = prefs.getValue(DROPBOX_API_KEY,DEFAULT_VALUE);
         if(dropboxAPIKey.equals(DEFAULT_VALUE)) {
             map.put(DROPBOX_ENABLED,false);
+            if(log.isDebugEnabled()) {
+                log.debug("Dropbox is not enabled.");
+            }
         } else {
             map.put(DROPBOX_API_KEY,dropboxAPIKey);
             map.put(DROPBOX_ENABLED,true);
         }
 
 
-        return new ModelAndView("googleDrive", map);
+        return new ModelAndView("cloudDrive", map);
     }
 
 }
