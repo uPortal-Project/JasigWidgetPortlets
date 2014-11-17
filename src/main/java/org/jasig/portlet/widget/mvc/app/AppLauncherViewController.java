@@ -23,6 +23,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
 
+import org.apache.commons.lang.StringUtils;
 import org.jasig.portlet.widget.service.IExpressionProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 public class AppLauncherViewController {
 
     private static final String WINDOW_STATE_DETACHED = "detached";
+    private static final String DEFAULT_VIEW_NAME = "defaultViewName";
 
     private static final String JSP_ICON = "app/icon";
     private static final String JSP_DETACHED = "app/detached";
@@ -56,9 +58,13 @@ public class AppLauncherViewController {
     public String view(PortletRequest req) throws Exception {
         // As a precaution, clear the in-process config settings (if any)...
         AppLauncherConfigController.clearAppDefinitionInProgress(req);
+
+        PortletPreferences preferences = req.getPreferences();
+        String view = preferences.getValue(DEFAULT_VIEW_NAME, JSP_ICON);
+
         return WINDOW_STATE_DETACHED.equalsIgnoreCase(req.getWindowState().toString())
                 ? JSP_DETACHED
-                : JSP_ICON;
+                : view;
     }
 
     @ModelAttribute("iconSizePixels")
