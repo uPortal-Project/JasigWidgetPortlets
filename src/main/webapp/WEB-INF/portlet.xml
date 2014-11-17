@@ -444,6 +444,10 @@
                 <name>includeJsLibs</name>
                 <value>false</value>
             </preference>
+            <preference>
+                <name>defaultViewName</name>
+                <value>app/icon</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
