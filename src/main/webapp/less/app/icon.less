@@ -1,0 +1,111 @@
+/**
+  * Licensed to Jasig under one or more contributor license
+  * agreements. See the NOTICE file distributed with this work
+  * for additional information regarding copyright ownership.
+  * Jasig licenses this file to you under the Apache License,
+  * Version 2.0 (the "License"); you may not use this file
+  * except in compliance with the License. You may obtain a
+  * copy of the License at:
+  *
+  * http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing,
+  * software distributed under the License is distributed on
+  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  * KIND, either express or implied. See the License for the
+  * specific language governing permissions and limitations
+  * under the License.
+  */
+
+/**
+ * NOTE: this file is located outside the less/ directory due to a limitation
+ * in the LESS CSS Maven Plugin's inability to traverse relative paths.
+ *
+ * Also, due to a limitation in the LESS CSS Maven Plugin, whitespace before an
+ * @import will cause a compile error.
+ */
+
+.app-launcher-portlet {
+
+    // Shared styles between app launcher icon with text, apl launcher icon only
+    .app-launcher-item {
+        width: 100%;
+        position: relative;
+
+        .app-icon-text {
+            background-color: #333;
+            opacity: 0.50;
+            padding: 12px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+
+            .app-title {
+                color: #fff;
+                font: 1.4em bold;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-bottom: 3px;
+            }
+            .app-subtitle {
+                height: 3em;
+                max-height: 3em;
+                color: #eee;
+                overflow: hidden;
+            }
+        }
+    }
+
+    // Styles for app launcher icon with text
+    .icon-and-text {
+        height: 300px;
+        max-height: 300px;
+
+        .app-link {
+            text-decoration: none;
+
+            .app-component {
+                display: block;
+                width: 100%;
+            }
+
+            .app-icon-wrapper {
+                text-align: center;
+            }
+        }
+    }
+
+    // Styles for app launcher icon only
+    .icon-only {
+        height: 200px;
+        max-height: 200px;
+
+        .app-icon-text {
+//            display: none;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+            -moz-transition: opacity 0.25s ease-in-out;
+            -webkit-transition: opacity 0.25s ease-in-out;
+        }
+
+        &:hover {
+            .app-icon-text {
+//                display: block;
+                opacity: 0.50;
+
+
+            }
+        }
+    }
+
+
+    @media (max-width: 1170px) {
+        .app-launcher-item {
+            height: 200px;
+            max-height: 200px;
+        }
+    }
+}
+
