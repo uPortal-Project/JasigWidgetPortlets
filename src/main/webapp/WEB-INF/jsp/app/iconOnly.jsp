@@ -18,7 +18,7 @@
   --%>
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-
+<rs:aggregatedResources path="${ usePortalJsLibs ? '/skin-shared.xml' : '/skin.xml' }"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
 <c:set var="linkHref">
@@ -41,66 +41,25 @@
 </c:set>
 
 <style>
-#${n}app .app-launcher-item {
-    height: 300px;
-    max-height: 300px;
-    width: 100%;
-    position: relative;
-}
-#${n}app .app-component {
-    display: block;
-    width: 100%;
-}
-#${n}app .app-link {
-    text-decoration: none;
-}
-#${n}app .app-icon-wrapper {
-    text-align: center;
-}
-#${n}app .app-icon {
-    display: inline-block;
-    width: <c:out value="${iconSizePixels}"/>px;
-    height: <c:out value="${iconSizePixels}"/>px;
-    background: url('${iconUrl}') center no-repeat;
-    background-size: contain;
-}
-#${n}app .app-icon-text {
-    background-color:rgba(50, 50, 50, 0.45);
-    padding: 12px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-}
-#${n}app .app-title {
-    color: #fff;
-    font: 1.4em bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 3px;
-}
-#${n}app .app-subtitle {
-    height: 3em;
-    max-height: 3em;
-    color: #eee;
-    overflow: hidden;
-}
-@media (max-width: 1170px) {
-    #${n}app .app-launcher-item {
-        height: 200px;
-        max-height: 200px;
-    }
-    #${n}app .app-icon {
-        display: inline-block;
-        width: <c:out value="${(iconSizePixels/2)}"/>px;
-        height: <c:out value="${(iconSizePixels/2)}"/>px;
-        background: url('${iconUrl}') center no-repeat;
-        background-size: contain;
-    }
-}
+  #${n}app .app-icon {
+      display: inline-block;
+      width: <c:out value="${iconSizePixels}"/>px;
+      height: <c:out value="${iconSizePixels}"/>px;
+      background: url('${iconUrl}') center no-repeat;
+      background-size: contain;
+  }
+  @media (max-width: 1170px) {
+      #${n}app .app-icon {
+          display: inline-block;
+          width: <c:out value="${(iconSizePixels/2)}"/>px;
+          height: <c:out value="${(iconSizePixels/2)}"/>px;
+          background: url('${iconUrl}') center no-repeat;
+          background-size: contain;
+      }
+  }
 </style>
 
-<div id="${n}app">
+<div id="${n}app" class="app-launcher-portlet">
     <div class="app-launcher-item icon-only">
         <a class="app-link" href="<c:out value="${linkHref}"/>"<c:out value="${targetAttribute}"/> title="<c:out value="${appDefinition.linkTitle}"/>">
             <span class="app-component app-icon-wrapper">
@@ -113,3 +72,4 @@
         </a>
     </div>
 </div>
+
