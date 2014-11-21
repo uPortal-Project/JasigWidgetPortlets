@@ -18,7 +18,7 @@
   --%>
 
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<rs:aggregatedResources path="${ usePortalJsLibs ? '/skin-shared.xml' : '/skin.xml' }"/>
+<rs:aggregatedResources path="${ usePortalJsLibs ? '/app-skin-shared.xml' : '/app-skin.xml' }"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
 <c:set var="linkHref">

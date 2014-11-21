@@ -23,7 +23,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
 
-import org.apache.commons.lang.StringUtils;
 import org.jasig.portlet.widget.service.IExpressionProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,15 +34,19 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @RequestMapping("VIEW")
 public class AppLauncherViewController {
 
-    private static final String WINDOW_STATE_DETACHED = "detached";
-    private static final String DEFAULT_VIEW_NAME = "defaultViewName";
-
-    private static final String JSP_ICON = "app/icon";
-    private static final String JSP_DETACHED = "app/detached";
-//    private static final String JSP_CONFIG = "app/config";
-
+    /*
+     * Initial View Selection
+     */
     private static final String PREFERENCE_ICON_SIZE_PIXELS = "AppLauncherPortletController.iconSizePixels";
     private static final String DEFAULT_ICON_SIZE_PIXELS = "200";
+    private static final String PREFERENCE_JSP_VIEW_NAME = "AppLauncherPortletController.jspViewName";
+    private static final String DEFAULT_JSP_VIEW_NAME = "app/icon";  // At least 'app/iconOnly' is also available
+
+    /*
+     * View When Invoked
+     */
+    private static final String WINDOW_STATE_DETACHED = "detached";
+    private static final String JSP_DETACHED = "app/detached";
 
     private IExpressionProcessor expressionProcessor;
 
@@ -60,7 +63,7 @@ public class AppLauncherViewController {
         AppLauncherConfigController.clearAppDefinitionInProgress(req);
 
         PortletPreferences preferences = req.getPreferences();
-        String view = preferences.getValue(DEFAULT_VIEW_NAME, JSP_ICON);
+        String view = preferences.getValue(PREFERENCE_JSP_VIEW_NAME, DEFAULT_JSP_VIEW_NAME);
 
         return WINDOW_STATE_DETACHED.equalsIgnoreCase(req.getWindowState().toString())
                 ? JSP_DETACHED

@@ -406,6 +406,15 @@
             <title>App Launcher Portlet</title>
         </portlet-info>
         <portlet-preferences>
+            <!-- The JSP file used to render the launcher (as opposed to 
+                 "launched") view.  Either:
+                     - app/icon      // default; icon and text
+                     - app/iconOnly  // text on hover
+             -->
+            <preference>
+                <name>AppLauncherPortletController.jspViewName</name>
+                <value>app/icon</value>
+            </preference>
             <preference>
                 <name>AppLauncherPortletController.iconSizePixels</name>
                 <value>200</value>
@@ -418,8 +427,8 @@
                 <value>http://www.apereo.org</value>
             </preference>
             <!-- Display Strategy to use.  Possible values:
-                 - iframe in detached mode
-                 - newWindow
+                     - iframe in detached mode
+                     - newWindow
                  See AppDefinition.DisplayStrategy for authoritative list of values. -->
             <preference>
                 <name>AppDefinition.displayStrategy</name>
@@ -443,10 +452,6 @@
             <preference>
                 <name>includeJsLibs</name>
                 <value>false</value>
-            </preference>
-            <preference>
-                <name>defaultViewName</name>
-                <value>app/icon</value>
             </preference>
         </portlet-preferences>
     </portlet>

@@ -11,3 +11,4 @@ target
 .idea
 overlays/
 pom.xml.versionsBackup
+src/main/webapp/css/jasig-widget-portlets.css
