@@ -34,7 +34,7 @@
 
         .app-icon-text {
             background-color: #333;
-            opacity: 0.50;
+            opacity: 0.70;
             padding: 12px;
             width: 100%;
             position: absolute;
@@ -47,12 +47,20 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 margin-bottom: 3px;
+                display: block;
             }
             .app-subtitle {
                 height: 3em;
                 max-height: 3em;
                 color: #eee;
                 overflow: hidden;
+            }
+
+            .app-link {
+                .app-component {
+                    display: block;
+                    width: 100%;
+                }
             }
         }
     }
@@ -64,15 +72,6 @@
 
         .app-link {
             text-decoration: none;
-
-            .app-component {
-                display: block;
-                width: 100%;
-            }
-
-            .app-icon-wrapper {
-                text-align: center;
-            }
         }
     }
 
@@ -80,9 +79,9 @@
     .icon-only {
         height: 200px;
         max-height: 200px;
-        text-align: center;
 
         .app-icon-text {
+            width: 200px;
             position: absolute;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -92,7 +91,7 @@
 
         &:hover {
             .app-icon-text {
-                opacity: 0.50;
+                opacity: 0.70;
             }
         }
     }
