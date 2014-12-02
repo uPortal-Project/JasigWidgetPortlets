@@ -19,6 +19,7 @@
 
 package org.jasig.portlet.widget.mvc;
 
+import org.jasig.portlet.widget.service.IWindowStateAwareJspMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -58,14 +59,14 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * @author Josh Helmer, jhelmer.unicon.net
  */
 public class SimpleJspPortletControllerTest {
-    private static String BASE_JSP_NAME = "baseName";
+    private static final String BASE_JSP_NAME = "baseName";
 
-    @Mock private ServletContext servletContext;
+    private SimpleJspPortletController controller;
+
     @Mock private Model model;
     @Mock private PortletPreferences preferences;
     @Mock private RenderRequest renderRequest;
-
-    private SimpleJspPortletController controller;
+    @Mock private IWindowStateAwareJspMapper stateAwareJspMapper;
 
 
     @Before
@@ -91,16 +92,15 @@ public class SimpleJspPortletControllerTest {
         doAnswer(answer).when(viewResolver).resolveViewName(anyString(), any(Locale.class));
 
         controller = new SimpleJspPortletController();
-        controller.setJspResolver(viewResolver);
-        controller.setServletContext(servletContext);
+        controller.setWindowStateAwareJspMapper(stateAwareJspMapper);
     }
-
 
     @Test
     public void testDefaultJspView() {
         // given window-state specific JSP does not exist
-        when(servletContext.getRealPath(anyString())).thenReturn("INVALID_FILENAME");
         when(renderRequest.getWindowState()).thenReturn(WindowState.NORMAL);
+        when(stateAwareJspMapper.getJspName(eq(BASE_JSP_NAME), eq(WindowState.NORMAL), any(Locale.class)))
+                .thenReturn(BASE_JSP_NAME);
 
         // when I resolve the view
         String jsp = controller.doView(renderRequest, model);
@@ -113,11 +113,10 @@ public class SimpleJspPortletControllerTest {
     @Test
     public void testMaximizedJspExists() throws IOException {
         String maxJspName = BASE_JSP_NAME + ".maximized";
-
         // given window-state specific JSP does exist
-        File testFile = File.createTempFile("simpleJspPortletControllerMock", "txt");
-        when(servletContext.getRealPath(eq("/WEB-INF/jsp/" + maxJspName + ".jsp")))
-                .thenReturn(testFile.getAbsolutePath());
+        when(stateAwareJspMapper.getJspName(eq(BASE_JSP_NAME), eq(WindowState.MAXIMIZED), any(Locale.class)))
+                .thenReturn(maxJspName);
+
         when(renderRequest.getWindowState()).thenReturn(WindowState.MAXIMIZED);
 
         // when I resolve the view
