@@ -19,7 +19,9 @@
 
 package org.jasig.portlet.widget.mvc;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -28,10 +30,13 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +44,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.AbstractUrlBasedView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 @Controller
 @RequestMapping("VIEW")
@@ -50,6 +58,22 @@ public class SimpleJspPortletController {
 
     // Instance Members.
     private final Log log = LogFactory.getLog(getClass());
+
+    private UrlBasedViewResolver jspResolver;
+    private ServletContext servletContext;
+
+
+    @Autowired
+    @Qualifier("jspViewResolver")
+    public void setJspResolver(UrlBasedViewResolver jspResolver) {
+        this.jspResolver = jspResolver;
+    }
+
+
+    @Autowired
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
     /*
      * Public API.
@@ -66,9 +90,11 @@ public class SimpleJspPortletController {
 
             final PortletPreferences prefs = req.getPreferences();
             WindowState state = req.getWindowState();
-            jspName = prefs.getValue(JSP_NAME_PREFERENCE + "." + state.toString().toUpperCase(), null);
-            if (StringUtils.isBlank(jspName)) {
-                jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+            jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+
+            String stateName = getStateJspName(jspName, state);
+            if (stateJspExists(stateName, req.getLocale())) {
+                jspName = stateName;
             }
 
             /*
@@ -125,6 +151,40 @@ public class SimpleJspPortletController {
         String[] securityRoles = prefs.getValues(PREF_SECURITY_ROLE_NAMES, new String[]{});
         for (int i = 0; i < securityRoles.length; i++) {
             model.addAttribute("is"+securityRoles[i], req.isUserInRole(securityRoles[i]));
+        }
+    }
+
+
+    /**
+     * Get the name of the JSP to look for given a base JSP name and
+     * a window state.
+     */
+    private String getStateJspName(String baseName, WindowState state) {
+        if (state == null) {
+            return baseName;
+        }
+
+        return baseName + "." + state.toString().toLowerCase();
+    }
+
+
+    /**
+     * Check if the state-specific JSP file exists.
+     */
+    private boolean stateJspExists(String stateName, Locale locale) {
+        try {
+            View view = jspResolver.resolveViewName(stateName, locale);
+            if (!(view instanceof AbstractUrlBasedView)) {
+                return false;
+            }
+
+            String url = ((AbstractUrlBasedView)view).getUrl();
+            String path = servletContext.getRealPath(url);
+            File f = new File(path);
+            return f.exists();
+
+        } catch (Exception e) {
+            return false;
         }
     }
 }

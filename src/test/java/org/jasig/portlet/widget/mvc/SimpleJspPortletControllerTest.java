@@ -19,54 +19,111 @@
 
 package org.jasig.portlet.widget.mvc;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.mock.web.portlet.MockPortletPreferences;
 import org.springframework.mock.web.portlet.MockRenderRequest;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.AbstractUrlBasedView;
+import org.springframework.web.servlet.view.InternalResourceView;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
 import javax.portlet.WindowState;
+import javax.servlet.ServletContext;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 
 /**
  * @author Josh Helmer, jhelmer.unicon.net
  */
 public class SimpleJspPortletControllerTest {
-    @Test
-    public void testJspViewWithoutMatchingWindowStateJSP() throws Exception {
-        MockPortletPreferences prefs = new MockPortletPreferences();
-        prefs.setValue(SimpleJspPortletController.JSP_NAME_PREFERENCE, "normal.jsp");
+    private static String BASE_JSP_NAME = "baseName";
 
-        MockRenderRequest req = new MockRenderRequest();
-        req.setWindowState(WindowState.MAXIMIZED);
-        req.setPreferences(prefs);
+    @Mock private ServletContext servletContext;
+    @Mock private Model model;
+    @Mock private PortletPreferences preferences;
+    @Mock private RenderRequest renderRequest;
 
-        Model model = mock(Model.class);
+    private SimpleJspPortletController controller;
 
-        SimpleJspPortletController controller = new SimpleJspPortletController();
-        String jsp = controller.doView(req, model);
 
-        assertThat(jsp, is("normal.jsp"));
+    @Before
+    public void setup() throws Exception {
+        initMocks(this);
+
+        when(preferences.getValue(eq(SimpleJspPortletController.JSP_NAME_PREFERENCE), anyString()))
+                .thenReturn(BASE_JSP_NAME);
+        when(preferences.getValues(eq(SimpleJspPortletController.PREF_SECURITY_ROLE_NAMES), any(String[].class)))
+                .thenReturn(new String[]{});
+
+        when(renderRequest.getLocale()).thenReturn(Locale.getDefault());
+        when(renderRequest.getPreferences()).thenReturn(preferences);
+
+        UrlBasedViewResolver viewResolver = spy(new UrlBasedViewResolver());
+        Answer<View> answer = new Answer<View>() {
+            @Override
+            public View answer(InvocationOnMock invocationOnMock) throws Throwable {
+                String jspName = (String)invocationOnMock.getArguments()[0];
+                return new JstlView("/WEB-INF/jsp/" + jspName + ".jsp");
+            }
+        };
+        doAnswer(answer).when(viewResolver).resolveViewName(anyString(), any(Locale.class));
+
+        controller = new SimpleJspPortletController();
+        controller.setJspResolver(viewResolver);
+        controller.setServletContext(servletContext);
     }
 
+
     @Test
-    public void testJspByWindowState() throws Exception {
-        MockPortletPreferences prefs = new MockPortletPreferences();
-        prefs.setValue(SimpleJspPortletController.JSP_NAME_PREFERENCE + ".MAXIMIZED", "maximized.jsp");
-        prefs.setValue(SimpleJspPortletController.JSP_NAME_PREFERENCE, "normal.jsp");
+    public void testDefaultJspView() {
+        // given window-state specific JSP does not exist
+        when(servletContext.getRealPath(anyString())).thenReturn("INVALID_FILENAME");
+        when(renderRequest.getWindowState()).thenReturn(WindowState.NORMAL);
 
-        MockRenderRequest req = new MockRenderRequest();
-        req.setWindowState(WindowState.MAXIMIZED);
-        req.setPreferences(prefs);
+        // when I resolve the view
+        String jsp = controller.doView(renderRequest, model);
 
-        Model model = mock(Model.class);
+        // then I should get the configured JSP
+        assertThat(jsp, is(BASE_JSP_NAME));
+    }
 
-        SimpleJspPortletController controller = new SimpleJspPortletController();
-        String jsp = controller.doView(req, model);
 
-        assertThat(jsp, is("maximized.jsp"));
+    @Test
+    public void testMaximizedJspExists() throws IOException {
+        String maxJspName = BASE_JSP_NAME + ".maximized";
+
+        // given window-state specific JSP does exist
+        File testFile = File.createTempFile("simpleJspPortletControllerMock", "txt");
+        when(servletContext.getRealPath(eq("/WEB-INF/jsp/" + maxJspName + ".jsp")))
+                .thenReturn(testFile.getAbsolutePath());
+        when(renderRequest.getWindowState()).thenReturn(WindowState.MAXIMIZED);
+
+        // when I resolve the view
+        String jsp = controller.doView(renderRequest, model);
+
+        // then I should get the state specific JSP
+        assertThat(jsp, is(maxJspName));
     }
 }
