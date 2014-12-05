@@ -32,6 +32,8 @@ import javax.portlet.WindowState;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jasig.portlet.widget.service.IWindowStateAwareJspMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,6 +53,14 @@ public class SimpleJspPortletController {
     // Instance Members.
     private final Log log = LogFactory.getLog(getClass());
 
+    private IWindowStateAwareJspMapper windowStateAwareJspMapper;
+
+
+    @Autowired
+    public void setWindowStateAwareJspMapper(final IWindowStateAwareJspMapper mapper) {
+        this.windowStateAwareJspMapper = mapper;
+    }
+
     /*
      * Public API.
      */
@@ -66,10 +76,8 @@ public class SimpleJspPortletController {
 
             final PortletPreferences prefs = req.getPreferences();
             WindowState state = req.getWindowState();
-            jspName = prefs.getValue(JSP_NAME_PREFERENCE + "." + state.toString().toUpperCase(), null);
-            if (StringUtils.isBlank(jspName)) {
-                jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
-            }
+            String baseName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
+            jspName = windowStateAwareJspMapper.getJspName(baseName, state, req.getLocale());
 
             /*
              * TODO:  In the future, we'll likely want to provide JSPs with access
