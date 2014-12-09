@@ -27,7 +27,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
-import javax.portlet.WindowState;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -65,11 +64,7 @@ public class SimpleJspPortletController {
         if (jspName == null) {
 
             final PortletPreferences prefs = req.getPreferences();
-            WindowState state = req.getWindowState();
-            jspName = prefs.getValue(JSP_NAME_PREFERENCE + "." + state.toString().toUpperCase(), null);
-            if (StringUtils.isBlank(jspName)) {
-                jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
-            }
+            jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
 
             /*
              * TODO:  In the future, we'll likely want to provide JSPs with access
