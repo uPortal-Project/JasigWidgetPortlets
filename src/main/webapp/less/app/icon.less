@@ -26,12 +26,18 @@
  */
 
 .app-launcher-portlet {
+    text-align: center;
 
     // Shared styles between app launcher icon with text, apl launcher icon only
     .app-launcher-item {
         position: relative;
-        text-align: center;
 
+        // This <span> has the icon as its background;  
+        .app-icon {
+            display: inline-block;
+            width: 100%; // Something wrapping the icon will bound its width
+            padding-top: 100%;
+        }
         .app-icon-text {
             background-color: #333;
             opacity: 0.70;
@@ -57,6 +63,8 @@
             }
 
             .app-link {
+                text-decoration: none;
+
                 .app-component {
                     display: block;
                     width: 100%;
@@ -67,24 +75,30 @@
 
     // Styles for app launcher icon with text
     .icon-and-text {
-        height: 300px;
-        max-height: 300px;
+        padding-bottom: 80px;
 
         .app-link {
-            text-decoration: none;
+            // Entire portlet real estate should be clickable
+            display: inline-block;
+            width: 100%;
+
+            .app-icon-wrapper {
+                // Must be an [inline-]block-level element to govern
+                // the 'padding-top: 100%' applied to .app-icon
+                display: inline-block;
+                width: 100%;
+            }
         }
     }
 
     // Styles for app launcher icon only
     .icon-only {
-        width: 200px;
-        max-width: 200px;
+        display: inline-block;
+        width: 100%;  // Portlet preferences will define max-width
         margin: 0 auto;
-        height: 200px;
-        max-height: 200px;
 
         .app-icon-text {
-            width: 200px;
+            width: 100%;
             position: absolute;
             opacity: 0;
             transition: opacity 0.25s ease-in-out;
@@ -96,13 +110,6 @@
             .app-icon-text {
                 opacity: 0.70;
             }
-        }
-    }
-
-    @media (max-width: 1170px) {
-        .app-launcher-item {
-            height: 200px;
-            max-height: 200px;
         }
     }
 }

@@ -42,21 +42,12 @@
 </c:set>
 
 <style>
-    #${n}app .app-icon {
-        display: inline-block;
-        width: <c:out value="${iconSizePixels}"/>px;
-        height: <c:out value="${iconSizePixels}"/>px;
-        background: url('${iconUrl}') center no-repeat;
-        background-size: contain;
+    /* These styles MUST be defined with the help of portlet preferences, so we do it here */
+    #${n}app .app-icon-wrapper {
+        max-width: <c:out value="${iconSizePixels}"/>px;
     }
-    @media (max-width: 1170px) {
-        #${n}app .app-icon {
-            display: inline-block;
-            width: <c:out value="${(iconSizePixels/2)}"/>px;
-            height: <c:out value="${(iconSizePixels/2)}"/>px;
-            background: url('${iconUrl}') center no-repeat;
-            background-size: contain;
-        }
+    #${n}app .app-icon {
+        background: url('${iconUrl}') center/contain no-repeat;
     }
 </style>
 
