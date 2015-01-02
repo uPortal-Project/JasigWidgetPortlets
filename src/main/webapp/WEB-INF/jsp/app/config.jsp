@@ -123,7 +123,7 @@
         <div class="form-group subtitle">
             <label for="subtitle" class="col-sm-2 control-label"><spring:message code="app-launcher.subtitle"/></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="subtitle" id="subtitle" value="${appDefinition.subtitle}" placeholder="A few wrords about your app">
+                <input type="text" class="form-control" name="subtitle" id="subtitle" value="${appDefinition.subtitle}" placeholder="A few words about your app">
                 <div class="field-error bg-danger"><spring:message code="app-launcher.subtitle.invalid"/></div>
             </div>
         </div>
