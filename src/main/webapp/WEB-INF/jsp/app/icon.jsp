@@ -28,10 +28,10 @@
         <c:otherwise><portlet:renderURL windowState="DETACHED"/></c:otherwise>
     </c:choose>
 </c:set>
-<c:set var="targetAttribute">
+<c:set var="targetValue">
     <c:choose>
-        <c:when test="${appDefinition.linkTarget ne null}">target=\"${appDefinition.linkTarget}\"</c:when>
-        <c:otherwise></c:otherwise>
+        <c:when test="${appDefinition.linkTarget ne null}">${appDefinition.linkTarget}</c:when>
+        <c:otherwise>_self</c:otherwise><%-- Standard default --%>
     </c:choose>
 </c:set>
 <c:set var="iconUrl">
@@ -53,7 +53,7 @@
 
 <div id="${n}app" class="app-launcher-portlet">
     <div class="app-launcher-item icon-and-text">
-        <a class="app-link" href="<c:out value="${linkHref}"/>"<c:out value="${targetAttribute}"/> title="<c:out value="${appDefinition.linkTitle}"/>">
+        <a class="app-link" href="<c:out value="${linkHref}"/>" target="<c:out value="${targetValue}"/>" title="<c:out value="${appDefinition.linkTitle}"/>">
             <span class="app-component app-icon-wrapper">
                 <span class="app-icon"></span>
             </span>
