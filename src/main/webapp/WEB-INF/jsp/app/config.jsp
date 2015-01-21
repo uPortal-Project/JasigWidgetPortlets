@@ -78,12 +78,19 @@
         </div>
         <div class="instructions form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <spring:message code="app-launcher.appUrl.instructions"/>
-                <ul>
-                    <li><spring:message code="app-launcher.appUrl.instructions.ex1"/></li>
-                    <li><spring:message code="app-launcher.appUrl.instructions.ex2"/></li>
-                    <li><spring:message code="app-launcher.appUrl.instructions.ex3"/></li>
-                </ul>
+                <div class="collapse" id="advancedUrlOptions">
+                    <div class="well">
+                        <spring:message code="app-launcher.appUrl.instructions"/>
+                        <ul>
+                            <li><spring:message code="app-launcher.appUrl.instructions.ex1"/></li>
+                            <li><spring:message code="app-launcher.appUrl.instructions.ex2"/></li>
+                            <li><spring:message code="app-launcher.appUrl.instructions.ex3"/></li>
+                        </ul>
+                    </div>
+                </div>
+                <a class="btn btn-info" href="javascript:void(0)" data-toggle="collapse" data-target="#advancedUrlOptions" aria-expanded="false" aria-controls="advancedUrlOptions">
+                    <spring:message code="app-launcher.appUrl.advancedUrlOptions"/>
+                </a>
             </div>
         </div>
         <div class="form-group displayStrategy">
