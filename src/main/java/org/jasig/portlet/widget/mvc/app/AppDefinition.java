@@ -40,7 +40,8 @@ public class AppDefinition implements Serializable {
     public enum DisplayStrategies {
 
         IFRAME("iframe"),
-        NEW_WINDOW("newWindow");
+        NEW_WINDOW("newWindow"),
+        SAME_WINDOW("sameWindow");
 
         private final String code;
 

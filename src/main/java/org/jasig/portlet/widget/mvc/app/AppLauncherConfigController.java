@@ -45,9 +45,8 @@ public class AppLauncherConfigController {
     private static final String INVALID_FIELDS = "invalidFields";
     private static final String APP_DEFINITION_IN_PROGRESS_PREFIX = "AppLauncherConfigController.APP_DEFINITION_IN_PROGRESS.";
 
-    private final List<AppDefinition.DisplayStrategies> availableDisplayStrategies = Arrays.asList(
-            AppDefinition.DisplayStrategies.IFRAME, 
-            AppDefinition.DisplayStrategies.NEW_WINDOW);
+    private final List<AppDefinition.DisplayStrategies> availableDisplayStrategies =
+            Arrays.asList(AppDefinition.DisplayStrategies.values());
 
     /**
      * This one is public and static because we want to call it in VIEW mode.

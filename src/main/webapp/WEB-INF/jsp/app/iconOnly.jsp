@@ -24,8 +24,9 @@
 
 <c:set var="linkHref">
     <c:choose>
-        <c:when test="${appDefinition.displayStrategy == 'newWindow'}">${appUrl}</c:when>
-        <c:otherwise><portlet:renderURL windowState="DETACHED"/></c:otherwise>
+        <%-- DETACHED Window State option is actually rendered within THIS portlet --%>
+        <c:when test="${appDefinition.displayStrategy == 'iframe'}"><portlet:renderURL windowState="DETACHED"/></c:when>
+        <c:otherwise>${appUrl}</c:otherwise>
     </c:choose>
 </c:set>
 <c:set var="targetValue">
