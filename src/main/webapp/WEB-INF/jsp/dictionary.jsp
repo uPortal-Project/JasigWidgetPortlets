@@ -37,67 +37,37 @@
     </c:otherwise>
 </c:choose>
     ${n}.jQuery(function(){
-
-	    var ${n}searchDictionary = function(form) {
-	         var $ = ${n}.jQuery;
-	         $("#${n}defs").html("");
-	         $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(json){
-	        	 if (json.definition.length) {
-		           $(form).parent().find("div.defContainer").append($(document.createElement("hr")));
-		           $(form).parent().find("div.defContainer")
-	               .append($(document.createElement("div")).html(json.definition));
-	        	 }
-
-	        	 }, "json");
-	         return false;
-	    };
+        var ${n}searchDictionary = function(form) {
+             var $ = ${n}.jQuery;
+             $("#${n}defs").html("");
+             $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(json){
+                 if (json.definition.length) {
+                     $(form).parent().find("div.defContainer").append($(document.createElement("hr")));
+                     $(form).parent().find("div.defContainer").append($(document.createElement("div")).html(json.definition));
+                 }
+             }, "json");
+             return false;
+        };
 
         ${n}.jQuery("#${n}tabs").ready(function(){
-            ${n}.jQuery("#${n}tabs").tabs();
             ${n}.jQuery("#${n}dictionaryTab > form").submit(function(){ return ${n}searchDictionary(this); });
-            ${n}.jQuery("#${n}thesaurusTab > form").submit(function(){ return ${n}searchDictionary(this); });
             <!-- Register the reset button's behaviour -->
             ${n}.jQuery("#${n}resetDictionary").click(function() { ${n}.jQuery("#${n}dictionaryTab > div.defContainer").html(""); });
-            ${n}.jQuery("#${n}resetThesaurus").click(function() { ${n}.jQuery("#${n}thesaurusTab > div.defContainer").html(""); });
         });
-        
     });
 
 </rs:compressJs></script>
 
-<div id="${n}tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all search-container">
-    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
-            <a shape="rect" href="#${n}dictionaryTab">Dictionary</a>
-        </li>
-        <li class="ui-state-default ui-corner-top">
-            <a shape="rect" href="#${n}thesaurusTab">Thesaurus</a>
-        </li>
-    </ul>
-    
-    <div id="${n}dictionaryTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-		<form>
-		    <input type="hidden" name="dict" value="wn"/>
-		    <input class="portlet-form-input-field" name="word"/> 
-                    <span class="buttons">
-		        <input class="portlet-form-button button primary" type="submit" value="Go!"/>
-                        <input type="reset" class="portlet-form-button button" id="${n}resetDictionary" value="Reset">
-                    </span>
-		</form>
-		<div class="defContainer"></div>
-	</div>
-
-	<div id="${n}thesaurusTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
+<div id="${n}tabs">
+    <div id="${n}dictionaryTab">
         <form>
-            <input type="hidden" name="dict" value="moby-thes"/> 
-            <input class="portlet-form-input-field" name="word"/>
+            <input type="hidden" name="dict" value="wn"/>
+            <input name="word"/> 
             <span class="buttons">
-                <input class="portlet-form-button button primary" type="submit" value="Go!"/>
-                <input type="reset" class="portlet-form-button button" id="${n}resetThesaurus" value="Reset">
+                <input type="submit" value="Go!"/>
+                <input type="reset" id="${n}resetDictionary" value="Reset">
             </span>
         </form>
         <div class="defContainer"></div>
-	</div>
-
+    </div>
 </div>
-	
