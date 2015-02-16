@@ -433,6 +433,8 @@
                 <name>AppDefinition.displayStrategy</name>
                 <value>iframe</value>
             </preference>
+            <!-- URL of the icon.  You can use a string such as /jasig-widget-portlets/images/xxx.png
+                 if the image is placed in the images folder of the portlet.  -->
             <preference>
                 <name>AppDefinition.iconUrl</name>
             </preference>
