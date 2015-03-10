@@ -60,7 +60,16 @@ public class AppDefinition implements Serializable {
         APP_URL("appUrl", "http://www.apereo.org") {
             @Override
             public boolean validate(String value) {
-                return value != null && VALID_URL_PATTERN.matcher(value).matches();
+                if (StringUtils.isBlank(value)) {
+                    return false;  // always invalid
+                }
+                boolean rslt = true;  // default for a non-blank value
+                // The appUrl input MAY begin with an EL token...
+                if (!VALID_EL_PATTERN.matcher(value).matches()) {
+                    // But if it doesn't, it MUST begin as a valid URL...
+                    rslt = VALID_URL_PATTERN.matcher(value).matches();
+                }
+                return rslt;
             }
         },
         DISPLAY_STRATEGY("displayStrategy", DisplayStrategies.IFRAME.getCode()) {
@@ -103,6 +112,8 @@ public class AppDefinition implements Serializable {
         };
 
         private static final String PREFERENCE_PREFIX = "AppDefinition.";
+        private static final String EL_REGEX = "^\\$\\{.*\\}.*";
+        private static final Pattern VALID_EL_PATTERN = Pattern.compile(EL_REGEX);
         private static final String URL_REGEX = "^(https?:)?/.*";
         private static final Pattern VALID_URL_PATTERN = Pattern.compile(URL_REGEX);
 
