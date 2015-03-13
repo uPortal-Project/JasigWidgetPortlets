@@ -19,7 +19,10 @@
 package org.jasig.portlet.widget.mvc;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -30,6 +33,7 @@ import javax.portlet.RenderRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,7 +52,18 @@ public class SimpleJspPortletController {
 
     // Instance Members.
     private final Log log = LogFactory.getLog(getClass());
+    private Properties properties;
 
+    /**
+     * Set the properties.
+     *
+     * @param properties the properties loader
+     */
+    @Required
+    public void setProperties(final Properties properties) {
+        this.properties = properties;
+    }
+    
     /*
      * Public API.
      */
@@ -64,7 +79,9 @@ public class SimpleJspPortletController {
 
             final PortletPreferences prefs = req.getPreferences();
             jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
-
+            
+            Map<String, Object> modelMap = new HashMap<String, Object>();
+            
             /*
              * TODO:  In the future, we'll likely want to provide JSPs with access
              * to things like...
@@ -72,8 +89,11 @@ public class SimpleJspPortletController {
              *   - Specific beans defined in the context
              *   - Arbitrary portlet preferences
              */
+            
+            // load properties into the Model
+            model.addAttribute("property", properties);
         }
-
+        
         return jspName;
 
     }
