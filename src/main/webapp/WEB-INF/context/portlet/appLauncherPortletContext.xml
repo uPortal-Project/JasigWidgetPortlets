@@ -34,7 +34,7 @@
 
     <bean id="appLauncherProperties" class="org.jasig.portlet.widget.service.SpringELProcessor">
         <property name="properties">
-            <util:properties id="appLauncherProperties" location="classpath://app-launcher.properties"/>
+            <util:properties id="appLauncherProperties" location="classpath:app-launcher.properties"/>
         </property>
     </bean>
 </beans>

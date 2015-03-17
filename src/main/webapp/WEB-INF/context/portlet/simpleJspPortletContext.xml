@@ -31,7 +31,7 @@
     <context:annotation-config/>
     <bean class="org.jasig.portlet.widget.mvc.SimpleJspPortletController">
         <property name="properties">
-            <util:properties id="appLauncherProperties" location="classpath://simple-jsp.properties"/>
+            <util:properties location="classpath:simple-jsp.properties"/>
         </property>
     </bean>
 
