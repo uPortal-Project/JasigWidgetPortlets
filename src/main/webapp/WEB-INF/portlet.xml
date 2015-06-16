@@ -271,6 +271,12 @@
             <title>SimpleJspPortlet</title>
         </portlet-info>
         <portlet-preferences>
+            <!--
+             | Indicates the JSP to display in the portlet.  The complete path will be built by concatenating
+             | '/WEB-INF/jsp/{preference.value}.jso' so the following examples each work well:
+             |   - my-portlet.jsp
+             |   - my-portlet/index.jsp
+             +-->
             <preference>
                 <name>SimpleJspPortletController.jspName</name>
                 <value>simple-jsp-instructions</value>
