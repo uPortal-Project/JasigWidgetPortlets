@@ -134,9 +134,9 @@
                 <div class="field-error bg-danger"><spring:message code="app-launcher.subtitle.invalid"/></div>
             </div>
         </div>
-        <div class="text-right">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="<portlet:renderURL portletMode="view"/>" class="btn btn-link">Cancel</a>
+        <div class="buttons text-right">
+            <input type="submit" class="button primary btn btn-primary" name="save" value="Save"/>
+            <input type="submit" class="button secondary btn btn-link" name="cancel" value="Cancel"/>
         </div>
     </form>
 </div>

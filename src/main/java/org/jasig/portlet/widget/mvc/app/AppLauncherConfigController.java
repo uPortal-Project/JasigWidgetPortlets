@@ -30,9 +30,11 @@ import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
@@ -75,24 +77,29 @@ public class AppLauncherConfigController {
     }
 
     @ActionMapping
-    public void saveSettings(ActionRequest req, ActionResponse res) throws PortletModeException {
-        final AppDefinition appDefinition = AppDefinition.fromFormFields(req);
-        final List<AppDefinition.Setting> invalidSettings = appDefinition.getInvalidSettings();
-        switch (invalidSettings.size()) {
-            case 0:  // success
-                AppDefinition.update(req, appDefinition);
-                clearAppDefinitionInProgress(req);
-                res.setPortletMode(PortletMode.VIEW);
-                break;
-            default:  // validation errors
-                setAppDefinitionInProgress(req, appDefinition);
-                String[] invalidFields = new String[invalidSettings.size()];
-                for (int i=0; i < invalidSettings.size(); i++) {
-                    AppDefinition.Setting p = invalidSettings.get(i);
-                    invalidFields[i] = p.getFieldName();
-                }
-                res.setRenderParameter(INVALID_FIELDS, invalidFields);
-                break;
+    public void saveSettings(ActionRequest req, ActionResponse res,
+                             @RequestParam(value="save", required=false) String save) throws PortletModeException {
+        if (StringUtils.isNotBlank(save)) {
+            final AppDefinition appDefinition = AppDefinition.fromFormFields(req);
+            final List<AppDefinition.Setting> invalidSettings = appDefinition.getInvalidSettings();
+            switch (invalidSettings.size()) {
+                case 0:  // success
+                    AppDefinition.update(req, appDefinition);
+                    clearAppDefinitionInProgress(req);
+                    res.setPortletMode(PortletMode.VIEW);
+                    break;
+                default:  // validation errors
+                    setAppDefinitionInProgress(req, appDefinition);
+                    String[] invalidFields = new String[invalidSettings.size()];
+                    for (int i = 0; i < invalidSettings.size(); i++) {
+                        AppDefinition.Setting p = invalidSettings.get(i);
+                        invalidFields[i] = p.getFieldName();
+                    }
+                    res.setRenderParameter(INVALID_FIELDS, invalidFields);
+                    break;
+            }
+        } else {
+            res.setPortletMode(PortletMode.VIEW);
         }
     }
 
