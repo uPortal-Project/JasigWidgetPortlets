@@ -331,7 +331,7 @@
             <!-- Name of the JSP (without the .jsp extension) for the controller to invoke after obtaining data. -->
             <preference>
                 <name>PluggableDataJspPortlet.Controller.jspName</name>
-                <value>simple-jsp-instructions</value>
+                <value>pluggableData-jsp-instructions</value>
             </preference>
             <!--
              | When pluggableDataJspPortletContext.xml is configured to have the controller invoke the
