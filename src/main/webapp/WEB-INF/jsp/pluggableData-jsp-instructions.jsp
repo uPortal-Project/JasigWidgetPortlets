@@ -37,12 +37,17 @@
         <li>Create an implementation of a PluggableDataDao and instantiate it in pluggableDatajspPortletContextOverrides.xml with a bean id</li>
         <li>Put any matching content you like in a JSP file (follow community best practices for for using HTML, JavaScript, and CSS) that leverages the data from your PluggableDataDao implementation</li>
         <li>Publish a new portlet based on the <code>/jasig-widget-portlets/PluggableDataJspPortlet</code> definition. Assuming you are using the <code>CachingConfigurableDataServiceImpl</code> decorator, configure the following portlet preferences
-        <ul>
-            <li><code>PluggableDataPortlet.Service.datasourceBeanName</code> - the bean id of your PluggableDataDao implementation bean</li>
-            <li><code>PluggableDataJspPortlet.Controller.jspName</code> - name of your JSP file, not including the file extension</li>
-            <li>Optionally, create a new cache entry in an overlayed ehcache.xml and refer to it with the portlet preference <code>PluggableDataPortlet.Service.cacheName</code></li>
-        </ul></li>
-        <li>
+            <ul>
+                <li><code>PluggableDataPortlet.Service.datasourceBeanName</code> - the bean id of your PluggableDataDao implementation bean</li>
+                <li><code>PluggableDataJspPortlet.Controller.jspName</code> - name of your JSP file, not including the file extension</li>
+                <li>Optionally, create a new cache entry in an overlayed ehcache.xml and refer to it with the portlet preference <code>PluggableDataPortlet.Service.cacheName</code></li>
+            </ul>
+        </li>
+        <li>In your JSP page, you have access to the following variables:
+            <ul>
+                <li>model - your list of objects returned by your DAO implementation.</li>
+                <li></li>
+            </ul>
     </ol>
     
 </div>

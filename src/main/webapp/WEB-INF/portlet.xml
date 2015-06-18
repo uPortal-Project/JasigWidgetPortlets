@@ -344,6 +344,16 @@
                 <value></value>
             </preference>
             <!--
+             | If set to true, serialize the data from the datasource and add as variable 'jsonData' to the JSP
+             | page for use in the JSP page.  Note, this preference is optional.  The JSON data is also available
+             | after the portlet is rendered via a resource URL request for use by jQuery or other Ajax javascript
+             | libraries.
+             +-->
+            <preference>
+                <name>PluggableDataJspPortlet.Controller.asJson</name>
+                <value>false</value>
+            </preference>
+            <!--
              | When using CachingConfigurableDataServiceImpl (default), the name of the cache to cache the data fetched
              | from the PluggableDataDao bean implementation.  By default uses the cache named pluggableDataCache,
              | but you can define other cache names in ehcache.xml with whatever retention characteristics are needed
