@@ -19,6 +19,9 @@
 package org.jasig.portlet.widget.mvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -61,7 +64,7 @@ public class SimpleJspPortletController {
     public void setProperties(final Properties properties) {
         this.properties = properties;
     }
-    
+
     /*
      * Public API.
      */
@@ -71,26 +74,39 @@ public class SimpleJspPortletController {
 
         addSecurityRoleChecksToModel(req, model);
 
-        // Choose a JSP based on a portlet preference
-        String jspName = req.getParameter("nextJspPage");
-        if (jspName == null) {
+        // load properties into the Model
+        model.addAttribute("property", properties);
 
-            final PortletPreferences prefs = req.getPreferences();
-            jspName = prefs.getValue(JSP_NAME_PREFERENCE, INSTRUCTIONS_VIEW);
-            
-            /*
-             * TODO:  In the future, we'll likely want to provide JSPs with access
-             * to things like...
-             *
-             *   - Specific beans defined in the context
-             *   - Arbitrary portlet preferences
-             */
-            
-            // load properties into the Model
-            model.addAttribute("property", properties);
+        final PortletPreferences prefs = req.getPreferences();
+
+        /* We're going to construct a list of JSP pages
+         * that are allowable and choose one from it
+         */
+        final List<String> allowableJspPages = new ArrayList<String>();
+        final String[] jspNamesAnyStateAnyMode = prefs.getValues(JSP_NAME_PREFERENCE, new String[] {INSTRUCTIONS_VIEW});
+        allowableJspPages.addAll(Arrays.asList(jspNamesAnyStateAnyMode));
+        final String[] jspNamesThisWindowState = prefs.getValues(JSP_NAME_PREFERENCE + "." + req.getWindowState().toString().toUpperCase(), new String[0]);
+        allowableJspPages.addAll(Arrays.asList(jspNamesThisWindowState));
+
+        /* The first JSP specified is the default.
+         */
+        String rslt = allowableJspPages.get(0);
+
+        /* Now that we know all psosible JSPs, was a
+         * jspName specified as a request parameter?
+         */
+        final String jspNameParam = req.getParameter("nextJspPage");
+        if (jspNameParam != null) {
+            // Yes;  is it allowed?
+            if (allowableJspPages.contains(jspNameParam)) {
+                rslt = jspNameParam;
+            } else {
+                // The default will be used;  but log the occurance
+                log.warn("User '" + req.getRemoteUser() + "' requested a JSP not in the whitelist:  " + jspNameParam);
+            }
         }
-        
-        return jspName;
+
+        return rslt;
 
     }
 

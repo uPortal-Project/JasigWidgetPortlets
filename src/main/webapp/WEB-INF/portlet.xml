@@ -272,13 +272,26 @@
         </portlet-info>
         <portlet-preferences>
             <!--
-             | Indicates the JSP to display in the portlet.  The complete path will be built by concatenating
-             | '/WEB-INF/jsp/{preference.value}.jso' so the following examples each work well:
-             |   - my-portlet.jsp
-             |   - my-portlet/index.jsp
+             | Multi-valued preference specifying the JSP pages that may be
+             | accessed within the portlet in any WindowState, any PortletMode.
+             | The first page listed is the starting (default) page.  The
+             | complete path will be built by concatenating with a prefix and
+             | suffix as follows:  '/WEB-INF/jsp/{preference.value}.jsp' (so the
+             | following examples each work well):
+             |   - my-portlet
+             |   - my-portlet/index
              +-->
             <preference>
                 <name>SimpleJspPortletController.jspName</name>
+                <value>simple-jsp-instructions</value>
+            </preference>
+            <!--
+             | Multi-valued preference specifying JSP pages that may be accessed
+             | within the portlet (in addition to those listed for
+             | SimpleJspPortletController.jspName) in MAXIMIZED WindowState only.
+             +-->
+            <preference>
+                <name>SimpleJspPortletController.jspName.MAXIMIZED</name>
                 <value>simple-jsp-instructions</value>
             </preference>
             <!--
