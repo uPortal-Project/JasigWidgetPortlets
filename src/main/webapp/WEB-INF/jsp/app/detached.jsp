@@ -25,7 +25,8 @@
 <style>
 #${n}frame {
     width: 100%;
-    height: 1200px;
+    height: 100%;
+    position:fixed;
 }
 </style>
 <iframe id="${n}frame" src="<c:out value="${appUrl}"/>">
