@@ -150,7 +150,7 @@ public class SimpleJspPortletController {
         PortletPreferences prefs = req.getPreferences();
         String[] securityRoles = prefs.getValues(PREF_SECURITY_ROLE_NAMES, new String[]{});
         for (int i = 0; i < securityRoles.length; i++) {
-            model.addAttribute("is"+securityRoles[i], req.isUserInRole(securityRoles[i]));
+            model.addAttribute("is"+securityRoles[i].replace(" ", "_"), req.isUserInRole(securityRoles[i]));
         }
     }
 }

@@ -308,6 +308,9 @@
             </preference>
         </portlet-preferences>
 
+        <!-- The role-name (the internal name used by the portlet) should not have spaces in it because
+             the role-name is used to add isRoleName attributes to the model for use by the JSP -->
+
         <security-role-ref>
             <role-name>Faculty</role-name>
             <role-link>Faculty</role-link>
@@ -399,6 +402,9 @@
                 <value>Staff</value>
             </preference>
         </portlet-preferences>
+
+        <!-- The role-name (the internal name used by the portlet) should not have spaces in it because
+             the role-name is used to add isRoleName attributes to the model for use by the JSP -->
 
         <security-role-ref>
             <role-name>Faculty</role-name>
