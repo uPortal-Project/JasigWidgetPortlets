@@ -22,14 +22,23 @@
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<style>
-#${n}frame {
-    width: 100%;
-    height: 100%;
-    position:fixed;
-}
-</style>
-<iframe id="${n}frame" src="<c:out value="${appUrl}"/>">
+<script type="text/javascript">
+
+    // Decided to simply use the portal's jQuery since this is all basic jQuery and for detached view
+    // it is pretty safe since there is no other content on the page and limited dependencies.
+    widgets_detached_size_frame = function () {
+        $ = up.jQuery;
+        // For IE it helps to subtract 5 to avoid a double vertical scrollbar
+        $('#${n}iframeContainer').height($(window).height() - $('#${n}iframeContainer').offset().top - 5);
+    };
+    up.jQuery(window).resize(widgets_detached_size_frame);
+    up.jQuery(widgets_detached_size_frame);
+
+</script>
+
+<div id="${n}iframeContainer">
+<iframe id="${n}frame" src="<c:out value="${appUrl}"/>" style="width:100%; height:100%;">
     This browser does not support inline frames.<br/> 
     <a href="<c:out value="${appUrl}"/>" target="_blank">Click here to view content</a> in a separate window.
 </iframe>
+</div>
