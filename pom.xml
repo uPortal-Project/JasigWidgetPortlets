@@ -13,13 +13,13 @@
 
     <name>Jasig Widget Portlets</name>
     <description>Collection of small, simple widget-type portlets.</description>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>2.2.0</version>
 
     <scm>
         <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
         <developerConnection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</developerConnection>
         <url>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</url>
-      <tag>HEAD</tag>
+      <tag>jasig-widget-portlets-2.2.0</tag>
   </scm>
 
     <properties>
@@ -666,6 +666,22 @@
                         <goals>
                             <goal>compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
