@@ -22,14 +22,14 @@
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+<c:if test="${portletPreferencesValues['usePortalJsLibs'][0] != 'true'}">
     <rs:aggregatedResources path="/resources.xml"/>
 </c:if>
 
 <script type="text/javascript">
     var ${n} = {}; // create a unique variable for our JS namespace
 <c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
+    <c:when test="${portletPreferencesValues['usePortalJsLibs'][0] != 'true'}">
         ${n}.jQuery = jQuery.noConflict(true)
     </c:when>
     <c:otherwise>
