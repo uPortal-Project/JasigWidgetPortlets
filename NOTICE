@@ -19,10 +19,10 @@ This project includes:
   AJAX Portlet Support under The BSD License
   ant-launcher under Apache License, Version 2.0
   AOP alliance under Public Domain
+  Apache Commons Collections under Apache License, Version 2.0
   Apache Log4j under The Apache Software License, Version 2.0
   Apache Pluto Portlet Tag Library under The Apache Software License, Version 2.0
   Codec under Apache License, Version 2.0
-  Collections under The Apache Software License, Version 2.0
   Commons IO under The Apache Software License, Version 2.0
   Commons Lang under The Apache Software License, Version 2.0
   Commons Logging under The Apache Software License, Version 2.0
