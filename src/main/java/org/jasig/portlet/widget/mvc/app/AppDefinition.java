@@ -183,7 +183,7 @@ public class AppDefinition implements Serializable {
             }
             prefs.store();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to save settings:  " + appDefinition.settings);
+            throw new RuntimeException("Unable to save settings:  " + appDefinition.settings, e);
         }
 
     }
