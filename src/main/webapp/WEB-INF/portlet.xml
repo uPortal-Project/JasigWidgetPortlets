@@ -458,7 +458,6 @@
                  or the isBlank() method will not work properly. -->
             <preference>
                 <name>AppDefinition.appUrl</name>
-                <value>http://www.apereo.org</value>
             </preference>
             <!-- Display Strategy to use.  Possible values:
                      - iframe in detached mode
@@ -475,15 +474,12 @@
             </preference>
             <preference>
                 <name>AppDefinition.linkTitle</name>
-                <value>Launch in a new window</value>
             </preference>
             <preference>
                 <name>AppDefinition.title</name>
-                <value>Apereo Foundation</value>
             </preference>
             <preference>
                 <name>AppDefinition.subtitle</name>
-                <value>Serving the academic mission</value>
             </preference>
             <preference>
                 <name>usePortalJsLibs</name>

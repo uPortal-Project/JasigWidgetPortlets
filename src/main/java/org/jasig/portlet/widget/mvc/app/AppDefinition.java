@@ -57,7 +57,7 @@ public class AppDefinition implements Serializable {
 
     public enum Setting {
 
-        APP_URL("appUrl", "http://www.apereo.org") {
+        APP_URL("appUrl", null) {
             @Override
             public boolean validate(String value) {
                 if (StringUtils.isBlank(value)) {
@@ -92,19 +92,19 @@ public class AppDefinition implements Serializable {
                         : true;
             }
         },
-        LINK_TITLE("linkTitle", "Launch in a new window") {
+        LINK_TITLE("linkTitle", null) {
             @Override
             public boolean validate(String value) {
                 return true;  // Anything is allowed
             }
         },
-        TITLE("title", "Apereo Foundation") {
+        TITLE("title", null) {
             @Override
             public boolean validate(String value) {
                 return StringUtils.isNotBlank(value);
             }
         },
-        SUBTITLE("subtitle", "Serving the academic mission") {
+        SUBTITLE("subtitle", null) {
             @Override
             public boolean validate(String value) {
                 return true;  // Not required
