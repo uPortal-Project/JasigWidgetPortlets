@@ -19,7 +19,7 @@
 
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<rs:aggregatedResources path="${ usePortalJsLibs ? '/app-skin-shared.xml' : '/app-skin.xml' }"/>
+<!-- NB:  3rd-party CSS and JS are not currently used in this JSP. -->
 <c:set var="n"><portlet:namespace/></c:set>
 
 <c:set var="linkHref">
@@ -43,13 +43,47 @@
 </c:set>
 
 <style>
-  /* These styles MUST be defined with the help of portlet preferences, so we do it here */
+  #${n}app {
+    text-align: center;
+  }
   #${n}app .icon-only {
-      max-width: <c:out value="${iconSizePixels}"/>px;
+    max-width: <c:out value="${iconSizePixels}"/>px;
+    display: inline-block;
+    width: 100%;  /* Portlet preferences will define max-width */
+    margin: 0 auto;
+  }
+  #${n}app .app-link {
+    text-decoration: none;
+  }
+  #${n}app .app-link .app-component {
+    display: block;
+    width: 100%;
   }
   #${n}app .app-icon {
-      // max-width: <c:out value="${iconSizePixels}"/>px;
-      background: url('${iconUrl}') center/contain no-repeat;
+    background: url('${iconUrl}') center/contain no-repeat;
+    display: inline-block;
+    width: 100%; /* Something wrapping the icon will bound its width */
+    padding-top: 100%;
+  }
+  #${n}app .app-icon-text {
+    margin-top: -4px;
+    padding: 5px 10px;
+    background-color: rgba(66, 66, 66, 1);
+    font-family: 'Oxygen', sans-serif;
+    opacity: 0.70;
+  }
+  #${n}app .app-icon-text .app-title {
+    font-size: 1.25em;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  #${n}app .app-icon-text .app-subtitle {
+    max-height: 3em;
+    color: #eee;
+    overflow: hidden;
   }
 </style>
 
