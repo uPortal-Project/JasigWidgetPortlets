@@ -176,7 +176,7 @@
             <keywords>Gadget</keywords>
         </portlet-info>
     </portlet>
-    
+
     <portlet>
         <portlet-name>tips</portlet-name>
         <display-name>Tips Portlet</display-name>
@@ -185,6 +185,8 @@
             <name>contextConfigLocation</name>
             <value>/WEB-INF/context/portlet/tipsPortletContext.xml</value>
         </init-param>
+        <!-- Do not cache (different tip each request) -->
+        <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
@@ -263,6 +265,7 @@
             <name>contextConfigLocation</name>
             <value>/WEB-INF/context/portlet/simpleJspPortletContext.xml</value>
         </init-param>
+        <expiration-cache>300</expiration-cache><!-- 5 min -->
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
@@ -336,6 +339,7 @@
             <name>contextConfigLocation</name>
             <value>/WEB-INF/context/portlet/pluggableDataJspPortletContext.xml,/WEB-INF/context/portlet/pluggableDataJspPortletContextOverrides.xml</value>
         </init-param>
+        <expiration-cache>300</expiration-cache><!-- 5 min -->
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
@@ -431,6 +435,7 @@
             <name>contextConfigLocation</name>
             <value>/WEB-INF/context/portlet/appLauncherPortletContext.xml</value>
         </init-param>
+        <expiration-cache>300</expiration-cache><!-- 5 min -->
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
@@ -491,7 +496,7 @@
     <custom-portlet-mode>
         <description>Allows the portlet to render a preferences edit UI during publishing</description>
         <portlet-mode>config</portlet-mode>
-    </custom-portlet-mode>    
+    </custom-portlet-mode>
 
     <user-attribute>
         <description>Username attribute name for uPortal user</description>
