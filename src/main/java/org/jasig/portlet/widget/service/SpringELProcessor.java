@@ -30,9 +30,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.context.expression.MapAccessor;
+import org.springframework.core.env.PropertyResolver;
 import org.springframework.expression.BeanResolver;
 import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateParserContext;
@@ -54,6 +56,14 @@ public class SpringELProcessor implements IExpressionProcessor, BeanFactoryAware
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     private BeanResolver beanResolver;
+
+    private PropertyResolver propertyResolver;
+
+    @Autowired
+    public void setPropertyResolver(PropertyResolver propertyResolver) {
+        this.propertyResolver = propertyResolver;
+    }
+
     private Properties properties;
 
 
@@ -85,6 +95,10 @@ public class SpringELProcessor implements IExpressionProcessor, BeanFactoryAware
         Map<String, Object> context = getContext(request);
 
         StandardEvaluationContext sec = new StandardEvaluationContext(context);
+
+        sec.setVariable("systemProperties", propertyResolver);
+
+        sec.addPropertyAccessor(new PropertyResolverAccessor());
         sec.addPropertyAccessor(new MapAccessor());
         sec.addPropertyAccessor(new ReflectivePropertyAccessor());
         sec.addPropertyAccessor(new DefaultPropertyAccessor(
