@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.env.PropertyResolver;
@@ -32,7 +33,13 @@ import org.springframework.core.env.PropertySourcesPropertyResolver;
 
 /**
  * @author Josh Helmer, jhelmer@unicon.net
+ *
+ * Aug 05 2016: This has been included (copied from uPortal) temporarily. The goal
+ * for the near future is to have this particular class included as an external
+ * dependency once it is split out from uPortal.
+ *
  */
+@Deprecated
 public class ExtendedPropertySourcesPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
     public static final String EXTENDED_PROPERTIES_SOURCE = "extendedPropertiesSource";
 
