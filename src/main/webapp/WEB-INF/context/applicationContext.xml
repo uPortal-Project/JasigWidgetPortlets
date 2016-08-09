@@ -28,6 +28,50 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
 
+    <!-- Configurable properties -->
+    <bean id="primaryPropertyPlaceholderConfigurer" class="org.springframework.context.support.ExtendedPropertySourcesPlaceholderConfigurer">
+      <property name="locations">
+        <list>
+          <value>classpath:/properties/rdbm.properties</value>
+          <value>classpath:/properties/security.properties</value>
+          <value>classpath:/properties/portal.properties</value>
+          <value>classpath:/properties/ccc/webresources-aws-s3.properties</value>
+            <!-- 
+             |  The following files optionally allow deployers to set or override many JasigWidgetPortlets
+             |  configuration settings in a outside the control of the build/deploy cycle, SCM, 
+             |  and Tomcat.
+             |
+             |  Reasons for choosing that may include:
+             |    - Desire to keep sensitive information out of your Git repository
+             |    - Ability to change some common settings without a full build and deploy cycle
+             |    - Building a WAR/EAR that is environment-independent.
+             |
+             |  Any property defined in the above files that is referenced in the Spring context 
+             |  may be overridden in one (or both) of these files.
+             |
+             |  The default location for overrides is ${CATALINA_HOME}/portal/overrides.properties;  
+             |  you can use a custom location by specifying PORTAL_HOME as a JVM startup argument 
+             |  or as an environment variable.
+             |
+             |  The first two files (overrides.properties) are intended to contain properties,
+             |  such as database secrets, that are shared with portlets (they read those property
+             |  files also).  The latter two files
+             |  (JasigWidgetPortlets_overrides.properties) are for properties
+             |  that are specific to JasigWidgetPortlets (portlets should not read
+             |  these files).
+             +-->
+
+          <value>file:${CATALINA_HOME}/portal/overrides.properties</value>
+          <value>file:${PORTAL_HOME}/overrides.properties</value>
+          <value>file:${CATALINA_HOME}/portal/JasigWidgetPortlets_overrides.properties</value>
+          <value>file:${PORTAL_HOME}/JasigWidgetPortlets_overrides.properties</value>
+        </list>
+      </property>
+      <property name="ignoreResourceNotFound" value="true" />
+      <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="propertyResolver" factory-bean="primaryPropertyPlaceholderConfigurer" factory-method="getPropertyResolver"/>
 	<!--
 	 | Message source for this context, loaded from localized "messages_xx" files
 	 +-->

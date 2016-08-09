@@ -24,15 +24,21 @@ import java.util.Properties;
 
 import javax.portlet.PortletRequest;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.Property;
+import org.springframework.core.env.PropertyResolver;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -41,9 +47,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "springElProcessorContext.xml")
 public class SpringELProcessorTest {
+
     @Autowired
     private SpringELProcessor processor;
-
 
     @Test
     public void testLookupProperties() {
@@ -72,6 +78,22 @@ public class SpringELProcessorTest {
         assertThat(processor.process("${request['key.with.dots']}", request), equalTo("key.with.dots"));
     }
 
+    @Test
+    public void testElvisExpr() throws Exception {
+        MockPortletRequest req = new MockPortletRequest();
+        assertThat(processor.process("${request['foo'] ?: 'bar'}", req), equalTo("bar"));
+    }
+
+    @Test
+    public void testPropertyResolver() throws Exception {
+        PropertyResolver pr = mock(PropertyResolver.class);
+        when(pr.getProperty("foo")).thenReturn("bar");
+
+        processor.setPropertyResolver(pr);
+        assertThat(processor.process("foo${#systemProperties['foo']}", new MockPortletRequest()), equalTo("foobar"));
+
+        verify(pr).getProperty("foo");
+    }
 
     @Test
     public void testLookupUserProperties() {

@@ -18,64 +18,38 @@
  */
 package org.jasig.portlet.widget.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.convert.Property;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.expression.AccessException;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.PropertyAccessor;
 import org.springframework.expression.TypedValue;
 
-
 /**
- * @author Josh Helmer, jhelmer@unicon.net
- *
- * Property accessor that tries to log an error and provide a default value
- * if a property can not be found.
- *
- * Limitation:  the accessor only gets access to the leaf property name.  If
- * you have a property like:  user.login.id, this will only be able to print
- * "${id}"  In the future need to revisit to try and find a more flexible
- * mechanism for handling without just throwing an exception.
+ * Created by andrew on 7/25/16.
  */
-public class DefaultPropertyAccessor implements PropertyAccessor {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-    private String leading;
-    private String trailing;
-
-    public DefaultPropertyAccessor(final String leading, final String trailing) {
-        this.leading = leading;
-        this.trailing = trailing;
-    }
-
-
+public class PropertyResolverAccessor implements PropertyAccessor {
     @Override
     public Class[] getSpecificTargetClasses() {
-        return new Class[] { Object.class };
+        return new Class[] { PropertyResolver.class };
     }
-
 
     @Override
     public boolean canRead(EvaluationContext evaluationContext, Object o, String s) throws AccessException {
-        return true;
+        return o != null;
     }
-
 
     @Override
     public TypedValue read(EvaluationContext evaluationContext, Object o, String s) throws AccessException {
-        logger.error("Property '" + s + "' not found!");
-        return new TypedValue(leading + s + trailing);
+        PropertyResolver pr = (PropertyResolver) o;
+        return new TypedValue(pr.getProperty(s)); // Returns TypedValue(null), allowing defaults to be processed
     }
-
 
     @Override
     public boolean canWrite(EvaluationContext evaluationContext, Object o, String s) throws AccessException {
         return false;
     }
 
-
-    @Override
-    public void write(EvaluationContext evaluationContext, Object o, String s, Object o2) throws AccessException {
+    public void write(EvaluationContext evaluationContext, Object o, String s, Object o1) throws AccessException {
+        //Unreachable
     }
 }
