@@ -28,9 +28,11 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 
+@Service
 public class YouTubeService {
     
     protected final Log log = LogFactory.getLog(getClass());

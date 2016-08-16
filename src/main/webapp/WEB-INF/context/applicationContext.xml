@@ -22,11 +22,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:lang="http://www.springframework.org/schema/lang"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
-	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
+	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <!-- Configurable properties -->
     <bean id="primaryPropertyPlaceholderConfigurer" class="org.springframework.context.support.ExtendedPropertySourcesPlaceholderConfigurer">
@@ -80,14 +82,11 @@
 			<list><value>messages</value></list>
 		</property>
 	</bean>
-    
-    <bean class="org.jasig.portlet.widget.service.ThemeNameViewHelperImpl"/>
-	
-	<bean class="org.jasig.web.service.AjaxPortletSupportService"/>
-    
-    <bean class="org.jasig.portlet.widget.service.GoogleGadgetService"/>
 
-    <bean class="org.jasig.portlet.widget.service.YouTubeService"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="org.jasig.portlet.widget.service"/>
+
+    <bean class="org.jasig.web.service.AjaxPortletSupportService"/>
 
 	<lang:groovy id="dictionaryParsingService" 
 		script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>

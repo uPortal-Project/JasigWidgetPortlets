@@ -43,7 +43,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jasig.portlet.widget.gadget.model.Module;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GoogleGadgetService {
     
     private static final String GADGET_BASE_URL = "http://www.google.com/ig/directory?synd=open";

@@ -20,15 +20,13 @@ package org.jasig.portlet.widget.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.portlet.PortletRequest;
 
-import org.junit.Before;
+import org.jasig.portlet.widget.service.spel.SpELExpressionProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.Property;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 import org.springframework.test.context.ContextConfiguration;
@@ -49,33 +47,24 @@ import static org.mockito.Mockito.when;
 public class SpringELProcessorTest {
 
     @Autowired
-    private SpringELProcessor processor;
+    private SpELExpressionProcessor processor;
 
     @Test
     public void testLookupProperties() {
-        Properties testProps = new Properties();
-        testProps.put("key", "value");
-        testProps.put("key.with.dots", "key.with.dots");
-
         PortletRequest request = new MockPortletRequest();
 
-        processor.setProperties(testProps);
         assertThat(processor.process("${key}", request), equalTo("value"));
-        assertThat(processor.process("${['key.with.dots']}", request), equalTo("key.with.dots"));
+        assertThat(processor.process("${['key.with.dots']}", request), equalTo("value.with.dots"));
     }
-
 
     @Test
     public void testLookupRequestParams() {
-        Properties testProps = new Properties();
-
         MockPortletRequest request = new MockPortletRequest();
         request.addParameter("key", "value");
-        request.addParameter("key.with.dots", "key.with.dots");
+        request.addParameter("key.with.dots", "value.with.dots");
 
-        processor.setProperties(testProps);
         assertThat(processor.process("${request.key}", request), equalTo("value"));
-        assertThat(processor.process("${request['key.with.dots']}", request), equalTo("key.with.dots"));
+        assertThat(processor.process("${request['key.with.dots']}", request), equalTo("value.with.dots"));
     }
 
     @Test
@@ -97,16 +86,14 @@ public class SpringELProcessorTest {
 
     @Test
     public void testLookupUserProperties() {
-        Properties testProps = new Properties();
-
         MockPortletRequest request = new MockPortletRequest();
         Map<String, String> userProperties = new HashMap<String, String>();
         userProperties.put("key", "value");
-        userProperties.put("key.with.dots", "key.with.dots");
+        userProperties.put("key.with.dots", "value.with.dots");
         request.setAttribute(PortletRequest.USER_INFO, userProperties);
 
-        processor.setProperties(testProps);
         assertThat(processor.process("${user.key}", request), equalTo("value"));
-        assertThat(processor.process("${user['key.with.dots']}", request), equalTo("key.with.dots"));
+        assertThat(processor.process("${user['key.with.dots']}", request), equalTo("value.with.dots"));
     }
+
 }
