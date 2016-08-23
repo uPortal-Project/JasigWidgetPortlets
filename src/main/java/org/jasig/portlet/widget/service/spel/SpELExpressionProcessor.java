@@ -16,22 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.jasig.portlet.widget.service;
 
-import java.util.Enumeration;
+package org.jasig.portlet.widget.service.spel;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Properties;
+import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.portlet.PortletRequest;
 
+import org.jasig.portlet.widget.service.DefaultPropertyAccessor;
+import org.jasig.portlet.widget.service.IExpressionProcessor;
+import org.jasig.portlet.widget.service.PropertyResolverAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.env.PropertyResolver;
@@ -43,56 +45,49 @@ import org.springframework.expression.spel.support.ReflectivePropertyAccessor;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Service;
 
-
 /**
  * Processor that uses spring EL for the implementation.
  *
  * @author Josh Helmer, jhelmer@unicon.net
  */
 @Service
-public class SpringELProcessor implements IExpressionProcessor, BeanFactoryAware {
+public class SpELExpressionProcessor implements IExpressionProcessor {
+
     private static ParserContext PARSER_CONTEXT = new TemplateParserContext("${", "}");
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private BeanResolver beanResolver;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     private PropertyResolver propertyResolver;
+
+    private BeanResolver beanResolver;
+
+    private final Set<IContextElementsProvider> contextElementsProviders = new HashSet<>();
 
     @Autowired
     public void setPropertyResolver(PropertyResolver propertyResolver) {
         this.propertyResolver = propertyResolver;
     }
 
-    private Properties properties;
-
-
-    /**
-     * @{inheritDoc}
-     */
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanResolver = new BeanFactoryResolver(beanFactory);
+    @PostConstruct
+    public void init() {
+        beanResolver = new BeanFactoryResolver(applicationContext);
+        contextElementsProviders.addAll(applicationContext.getBeansOfType(IContextElementsProvider.class).values());
     }
-
-
-    /**
-     * Set the properties loader to user.
-     *
-     * @param properties the properties loader
-     */
-    @Required
-    public void setProperties(final Properties properties) {
-        this.properties = properties;
-    }
-
 
     /**
      * @{inheritDoc}
      */
     @Override
     public String process(String value, PortletRequest request) {
-        Map<String, Object> context = getContext(request);
+
+        // Set up the context
+        final Map<String,Object> context = new HashMap<>();
+        for (IContextElementsProvider cep : contextElementsProviders) {
+            context.putAll(cep.provideElements(request));
+        }
 
         StandardEvaluationContext sec = new StandardEvaluationContext(context);
 
@@ -114,33 +109,4 @@ public class SpringELProcessor implements IExpressionProcessor, BeanFactoryAware
         return processed;
     }
 
-
-    /**
-     * Setup the context for spring EL.   Will add all raw properties from
-     * the config file, the request parameters and user info.
-     *
-     * @param request the portlet request to read params from
-     * @return a map of properties
-     */
-    private Map<String, Object> getContext(PortletRequest request) {
-        Map<String, Object> context = new HashMap<String, Object>();
-
-        for (String key : properties.stringPropertyNames()) {
-            context.put(key, properties.getProperty(key));
-        }
-
-        Map<String, String> requestMap = new HashMap<String, String>();
-        Enumeration<String> names = request.getParameterNames();
-        while (names.hasMoreElements()) {
-            String name = names.nextElement();
-            requestMap.put(name, request.getParameter(name));
-        }
-        context.put("request", requestMap);
-
-
-        Map<String, String> userInfo = (Map<String, String>)request.getAttribute(PortletRequest.USER_INFO);
-        context.put("user", userInfo);
-
-        return context;
-    }
 }

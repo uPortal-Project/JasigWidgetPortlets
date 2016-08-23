@@ -20,6 +20,9 @@ package org.jasig.portlet.widget.service;
 
 import javax.portlet.PortletRequest;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ThemeNameViewHelperImpl implements IViewHelper {
 
     protected static final String THEME_NAME_PROPERTY = "themeName";

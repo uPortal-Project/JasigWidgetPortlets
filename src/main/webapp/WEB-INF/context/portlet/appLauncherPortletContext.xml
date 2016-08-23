@@ -19,7 +19,6 @@
     under the License.
 
 -->
-<!-- DEPRECATED:  This portlet was moved to the Apereo NotificationPortlet project.  -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -31,10 +30,4 @@
     <context:annotation-config/>
     <context:component-scan base-package="org.jasig.portlet.widget.mvc.app"/>
 
-
-    <bean id="appLauncherProperties" class="org.jasig.portlet.widget.service.SpringELProcessor">
-        <property name="properties">
-            <util:properties id="appLauncherProperties" location="classpath:app-launcher.properties"/>
-        </property>
-    </bean>
 </beans>
