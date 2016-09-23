@@ -20,14 +20,14 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
     xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:lang="http://www.springframework.org/schema/lang"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
-	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
+    http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <!-- Configurable properties -->
@@ -74,47 +74,47 @@
     </bean>
 
     <bean id="propertyResolver" factory-bean="primaryPropertyPlaceholderConfigurer" factory-method="getPropertyResolver"/>
-	<!--
-	 | Message source for this context, loaded from localized "messages_xx" files
-	 +-->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basenames">
-			<list><value>messages</value></list>
-		</property>
-	</bean>
+    <!--
+     | Message source for this context, loaded from localized "messages_xx" files
+     +-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list><value>messages</value></list>
+        </property>
+    </bean>
 
     <context:annotation-config/>
     <context:component-scan base-package="org.jasig.portlet.widget.service"/>
 
     <bean class="org.jasig.web.service.AjaxPortletSupportService"/>
 
-	<lang:groovy id="dictionaryParsingService" 
-		script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>
+    <lang:groovy id="dictionaryParsingService" 
+        script-source="classpath:org/jasig/portlet/widget/service/DictionaryParsingServiceImpl.groovy"/>
 
-	<!--
-	 | CACHE CONFIGUATION
-	 +-->
-	
-	<!-- EhCache Cache manager -->
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-		p:configLocation="classpath:ehcache.xml"/>
-	
-	<bean id="definitionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
-		p:cacheManager-ref="cacheManager" p:cacheName="definitionCache"/>
-	
+    <!--
+     | CACHE CONFIGUATION
+     +-->
+
+    <!-- EhCache Cache manager -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+        p:configLocation="classpath:ehcache.xml"/>
+
+    <bean id="definitionCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+        p:cacheManager-ref="cacheManager" p:cacheName="definitionCache"/>
+
     <bean id="youTubeCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
         p:cacheManager-ref="cacheManager" p:cacheName="youTubeCache"/>
-    
-	<!-- 
-	 | View resolvers, look for a named view bean before going to JSP resolution
-	 +-->
-	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
-		p:order="0" p:location="/WEB-INF/context/views.xml"/>
-	
-	<bean id="jspViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		p:order="10" p:cache="true" p:viewClass="org.springframework.web.servlet.view.JstlView"
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+
+    <!-- 
+     | View resolvers, look for a named view bean before going to JSP resolution
+     +-->
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver"
+        p:order="0" p:location="/WEB-INF/context/views.xml"/>
+
+    <bean id="jspViewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        p:order="10" p:cache="true" p:viewClass="org.springframework.web.servlet.view.JstlView"
+        p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
     <!--
      | Always declare an 'exceptionResolver' bean with a 'defaultErrorView' 
