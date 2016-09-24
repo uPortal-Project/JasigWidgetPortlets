@@ -72,6 +72,12 @@ public class AppDefinition implements Serializable {
                 return rslt;
             }
         },
+        REDIRECT("redirect", Boolean.FALSE.toString()) {
+            @Override
+            public boolean validate(String value) {
+                return value.equalsIgnoreCase(Boolean.TRUE.toString()) || value.equalsIgnoreCase(Boolean.FALSE.toString());
+            }
+        },
         DISPLAY_STRATEGY("displayStrategy", DisplayStrategies.IFRAME.getCode()) {
             @Override
             public boolean validate(String value) {
@@ -190,6 +196,10 @@ public class AppDefinition implements Serializable {
 
     public String getAppUrl() {
         return settings.get(Setting.APP_URL);
+    }
+
+    public boolean isRedirect() {
+        return Boolean.parseBoolean(settings.get(Setting.REDIRECT));
     }
 
     public String getDisplayStrategy() {

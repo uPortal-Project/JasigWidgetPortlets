@@ -93,6 +93,16 @@
                 </a>
             </div>
         </div>
+        <div class="form-group redirect">
+            <label for="redirect" class="col-sm-2 control-label"><spring:message code="app-launcher.redirect"/></label>
+            <div class="col-sm-10">
+                <select class="form-control" name="redirect" id="redirect">
+                    <option value="false"><spring:message code="app-launcher.no"/></option>
+                    <option value="true"><spring:message code="app-launcher.yes"/></option>
+                </select>
+                <div class="field-error bg-danger"><spring:message code="app-launcher.redirect.invalid"/></div>
+            </div>
+        </div>
         <div class="form-group displayStrategy">
             <label for="displayStrategy" class="col-sm-2 control-label"><spring:message code="app-launcher.displayStrategy"/></label>
             <div class="col-sm-10">

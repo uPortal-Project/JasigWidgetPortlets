@@ -16,10 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.jasig.portlet.widget.mvc.app;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
 
 import org.jasig.portlet.widget.service.IExpressionProcessor;
@@ -49,14 +52,12 @@ public class AppLauncherViewController {
 
     private IExpressionProcessor expressionProcessor;
 
-
     @Autowired
     public void setExpressionProcessor(final IExpressionProcessor expressionProcessor) {
         this.expressionProcessor = expressionProcessor;
     }
 
-
-    @RenderMapping()
+    @RenderMapping
     public String view(PortletRequest req) throws Exception {
         // As a precaution, clear the in-process config settings (if any)...
         AppLauncherConfigController.clearAppDefinitionInProgress(req);
@@ -81,12 +82,29 @@ public class AppLauncherViewController {
     }
 
     @ModelAttribute("appUrl")
-    public String getAppUrl(PortletRequest req) throws WindowStateException {
-        AppDefinition def = getAppDefinition(req);
+    public String getAppUrl(PortletRequest req, RenderResponse res) throws WindowStateException {
 
-        String configuredUrl = def.getAppUrl();
-        String processedUrl = expressionProcessor.process(configuredUrl, req);
+        String rslt = null;
 
-        return processedUrl;
+        final AppDefinition def = getAppDefinition(req);
+        final boolean useRedirect = def.isRedirect() && (def.getDisplayStrategy() != AppDefinition.DisplayStrategies.IFRAME.getCode());
+        if (useRedirect) {
+            /*
+             * Redirect through the action handler first;  process SpEL in there.
+             */
+            final PortletURL actionUrl = res.createActionURL();
+            actionUrl.setParameter(AppLauncherRedirectController.ACTION_PARAMETER_NAME, AppLauncherRedirectController.REDIRECT_ACTION);
+            rslt = actionUrl.toString();
+        } else {
+            /*
+             * No redirect
+             */
+            final String configuredUrl = def.getAppUrl();
+            rslt = expressionProcessor.process(configuredUrl, req);
+        }
+
+        return rslt;
+
     }
+
 }
