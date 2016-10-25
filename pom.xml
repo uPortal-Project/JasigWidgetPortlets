@@ -226,6 +226,11 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.jasypt</groupId>
+                <artifactId>jasypt-spring31</artifactId>
+                <version>1.9.2</version>
+            </dependency>
+            <dependency>
                 <groupId>org.jvnet.jaxb2_commons</groupId>
                 <artifactId>jaxb2-basics-runtime</artifactId>
                 <version>0.6.0</version>
@@ -404,6 +409,10 @@
         <dependency>
             <groupId>org.jasig.resourceserver</groupId>
             <artifactId>resource-server-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt-spring31</artifactId>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

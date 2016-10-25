@@ -16,34 +16,89 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.springframework.context.support;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.properties.EncryptableProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.PropertySourcesPropertyResolver;
-
+import org.springframework.core.io.Resource;
+import org.springframework.util.CollectionUtils;
 
 /**
+ * Custom extension of {@link PropertySourcesPlaceholderConfigurer} that serves
+ * three purposes:
+ * <ul>
+ *   <li>Override postProcessing to provide access to "local" properties before
+ *   bean post-processing has completed</li>
+ *   <li>Force configuration setting ignoreResourceNotFound=true and (safely)
+ *   ignore noisy WARNings in the log concerning missing properties files that
+ *   are optional</li>
+ *   <li>Provide support for encrypted property values based on Jasypt</li>
+ * </ul>
+ *
  * @author Josh Helmer, jhelmer@unicon.net
- *
- * Aug 05 2016: This has been included (copied from uPortal) temporarily. The goal
- * for the near future is to have this particular class included as an external
- * dependency once it is split out from uPortal.
- *
  */
 @Deprecated
 public class ExtendedPropertySourcesPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
     public static final String EXTENDED_PROPERTIES_SOURCE = "extendedPropertiesSource";
+    public static final String JAYSYPT_ENCRYPTION_KEY_VARIABLE = "UP_JASYPT_KEY";
 
     private PropertyResolver propertyResolver;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    public ExtendedPropertySourcesPlaceholderConfigurer() {
+        /*
+         * We rely on this config for our optional properties files
+         */
+        super.setIgnoreResourceNotFound(true);
+    }
+
+    @Override
+    public void setIgnoreResourceNotFound(boolean value) {
+        if (value == false) {
+            final String msg = "Instances of PortalPropertySourcesPlaceholderConfigurer "
+                                            + "are always ignoreResourceNotFound=true";
+            throw new UnsupportedOperationException(msg);
+        }
+    }
+
+    /**
+     * uPortal defines some properties files in its primaryPropertyPlaceholderConfigurer
+     * bean that are considered (and documented) optional.  The parent class
+     * (PropertySourcesPlaceholderConfigurer) will operate properly without them, but
+     * puts a significant number of WARN messages into the log.  These are noisy, and
+     * could lead a new adopter to think that something's wrong.  This method removes
+     * absent properties files from the collection.
+     */
+    @Override
+    public void setLocations(Resource[] locations) {
+        final List<Resource> list = new ArrayList<>();
+        for (Resource r : locations) {
+            if (r.exists()) {
+                list.add(r);
+            } else {
+                // In our case this event is worth a DEBUG note.
+                logger.debug("The following Resource was not present (it may be "
+                        + "optional, or it's absence may lead to issues):  ", r);
+            }
+        }
+        super.setLocations(list.toArray(new Resource[0]));
+    }
 
 
     /**
@@ -88,4 +143,71 @@ public class ExtendedPropertySourcesPlaceholderConfigurer extends PropertySource
     public PropertyResolver getPropertyResolver() {
         return propertyResolver;
     }
+
+    /**
+     * Override PropertiesLoaderSupport.mergeProprties in order to slip in a
+     * properly-configured EncryptableProperties instance, allowing us to
+     * encrypt property values at rest.
+     */
+    @Override
+    protected Properties mergeProperties() throws IOException {
+
+        Properties rslt = null;
+
+        /*
+         * If properties file encryption is used in this deployment, the
+         * encryption key will be made available to the application as an
+         * environment variable called UP_JASYPT_KEY.
+         */
+        final String encryptionKey = System.getenv(JAYSYPT_ENCRYPTION_KEY_VARIABLE);
+        if (encryptionKey != null) {
+
+            logger.info("Jasypt support for encrypted property values ENABLED");
+
+            StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+            encryptor.setPassword(encryptionKey);
+            rslt = new EncryptableProperties(encryptor);
+
+            /*
+             * BEGIN copied from PropertiesLoaderSupport.mergeProperties()
+             */
+
+            if (this.localOverride) {
+                // Load properties from file upfront, to let local properties override.
+                loadProperties(rslt);
+            }
+
+            if (this.localProperties != null) {
+                for (int i = 0; i < this.localProperties.length; i++) {
+                    CollectionUtils.mergePropertiesIntoMap(this.localProperties[i], rslt);
+                }
+            }
+
+            if (!this.localOverride) {
+                // Load properties from file afterwards, to let those properties override.
+                loadProperties(rslt);
+            }
+
+            /*
+             * END copied from PropertiesLoaderSupport.mergeProperties()
+             */
+
+        } else {
+
+            logger.info("Jasypt support for encrypted property values DISABLED;  "
+                    + "specify environment variable {} to use this feature",
+                    JAYSYPT_ENCRYPTION_KEY_VARIABLE);
+
+            /*
+             * The feature is not in use;  defer to the Spring-provided
+             * implementation of this method.
+             */
+            return super.mergeProperties();
+
+        }
+
+        return rslt;
+
+    }
+
 }
