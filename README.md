@@ -1,5 +1,7 @@
 # Jasig Widget Portlets
 
+[![Build Status](https://travis-ci.org/Jasig/JasigWidgetPortlets.svg?branch=master)](https://travis-ci.org/Jasig/JasigWidgetPortlets)
+
 This is a [Sponsored Portlet][] in the uPortal ecosystem.
 
 ## Configuration
