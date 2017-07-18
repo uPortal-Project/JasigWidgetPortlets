@@ -1,0 +1,20 @@
+.up #googleDrive {
+    height: 64px;
+    width: 64px;
+    background: url(../images/googleDrive.png) 0px center no-repeat;
+    background-size: contain;
+}
+
+.up #dropbox {
+    height: 64px;
+    width: 64px;
+    background: url(../images/dropbox.png) 0px center no-repeat;
+    background-size: contain;
+}
+
+.up #onedrive {
+    height: 64px;
+    width: 64px;
+    background: url(../images/onedrive.png) 0px center no-repeat;
+    background-size: contain;
+}
