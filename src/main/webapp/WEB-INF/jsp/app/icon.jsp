@@ -54,7 +54,7 @@
 
 <div id="${n}app" class="app-launcher-portlet">
     <div class="app-launcher-item icon-and-text">
-        <a class="app-link" href="<c:out value="${linkHref}"/>" target="<c:out value="${targetValue}"/>" title="<c:out value="${appDefinition.linkTitle}"/>">
+        <a class="app-link" rel="noopener noreferrer" href="<c:out value="${linkHref}"/>" target="<c:out value="${targetValue}"/>" title="<c:out value="${appDefinition.linkTitle}"/>">
             <span class="app-component app-icon-wrapper">
                 <span class="app-icon"></span>
             </span>

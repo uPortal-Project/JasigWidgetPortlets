@@ -39,6 +39,6 @@
 <div id="${n}iframeContainer">
 <iframe id="${n}frame" src="<c:out value="${appUrl}"/>" style="width:100%; height:100%;">
     This browser does not support inline frames.<br/> 
-    <a href="<c:out value="${appUrl}"/>" target="_blank">Click here to view content</a> in a separate window.
+    <a href="<c:out value="${appUrl}"/>" target="_blank" rel="noopener noreferrer">Click here to view content</a> in a separate window.
 </iframe>
 </div>
