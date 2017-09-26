@@ -13,14 +13,14 @@
 
     <name>Jasig Widget Portlets</name>
     <description>Collection of small, simple widget-type portlets.</description>
-    <version>2.2.8-SNAPSHOT</version>
+    <version>3.0.0</version>
 
     <scm>
-        <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
-        <developerConnection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</developerConnection>
-        <url>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</url>
+      <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
+      <developerConnection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</developerConnection>
+      <url>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</url>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <properties>
         <icu4j.version>51.1</icu4j.version>
@@ -33,6 +33,7 @@
         <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>3.2.3.RELEASE</spring.version>
         <resource-server.version>1.0.42</resource-server.version>
+        <uportal-libs.version>5.0.0-M5</uportal-libs.version>
     </properties>
 
     <licenses>
@@ -342,6 +343,37 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.jasig.portal</groupId>
+                <artifactId>uPortal-spring</artifactId>
+                <version>${uportal-libs.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jasig.portal</groupId>
+                        <artifactId>uPortal-api-internal</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jasig.portal</groupId>
+                        <artifactId>uPortal-security-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jasig.portal</groupId>
+                        <artifactId>uPortal-security-mvc</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jasig.portal</groupId>
+                        <artifactId>uPortal-tools</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.oauth.core</groupId>
+                        <artifactId>oauth</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-webmvc</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <!-- End of logging section -->
         </dependencies>
     </dependencyManagement>
@@ -527,7 +559,10 @@
             <scope>runtime</scope>
         </dependency>
         <!-- End of logging section -->
-
+        <dependency>
+            <groupId>org.jasig.portal</groupId>
+            <artifactId>uPortal-spring</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
