@@ -27,6 +27,9 @@
                 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+    <!-- Properties configuration -->
+    <bean parent="propertyConfigurer"/>
+
     <!--
      | Copy this file to the uportal-portlets-overlay/src/main/webapp/WEB-INF/context folder and add your
      | beans to this file, especially the custom beans that implement the PluggableDataDao interface.

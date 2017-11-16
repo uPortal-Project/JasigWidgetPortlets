@@ -26,6 +26,9 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
     
     <context:annotation-config/>
+
+    <!-- Properties configuration -->
+    <bean parent="propertyConfigurer"/>
     
     <bean class="org.jasig.portlet.widget.mvc.GoogleSearchController"/>
     
