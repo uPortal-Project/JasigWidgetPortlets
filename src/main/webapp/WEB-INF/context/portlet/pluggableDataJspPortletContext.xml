@@ -29,6 +29,10 @@
 
 
     <context:annotation-config/>
+
+    <!-- Properties configuration -->
+    <bean parent="propertyConfigurer"/>
+
     <bean class="org.jasig.portlet.widget.mvc.PluggableDataJspPortletController"
         p:service-ref="cachingConfigurableDataServiceImpl"/>
     <bean id="cachingConfigurableDataServiceImpl"
