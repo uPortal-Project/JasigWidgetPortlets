@@ -503,4 +503,40 @@
         <name>user.login.id</name>
     </user-attribute>
 
+    <portlet>
+        <portlet-name>resource-links</portlet-name>
+        <display-name xml:lang="en">Resource Links</display-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/portlet/resourceLinksPortletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>CONFIG</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>Resource Links</title>
+            <short-title>Resource Links</short-title>
+            <keywords>links</keywords>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>includeJsLibs</name>
+                <value>false</value>
+            </preference>
+            <preference>
+                <name>link-order</name>
+                <value>My Title, My Title2</value>
+            </preference>
+            <preference>
+                <name>resource-link</name>
+                <value>{"title":"My Title","description":"My description.","icon":"fa-link","url":"http://localhost:8080/myapp","groups":["everyone","students"]}</value>
+                <value>{"title":"My Title2","description":"Another description.","icon":"fa-wifi","url":"http://localhost:8080/myapp2","groups":["everyone"]}</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
 </portlet-app>

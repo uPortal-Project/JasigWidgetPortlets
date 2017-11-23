@@ -26,10 +26,12 @@
         <icu4j.version>51.1</icu4j.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
+        <jackson.version>2.9.2</jackson.version>
         <logbackVersion>1.0.12</logbackVersion>
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.5</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
+        <ehcache.version>2.10.4</ehcache.version>
         <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>4.3.12.RELEASE</spring.version>
         <resource-server.version>1.0.42</resource-server.version>
@@ -69,6 +71,10 @@
                     <exclusion>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.sf.ehcache</groupId>
+                        <artifactId>ehcache-core</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -166,7 +172,7 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>1.6.4</version>
+                <version>1.8.9</version>
             </dependency>
             <dependency>
                 <groupId>org.hsqldb</groupId>
@@ -382,6 +388,11 @@
 
         <!-- ===== Compile Time Dependencies ============================== -->
         <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.googlecode.ehcache-spring-annotations</groupId>
             <artifactId>ehcache-spring-annotations</artifactId>
         </dependency>
@@ -400,6 +411,16 @@
         <dependency>
            <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

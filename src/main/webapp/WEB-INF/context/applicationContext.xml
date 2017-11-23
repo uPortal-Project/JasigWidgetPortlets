@@ -65,7 +65,7 @@
         </property>
     </bean>
 
-    <bean id="propertyResolver" factory-bean="primaryPropertyPlaceholderConfigurer" factory-method="getPropertyResolver"/>
+    <bean id="propertyResolver" factory-bean="propertyConfigurer" factory-method="getPropertyResolver"/>
 
     <!--
      | Message source for this context, loaded from localized "messages_xx" files
