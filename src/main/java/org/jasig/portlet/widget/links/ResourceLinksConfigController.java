@@ -1,11 +1,12 @@
 package org.jasig.portlet.widget.links;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,18 +33,23 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
     @ActionMapping
     public void saveResourceLinks(ActionRequest req, ActionResponse res,
                                   @RequestParam(value="save", required = false) String save,
-                                  @RequestParam(value="links", required = false) String linksJson) throws PortletModeException {
-        if (StringUtils.isNotBlank((save))) {
+                                  @RequestParam(value="links", required = false) String linksJson) throws PortletException, IOException {
 
-            // validate JSON of links
-            log.error(linksJson);
-
-            // validate ordered list of link titles
-
+        // validate JSON of links by converting to list of ResouceLink objects
+        if (StringUtils.isNotBlank(save)) {
+            log.debug(linksJson);
+            List<ResourceLink> links = ResourceLinkService.jsonArrayToLinkList(linksJson);
+            if (links == null || links.isEmpty()) {
+                return;  // send them back to config mode
+            }
+            String[] validLinksJson = ResourceLinkService.linkListToJsonStrArray(links);
+            String linkOrder = ResourceLinkService.linkListToOrderString(links);
             // save  to preferences
-        } else {
-            res.setPortletMode(PortletMode.VIEW);
+            req.getPreferences().setValues(PREF_LINK_ATTR, validLinksJson);
+            req.getPreferences().setValue(PREF_LINK_ORDER_ATTR, linkOrder);
+            req.getPreferences().store();
         }
+        res.setPortletMode(PortletMode.VIEW);
     }
 
     @ModelAttribute("links")

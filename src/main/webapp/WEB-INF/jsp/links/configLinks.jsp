@@ -110,7 +110,6 @@
         }
 
         var selectItem = function(e) {
-            console.log(e);
             _.forEach(document.getElementById('${n}config').querySelectorAll("li"), function(li) {
                 li.classList.remove('active');
             });
@@ -227,7 +226,6 @@
             _.forEach(app.querySelectorAll("li"), function(item) {
                 links.push(item.link);
             });
-            console.log(links);
             app.querySelector('input[name="links"]').value = JSON.stringify(links);
         }
 

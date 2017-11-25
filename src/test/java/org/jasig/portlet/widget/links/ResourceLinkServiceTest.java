@@ -40,6 +40,7 @@ public class ResourceLinkServiceTest {
     static final String JSON3 = "{\"title\":\"My Title 3\",\"description\":\"My 3rd description.\",\"icon\":\"fa-foot\",\"url\":\"http://localhost:8080/myapp3\",\"groups\":[\"admin\"]}";
     static final String BAD_JSON = "{\"title\":\"My Title\",\"description\":\"My description.\",\"icon\":\"fa-disk\",\"url\":\"http://localhost:8080/myapp\",\"groups\":[\"everyone\",\"students\"],\"iconType\":\"fa\"}";
     final String[] JSON_STRINGS = {JSON, JSON2, JSON3};
+    final String JSON_ARRAY = "[" + JSON + "," + JSON2 + "," + JSON3 + "]";
     final String[] LINK_ORDER = {"My Title 2", "My Title 3", "My Title"};
 
     static {
@@ -93,13 +94,61 @@ public class ResourceLinkServiceTest {
 
     @Test
     public void testStringArrayToJSON() {
-        final String[] STRINGS = {JSON, JSON2, JSON3};
         final String[] EMPTY = {};
         final String[] BLANK = {""};
-        final String JSON_ARRAY = "[" + JSON + "," + JSON2 + "," + JSON3 + "]";
-        assertEquals(JSON_ARRAY, ResourceLinkService.convertStringArrayToJsonArray(STRINGS));
+        assertEquals(JSON_ARRAY, ResourceLinkService.convertStringArrayToJsonArray(JSON_STRINGS));
         assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(EMPTY));
         assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(BLANK));
         assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(null));
+    }
+
+    @Test
+    public void testJsonArrayToLinkList() {
+        final ResourceLink link1 = ResourceLinkService.jsonToLink(JSON);
+        final ResourceLink link2 = ResourceLinkService.jsonToLink(JSON2);
+        final ResourceLink link3 = ResourceLinkService.jsonToLink(JSON3);
+        final List<ResourceLink> links = new ArrayList<>();
+        links.add(link1);
+        links.add(link2);
+        links.add(link3);
+        assertEquals(links, ResourceLinkService.jsonArrayToLinkList(JSON_ARRAY));
+        assertEquals(link1, links.get(0));
+        assertEquals(link2, links.get(1));
+        assertEquals(link3, links.get(2));
+
+        final String JSON_ARRAY2 = "[" + JSON3 + "," + JSON + "," + JSON2 + "]";
+        links.clear();
+        links.add(link3);
+        links.add(link1);
+        links.add(link2);
+        assertEquals(links, ResourceLinkService.jsonArrayToLinkList(JSON_ARRAY2));
+        assertEquals(link3, links.get(0));
+        assertEquals(link1, links.get(1));
+        assertEquals(link2, links.get(2));
+    }
+
+    @Test
+    public void testLinkListToJsonStrArray() {
+        final ResourceLink link1 = ResourceLinkService.jsonToLink(JSON);
+        final ResourceLink link2 = ResourceLinkService.jsonToLink(JSON2);
+        final ResourceLink link3 = ResourceLinkService.jsonToLink(JSON3);
+        final List<ResourceLink> links = new ArrayList<>();
+        links.add(link1);
+        links.add(link2);
+        links.add(link3);
+        assertEquals(JSON_STRINGS, ResourceLinkService.linkListToJsonStrArray(links));
+    }
+
+    @Test
+    public void testLinkListToOrderString() {
+        final ResourceLink link1 = ResourceLinkService.jsonToLink(JSON);
+        final ResourceLink link2 = ResourceLinkService.jsonToLink(JSON2);
+        final ResourceLink link3 = ResourceLinkService.jsonToLink(JSON3);
+        final List<ResourceLink> links = new ArrayList<>();
+        links.add(link1);
+        links.add(link2);
+        links.add(link3);
+        final String titles = link1.getTitle() + "," + link2.getTitle() + "," + link3.getTitle();
+        assertEquals(titles, ResourceLinkService.linkListToOrderString(links));
     }
 }

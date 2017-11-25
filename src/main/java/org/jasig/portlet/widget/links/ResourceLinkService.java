@@ -1,5 +1,7 @@
 package org.jasig.portlet.widget.links;
 
+import static java.util.stream.Collectors.joining;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -40,6 +43,32 @@ public class ResourceLinkService {
             log.error("Unable to parse JSON to ResourceLink: " + json, e);
         }
         return link;
+    }
+
+    public static List<ResourceLink> jsonArrayToLinkList(final String json) {
+        List<ResourceLink> links = null;
+        if (json != null) {
+            try {
+                links = mapper.readValue(json, new TypeReference<List<ResourceLink>>(){});
+            } catch (IOException e) {
+                log.error("Unable to parse JSON to ResourceLink: " + json, e);
+            }
+        }
+        return links;
+    }
+
+    public static String[] linkListToJsonStrArray(final List<ResourceLink> links) {
+        return links
+                .stream()
+                .map(e -> linkToJson(e))
+                .toArray(String[]::new);
+    }
+
+    public static String linkListToOrderString(final List<ResourceLink> links) {
+        return links
+                .stream()
+                .map(e -> e.getTitle())
+                .collect(joining(","));
     }
 
     public static Map<String, ResourceLink> jsonStringArrayToMapByTitle(String[] jsonStrs) {
