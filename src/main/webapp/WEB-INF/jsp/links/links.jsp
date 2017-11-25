@@ -21,17 +21,6 @@
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 <rs:aggregatedResources path="${ usePortalJsLibs ? '/app-skin-shared.xml' : '/app-skin.xml' }"/>
 <c:set var="n"><portlet:namespace/></c:set>
-<!--
-<style>
-    #${n}app ul {
-        list-style-type: none;
-        padding-left: 0;
-    }
-    #${n}app li:hover {
-        background-color: #ddf;
-    }
-</style>
--->
 
 <div id="${n}app">
     <ul class="list-group">

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,7 @@ public class ResourceLinkServiceTest {
         Map<String, ResourceLink> map = ResourceLinkService.jsonStringArrayToMapByTitle(JSON_STRINGS);
         assertEquals(3, map.size());
         assertEquals(createLink(), map.get(TITLE));
+        assertNull(ResourceLinkService.jsonStringArrayToMapByTitle(null));
     }
 
     @Test
@@ -86,5 +88,18 @@ public class ResourceLinkServiceTest {
         for (int i = 0; i < 3; i++) {
             assertEquals(map.get(LINK_ORDER[i]), list.get(i));
         }
+        assertEquals(Collections.EMPTY_LIST, ResourceLinkService.createOrderedLinkList(null, null));
+    }
+
+    @Test
+    public void testStringArrayToJSON() {
+        final String[] STRINGS = {JSON, JSON2, JSON3};
+        final String[] EMPTY = {};
+        final String[] BLANK = {""};
+        final String JSON_ARRAY = "[" + JSON + "," + JSON2 + "," + JSON3 + "]";
+        assertEquals(JSON_ARRAY, ResourceLinkService.convertStringArrayToJsonArray(STRINGS));
+        assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(EMPTY));
+        assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(BLANK));
+        assertEquals("[]", ResourceLinkService.convertStringArrayToJsonArray(null));
     }
 }

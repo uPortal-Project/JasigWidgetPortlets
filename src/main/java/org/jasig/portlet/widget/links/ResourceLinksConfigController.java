@@ -4,14 +4,17 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
@@ -27,17 +30,30 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
     }
 
     @ActionMapping
-    public void saveResourceLinks(ActionRequest req, ActionResponse res) throws PortletModeException {
-        // validate JSON of links
+    public void saveResourceLinks(ActionRequest req, ActionResponse res,
+                                  @RequestParam(value="save", required = false) String save,
+                                  @RequestParam(value="links", required = false) String linksJson) throws PortletModeException {
+        if (StringUtils.isNotBlank((save))) {
 
-        // validate ordered list of link titles
+            // validate JSON of links
+            log.error(linksJson);
 
-        // save  to preferences
+            // validate ordered list of link titles
+
+            // save  to preferences
+        } else {
+            res.setPortletMode(PortletMode.VIEW);
+        }
     }
 
     @ModelAttribute("links")
     public List<ResourceLink> getResourceLinks(PortletRequest req) {
         return super.getResourceLinks(req);
+    }
+
+    @ModelAttribute("linksJson")
+    public String getResourceLinksJsonArray(PortletRequest req) {
+        return super.getResourceLinksJson(req);
     }
 
     @ModelAttribute("iconSizePixels")

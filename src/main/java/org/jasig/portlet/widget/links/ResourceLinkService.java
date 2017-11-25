@@ -2,6 +2,7 @@ package org.jasig.portlet.widget.links;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,10 @@ public class ResourceLinkService {
     }
 
     public static Map<String, ResourceLink> jsonStringArrayToMapByTitle(String[] jsonStrs) {
+        if (jsonStrs == null) {
+            return null;
+        }
+
         Map<String, ResourceLink> linksByTitle =
                 Arrays.asList(jsonStrs)
                 .stream()
@@ -54,6 +60,9 @@ public class ResourceLinkService {
     }
 
     public static List<ResourceLink> createOrderedLinkList(String[] orderByTitle, Map<String, ResourceLink> linksByTitle) {
+        if (orderByTitle == null || orderByTitle.length == 0 || linksByTitle == null) {
+            return Collections.EMPTY_LIST;
+        }
         List<ResourceLink> list =
                 Arrays.asList(orderByTitle)
                 .stream()
@@ -64,5 +73,15 @@ public class ResourceLinkService {
             log.warn("order list (%d) != order list (%d)", orderByTitle.length, list.size());
         }
         return list;
+    }
+
+    public static String convertStringArrayToJsonArray(String[] jsonStrs) {
+        // Assume the parameter strings are already JSON
+        // This is very simple, but might as well add it here with a test
+        if (jsonStrs == null) {
+            return "[]";
+        } else {
+            return "[" + StringUtils.join(jsonStrs, ',') + "]";
+        }
     }
 }

@@ -26,6 +26,12 @@ public class ResourceLinksBaseController {
         return ResourceLinkService.createOrderedLinkList(linkOrder, linksByTitle);
     }
 
+    public String getResourceLinksJson(PortletRequest req) {
+        final PortletPreferences preferences = req.getPreferences();
+        final String[] prefLinks = preferences.getValues(PREF_LINK_ATTR, null);
+        return ResourceLinkService.convertStringArrayToJsonArray(prefLinks);
+    }
+
     public String getIconSizePixels(PortletRequest req) {
         final PortletPreferences preferences = req.getPreferences();
         return preferences.getValue(PREF_ICON_SIZE_PIXELS, DEFAULT_ICON_SIZE_PIXELS);
