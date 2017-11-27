@@ -78,10 +78,10 @@ public class ResourceLinkService {
 
         Map<String, ResourceLink> linksByTitle =
                 Arrays.asList(jsonStrs)
-                .stream()
-                .map(e -> jsonToLink(e))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(e -> e.getTitle(), e -> e));
+                    .stream()
+                    .map(e -> jsonToLink(e))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(e -> e.getTitle(), e -> e));
         if (jsonStrs.length != linksByTitle.size()) {
             log.warn("jsonStr.length (%d) != linksByTitle.size (%d)", jsonStrs.length, linksByTitle.size());
         }
@@ -94,10 +94,10 @@ public class ResourceLinkService {
         }
         List<ResourceLink> list =
                 Arrays.asList(orderByTitle)
-                .stream()
-                .map(title -> linksByTitle.get(title))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                    .stream()
+                    .map(title -> linksByTitle.get(title))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         if (orderByTitle.length != list.size()) {
             log.warn("order list (%d) != order list (%d)", orderByTitle.length, list.size());
         }

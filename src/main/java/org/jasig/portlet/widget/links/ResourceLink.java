@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ResourceLink {
 
-    private static final Logger log = LoggerFactory.getLogger(ResourceLink.class);
+    private final Logger log = LoggerFactory.getLogger(ResourceLink.class);
 
     private String title = "Title";
     private String description = "Short description";
