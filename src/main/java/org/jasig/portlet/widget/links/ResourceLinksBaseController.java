@@ -17,7 +17,6 @@ public class ResourceLinksBaseController implements PortletConfigAware {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    protected static final String PREF_LINK_ORDER_ATTR = "link-order";
     protected static final String PREF_LINK_ATTR = "resource-link";
     protected static final String PREF_ICON_SIZE_PIXELS = "icon-size";
     protected static final String DEFAULT_ICON_SIZE_PIXELS = "200";
@@ -28,10 +27,7 @@ public class ResourceLinksBaseController implements PortletConfigAware {
     public List<ResourceLink> getResourceLinks(PortletRequest req) {
         final PortletPreferences preferences = req.getPreferences();
         final String[] prefLinks = preferences.getValues(PREF_LINK_ATTR, null);
-        final String prefLinkOrder = preferences.getValue(PREF_LINK_ORDER_ATTR, "");
-        final String[] linkOrder = prefLinkOrder.split("\\s*,\\s*");
-        final Map<String, ResourceLink> linksByTitle = ResourceLinkService.jsonStringArrayToMapByTitle(prefLinks);
-        return ResourceLinkService.createOrderedLinkList(linkOrder, linksByTitle);
+        return ResourceLinkService.createResourceLinkList(prefLinks);
     }
 
     public String getResourceLinksJson(PortletRequest req) {

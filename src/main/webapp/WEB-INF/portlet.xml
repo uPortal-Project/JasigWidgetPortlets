@@ -529,10 +529,6 @@
                 <value>false</value>
             </preference>
             <preference>
-                <name>link-order</name>
-                <value>My Title, My Title2</value>
-            </preference>
-            <preference>
                 <name>resource-link</name>
                 <value>{"title":"My Title","description":"My description.","icon":"fa-link","url":"http://localhost:8080/myapp","groups":["everyone","students"]}</value>
                 <value>{"title":"My Title2","description":"Another description.","icon":"fa-wifi","url":"http://localhost:8080/myapp2","groups":["everyone"]}</value>

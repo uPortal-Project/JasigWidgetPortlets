@@ -45,20 +45,13 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
                 return;  // send them back to config mode
             }
             String[] validLinksJson = ResourceLinkService.linkListToJsonStrArray(links);
-            String linkOrder = ResourceLinkService.linkListToOrderString(links);
             // save  to preferences
             req.getPreferences().setValues(PREF_LINK_ATTR, validLinksJson);
-            req.getPreferences().setValue(PREF_LINK_ORDER_ATTR, linkOrder);
             req.getPreferences().store();
         }
         res.setPortletMode(PortletMode.VIEW);
     }
-/*
-    @ModelAttribute("links")
-    public List<ResourceLink> getResourceLinks(PortletRequest req) {
-        return super.getResourceLinks(req);
-    }
-*/
+
     @ModelAttribute("linksJson")
     public String getResourceLinksJsonArray(PortletRequest req) {
         return super.getResourceLinksJson(req);

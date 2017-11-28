@@ -1,12 +1,8 @@
 package org.jasig.portlet.widget.links;
 
-import static java.util.stream.Collectors.joining;
-
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -64,44 +60,21 @@ public class ResourceLinkService {
                 .toArray(String[]::new);
     }
 
-    public static String linkListToOrderString(final List<ResourceLink> links) {
-        return links
-                .stream()
-                .map(e -> e.getTitle())
-                .collect(joining(","));
-    }
-
-    public static Map<String, ResourceLink> jsonStringArrayToMapByTitle(String[] jsonStrs) {
+    public static List<ResourceLink> createResourceLinkList(String[] jsonStrs) {
         if (jsonStrs == null) {
             return null;
         }
 
-        Map<String, ResourceLink> linksByTitle =
+        List<ResourceLink> links =
                 Arrays.asList(jsonStrs)
                     .stream()
                     .map(e -> jsonToLink(e))
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toMap(e -> e.getTitle(), e -> e));
-        if (jsonStrs.length != linksByTitle.size()) {
-            log.warn("jsonStr.length (%d) != linksByTitle.size (%d)", jsonStrs.length, linksByTitle.size());
-        }
-        return linksByTitle;
-    }
-
-    public static List<ResourceLink> createOrderedLinkList(String[] orderByTitle, Map<String, ResourceLink> linksByTitle) {
-        if (orderByTitle == null || orderByTitle.length == 0 || linksByTitle == null) {
-            return Collections.EMPTY_LIST;
-        }
-        List<ResourceLink> list =
-                Arrays.asList(orderByTitle)
-                    .stream()
-                    .map(title -> linksByTitle.get(title))
-                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-        if (orderByTitle.length != list.size()) {
-            log.warn("order list (%d) != order list (%d)", orderByTitle.length, list.size());
+        if (jsonStrs.length != links.size()) {
+            log.warn("jsonStr.length (%d) != linksByTitle.size (%d)", jsonStrs.length, links.size());
         }
-        return list;
+        return links;
     }
 
     public static String convertStringArrayToJsonArray(String[] jsonStrs) {

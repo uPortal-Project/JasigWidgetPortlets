@@ -22,9 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 
@@ -72,24 +70,6 @@ public class ResourceLinkServiceTest {
         assertEquals(link, jsonLink);
         assertEquals(null, ResourceLinkService.jsonToLink(BAD_JSON));
         assertEquals(null, ResourceLinkService.jsonToLink(null));
-    }
-
-    @Test
-    public void testJsonStringsToMapByTitle() {
-        Map<String, ResourceLink> map = ResourceLinkService.jsonStringArrayToMapByTitle(JSON_STRINGS);
-        assertEquals(3, map.size());
-        assertEquals(createLink(), map.get(TITLE));
-        assertNull(ResourceLinkService.jsonStringArrayToMapByTitle(null));
-    }
-
-    @Test
-    public void testOrderedList() {
-        Map<String, ResourceLink> map = ResourceLinkService.jsonStringArrayToMapByTitle(JSON_STRINGS);
-        List<ResourceLink> list = ResourceLinkService.createOrderedLinkList(LINK_ORDER, map);
-        for (int i = 0; i < 3; i++) {
-            assertEquals(map.get(LINK_ORDER[i]), list.get(i));
-        }
-        assertEquals(Collections.EMPTY_LIST, ResourceLinkService.createOrderedLinkList(null, null));
     }
 
     @Test
