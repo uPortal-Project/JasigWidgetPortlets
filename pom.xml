@@ -30,6 +30,7 @@
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.5</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
+        <ehcache.version>2.10.4</ehcache.version>
         <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>4.3.12.RELEASE</spring.version>
         <resource-server.version>1.0.42</resource-server.version>
@@ -69,6 +70,10 @@
                     <exclusion>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.sf.ehcache</groupId>
+                        <artifactId>ehcache-core</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -166,7 +171,7 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>1.6.4</version>
+                <version>1.8.9</version>
             </dependency>
             <dependency>
                 <groupId>org.hsqldb</groupId>
@@ -381,6 +386,11 @@
     <dependencies>
 
         <!-- ===== Compile Time Dependencies ============================== -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.ehcache-spring-annotations</groupId>
             <artifactId>ehcache-spring-annotations</artifactId>
