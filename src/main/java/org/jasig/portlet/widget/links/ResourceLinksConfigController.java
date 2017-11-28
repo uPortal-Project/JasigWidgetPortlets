@@ -2,6 +2,7 @@ package org.jasig.portlet.widget.links;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -23,7 +24,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @RequestMapping("CONFIG")
 public class ResourceLinksConfigController extends ResourceLinksBaseController {
 
-    private static final Logger log = LoggerFactory.getLogger(ResourceLinksConfigController.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RenderMapping
     public String config(final PortletRequest req) throws Exception {
@@ -38,6 +39,7 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
         // validate JSON of links by converting to list of ResouceLink objects
         if (StringUtils.isNotBlank(save)) {
             log.debug(linksJson);
+            log.error(linksJson);
             List<ResourceLink> links = ResourceLinkService.jsonArrayToLinkList(linksJson);
             if (links == null || links.isEmpty()) {
                 return;  // send them back to config mode
@@ -51,15 +53,20 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
         }
         res.setPortletMode(PortletMode.VIEW);
     }
-
+/*
     @ModelAttribute("links")
     public List<ResourceLink> getResourceLinks(PortletRequest req) {
         return super.getResourceLinks(req);
     }
-
+*/
     @ModelAttribute("linksJson")
     public String getResourceLinksJsonArray(PortletRequest req) {
         return super.getResourceLinksJson(req);
+    }
+
+    @ModelAttribute("groups")
+    public Set<String> getGroups() {
+        return super.getGroups();
     }
 
     @ModelAttribute("iconSizePixels")

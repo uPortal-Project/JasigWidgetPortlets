@@ -1,6 +1,8 @@
 package org.jasig.portlet.widget.links;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -15,16 +17,27 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @RequestMapping("VIEW")
 public class ResourceLinksController extends ResourceLinksBaseController {
 
-    private static final Logger log = LoggerFactory.getLogger(ResourceLinksController.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RenderMapping
     public String view(final PortletRequest req) throws Exception {
+        Set<String> groups = getGroups();
         return "links/links";
     }
 
     @ModelAttribute("links")
     public List<ResourceLink> getResourceLinks(PortletRequest req) {
-        return super.getResourceLinks(req);
+        final List<ResourceLink> filteredLinks = new ArrayList<>();
+        final List<ResourceLink> allLinks = super.getResourceLinks(req);
+        for (ResourceLink link : allLinks) {
+            for (String group : link.getGroups()) {
+                if (req.isUserInRole(group)) {
+                    filteredLinks.add(link);
+                    break;
+                }
+            }
+        }
+        return filteredLinks;
     }
 
     @ModelAttribute("iconSizePixels")

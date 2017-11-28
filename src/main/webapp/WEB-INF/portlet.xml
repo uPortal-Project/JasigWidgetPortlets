@@ -538,5 +538,17 @@
                 <value>{"title":"My Title2","description":"Another description.","icon":"fa-wifi","url":"http://localhost:8080/myapp2","groups":["everyone"]}</value>
             </preference>
         </portlet-preferences>
+        <security-role-ref>
+            <role-name>Faculty</role-name>
+            <role-link>Faculty</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>Staff</role-name>
+            <role-link>Staff</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>Students</role-name>
+            <role-link>Students</role-link>
+        </security-role-ref>
     </portlet>
 </portlet-app>

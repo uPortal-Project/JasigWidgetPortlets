@@ -24,19 +24,6 @@
 <rs:aggregatedResources path="${ usePortalJsLibs ? '/app-skin-shared.xml' : '/app-skin.xml' }"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<!--
-  Events:
-   - onload: display current links in list
-   - select: display edit form with selected link data
-   - drop:   reorder list
-   - onchange (inputs): update selected link and view
-   - delete: remove link from array and list
-   - new:    display edit form with default values
-   - add:    add new link to end of array
-   - save:   send array to server
-   - cancel: redirect to view
--->
-
 <template id="${n}_link_item">
     <li class="list-group-item list-group-item-action" draggable="true">
         <i class="fa fa-pull-left fa-fw fa-3x" aria-hidden="true"></i>
@@ -55,7 +42,7 @@
 
     (function($) {
         var default_link = {title: "Important Site", description: "A few words about this link", icon: "fa-link",
-                            url: "https://www.yourapp.edu/", groups: ["everyone"]};
+                            url: "https://www.yourapp.edu/", groups: []};
         var drag_source;
 
         var cloneDefaultLink = function() {
@@ -130,7 +117,10 @@
             icon_classes.add("fa", "fa-fw", "fa-lg", link.icon);  // re-add non-link fa plus link.icon
             form.querySelector('input#icon').value = link.icon;
             form.querySelector('input#url').value = link.url;
-            form.querySelector('input#groups').value = link.groups;
+            var checked = form.querySelectorAll(".groups input[type='checkbox']");
+            Array.from(checked).map(function(e) {
+                    e.checked = (link.groups.indexOf(e.name) != -1);
+            });
         }
 
         var initEditForm = function() {
@@ -140,7 +130,10 @@
             form.querySelector('input#description').addEventListener("input", updateDescription);
             form.querySelector('input#icon').addEventListener("input", updateIcon);
             form.querySelector('input#url').addEventListener("input", updateUrl);
-            form.querySelector('input#groups').addEventListener("input", updateGroups);
+            var checked = form.querySelectorAll(".groups input[type='checkbox']");
+            Array.from(checked).map(function(e) {
+                    e.addEventListener("change", updateGroups);
+            });
         }
 
         var updateTitle = function(e) {
@@ -178,9 +171,12 @@
 
         var updateGroups = function(e) {
             var form = document.getElementById('${n}_edit_form');
-            var groups = e.target.value.split(',').map(function(group) {return group.trim();});
-            form.li.link.url = groups;
-            form.li.querySelector('dd.groups').textContent = groups;
+            var checked = form.querySelectorAll(".groups input[type='checkbox']:checked");
+            var groups = Array.from(checked).map(function(e) { return e.name; });
+            console.log(groups);
+            if (groups.length === 0) groups = ['Everyone'];
+            form.li.link.groups = groups;
+            form.li.querySelector('dd.groups').textContent = form.li.link.groups;
         }
 
         var dragstart = function(e) {
@@ -310,9 +306,12 @@
         </div>
         <div class="form-group groups">
             <label for="groups" class="col-sm-2 control-label"><spring:message code="resource-links.groups"/></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="groups" id="groups" value="${item.groups}" placeholder="staff, students">
-                <div class="field-error bg-danger"><spring:message code="resource-links.groups.invalid"/></div>
+            <div class="col-sm-10 form-check">
+                <c:forEach var="group" items="${groups}">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="${group}" id="${group}"> ${group}
+                </label>
+                </c:forEach>
             </div>
         </div>
     </form>
