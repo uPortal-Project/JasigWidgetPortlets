@@ -41,14 +41,17 @@
     var ${n} = {}; // create a unique variable for our JS namespace
 
     (function($) {
-        var default_link = {title: "Important Site", description: "A few words about this link", icon: "fa-link",
+        const FA_LIST_CLASSES = "fa fa-fw fa-3x fa-pull-left ";
+        const FA_FORM_CLASSES = "fa fa-fw fa-lg ";
+        const DEFAULT_LINK = {title: "Important Site", description: "A few words about this link", icon: "fa-link",
                             url: "https://www.yourapp.edu/", groups: []};
         var drag_source;
 
         var cloneDefaultLink = function() {
             var newlink = {};
-            for (var i in default_link)
-                newlink[i] = default_link[i];
+            for (var i in DEFAULT_LINK)
+                newlink[i] = DEFAULT_LINK[i];
+            newlink.group = DEFAULT_LINK.group.slice(0);
             return newlink;
         }
 
@@ -97,7 +100,7 @@
         }
 
         var selectItem = function(e) {
-            _.forEach(document.getElementById('${n}config').querySelectorAll("li"), function(li) {
+            _.forEach(document.getElementById('${n}config').querySelectorAll('li'), function(li) {
                 li.classList.remove('active');
             });
             var li = parentLi(e.target);
@@ -111,15 +114,12 @@
             var link = li.link;
             form.querySelector('input#title').value = link.title;
             form.querySelector('input#description').value = link.description;
-            var icon_classes = form.querySelector('div.icon i').classList;
-            icon_classes.remove("fa", "fa-fw", "fa-lg");  // remove non-link fa
-            icon_classes.remove(icon_classes.item(0));
-            icon_classes.add("fa", "fa-fw", "fa-lg", link.icon);  // re-add non-link fa plus link.icon
+            form.querySelector('div.icon i').className = FA_FORM_CLASSES + link.icon;
             form.querySelector('input#icon').value = link.icon;
             form.querySelector('input#url').value = link.url;
             var checked = form.querySelectorAll(".groups input[type='checkbox']");
             Array.from(checked).map(function(e) {
-                    e.checked = (link.groups.indexOf(e.name) != -1);
+                    e.checked = (link.groups.indexOf(e.name) !== -1);
             });
         }
 
@@ -151,16 +151,8 @@
         var updateIcon = function(e) {
             var form = document.getElementById('${n}_edit_form');
             form.li.link.icon = e.target.value;
-
-            var icon_classes = form.li.querySelector('i').classList
-            icon_classes.remove("fa", "fa-fw", "fa-3x", "fa-pull-left");  // remove non-link fa
-            icon_classes.remove(icon_classes.item(0));
-            icon_classes.add("fa", "fa-fw", "fa-3x", "fa-pull-left", e.target.value);  // re-add non-link fa plus link.icon
-
-            var icon_classes = form.querySelector('div.icon i').classList;
-            icon_classes.remove("fa", "fa-fw", "fa-lg");  // remove non-link fa
-            icon_classes.remove(icon_classes.item(0));
-            icon_classes.add("fa", "fa-fw", "fa-lg", e.target.value);  // re-add non-link fa plus link.icon
+            form.li.querySelector('i').className = FA_LIST_CLASSES + e.target.value;
+            form.querySelector('div.icon i').className = FA_FORM_CLASSES + e.target.value;
         }
 
         var updateUrl = function(e) {
@@ -219,7 +211,7 @@
         var beforeSave = function() {
             var app = document.getElementById('${n}config');
             var links = [];
-            _.forEach(app.querySelectorAll("li"), function(item) {
+            _.forEach(app.querySelectorAll('li'), function(item) {
                 links.push(item.link);
             });
             app.querySelector('input[name="links"]').value = JSON.stringify(links);
@@ -236,7 +228,7 @@
             _.forEach(${n}.links, function(link) {
                 var item = app.querySelector('ul').appendChild(createLinkListItem(link));
             });
-            _.forEach(app.querySelectorAll("li"), function(item, i) {
+            _.forEach(app.querySelectorAll('li'), function(item, i) {
                 // have to iterate the list items b/c the returned new child cannot be updated
                 setupLi(item, ${n}.links[i]);
             });

@@ -39,7 +39,6 @@ public class ResourceLinksConfigController extends ResourceLinksBaseController {
         // validate JSON of links by converting to list of ResouceLink objects
         if (StringUtils.isNotBlank(save)) {
             log.debug(linksJson);
-            log.error(linksJson);
             List<ResourceLink> links = ResourceLinkService.jsonArrayToLinkList(linksJson);
             if (links == null || links.isEmpty()) {
                 return;  // send them back to config mode
