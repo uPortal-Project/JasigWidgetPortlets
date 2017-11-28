@@ -118,17 +118,5 @@ public class ResourceLinkServiceTest {
         links.add(link3);
         assertEquals(JSON_STRINGS, ResourceLinkService.linkListToJsonStrArray(links));
     }
-
-    @Test
-    public void testLinkListToOrderString() {
-        final ResourceLink link1 = ResourceLinkService.jsonToLink(JSON);
-        final ResourceLink link2 = ResourceLinkService.jsonToLink(JSON2);
-        final ResourceLink link3 = ResourceLinkService.jsonToLink(JSON3);
-        final List<ResourceLink> links = new ArrayList<>();
-        links.add(link1);
-        links.add(link2);
-        links.add(link3);
-        final String titles = link1.getTitle() + "," + link2.getTitle() + "," + link3.getTitle();
-        assertEquals(titles, ResourceLinkService.linkListToOrderString(links));
-    }
 }
+
