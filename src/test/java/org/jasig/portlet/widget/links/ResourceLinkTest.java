@@ -88,8 +88,8 @@ public class ResourceLinkTest {
 
     @Test
     public void testToString() {
-        final String TO_STR = "ResourceLink{title='My Title', description='My description.', icon='fa-disk',"
-        + " url=http://localhost:8080/myapp, groups=[everyone, students]}";
+        final String TO_STR = "ResourceLink(title=My Title, description=My description., icon=fa-disk,"
+        + " url=http://localhost:8080/myapp, groups=[everyone, students])";
         final ResourceLink link = createLink();
         assertEquals(TO_STR, link.toString());
     }

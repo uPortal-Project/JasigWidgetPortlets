@@ -30,10 +30,12 @@ public class ResourceLinksController extends ResourceLinksBaseController {
         final List<ResourceLink> filteredLinks = new ArrayList<>();
         final List<ResourceLink> allLinks = super.getResourceLinks(req);
         for (ResourceLink link : allLinks) {
-            for (String group : link.getGroups()) {
-                if (req.isUserInRole(group)) {
+            if (link.getGroups().isEmpty()) {
+                filteredLinks.add(link);
+            } else {
+                boolean inGroup = link.getGroups().stream().anyMatch(req::isUserInRole);
+                if (inGroup) {
                     filteredLinks.add(link);
-                    break;
                 }
             }
         }

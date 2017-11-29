@@ -52,7 +52,7 @@
             var newlink = {};
             for (var i in DEFAULT_LINK)
                 newlink[i] = DEFAULT_LINK[i];
-            newlink.group = DEFAULT_LINK.group.slice(0);
+            newlink.groups = DEFAULT_LINK.groups.slice(0);
             return newlink;
         }
 
@@ -72,7 +72,7 @@
             dl.querySelector('dt.title').textContent = link.title;
             dl.querySelector('dd.description').textContent = link.description;
             dl.querySelector('dd.url').textContent = link.url;
-            dl.querySelector('dd.groups').textContent = link.groups;
+            dl.querySelector('dd.groups').textContent = link.groups.length === 0 ? "Everyone" : link.groups;
             return item;
         }
 
@@ -196,10 +196,9 @@
             var form = document.getElementById('${n}_edit_form');
             var checked = form.querySelectorAll(".groups input[type='checkbox']:checked");
             var groups = Array.from(checked).map(function(e) { return e.name; });
-            console.log(groups);
-            if (groups.length === 0) groups = ['Everyone'];
             form.li.link.groups = groups;
-            form.li.querySelector('dd.groups').textContent = form.li.link.groups;
+            if (groups.length === 0) groups = ['Everyone'];
+            form.li.querySelector('dd.groups').textContent = groups;
         }
 
         var dragstart = function(e) {
