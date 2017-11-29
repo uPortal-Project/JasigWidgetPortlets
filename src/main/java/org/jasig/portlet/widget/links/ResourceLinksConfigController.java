@@ -10,9 +10,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +20,9 @@ import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
+@Slf4j
 @RequestMapping("CONFIG")
 public class ResourceLinksConfigController extends ResourceLinksBaseController {
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RenderMapping
     public String config(final PortletRequest req) throws Exception {

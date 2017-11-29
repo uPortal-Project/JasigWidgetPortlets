@@ -10,22 +10,21 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 import org.jaxen.NamespaceContext;
 import org.jaxen.SimpleNamespaceContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class PortletXmlGroupService {
     private static final String PORTLET_XML_PATH = "/WEB-INF/portlet.xml";
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
     private Document doc;
     private NamespaceContext namespaceContext;
     private XPath xpathRoleName;

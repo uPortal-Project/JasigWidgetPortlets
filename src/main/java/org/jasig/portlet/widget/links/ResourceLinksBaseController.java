@@ -1,21 +1,18 @@
 package org.jasig.portlet.widget.links;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.portlet.context.PortletConfigAware;
 
+@Slf4j
 public class ResourceLinksBaseController implements PortletConfigAware {
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected static final String PREF_LINK_ATTR = "resource-link";
     protected static final String PREF_ICON_SIZE_PIXELS = "icon-size";
