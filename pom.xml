@@ -26,6 +26,7 @@
         <icu4j.version>51.1</icu4j.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
+        <jackson.version>2.9.2</jackson.version>
         <logbackVersion>1.0.12</logbackVersion>
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.5</sl4jVersion>
@@ -247,6 +248,12 @@
                 <version>1.8.4</version>
             </dependency>
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.18</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
@@ -412,6 +419,16 @@
             <artifactId>dom4j</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
@@ -572,6 +589,10 @@
         <dependency>
             <groupId>org.jasig.portal</groupId>
             <artifactId>uPortal-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
