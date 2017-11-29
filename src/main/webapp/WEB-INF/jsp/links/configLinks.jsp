@@ -27,6 +27,7 @@
 <template id="${n}_link_item">
     <li class="list-group-item list-group-item-action" draggable="true">
         <i class="fa fa-pull-left fa-fw fa-3x" aria-hidden="true"></i>
+        <img class="fa-3x fa-fw fa-pull-left" src="" style="display:none;">
         <a class='fa-pull-right close-btn'><i class="fa fa-pull-right fa-close text-danger" aria-hidden="true"></i></a>
         <dl>
             <dt class="title"></dt>
@@ -58,7 +59,15 @@
         var createLinkListItem = function(link) {
             var template = document.getElementById('${n}_link_item');
             var item = document.importNode(template.content, true);
-            item.querySelector('i').classList.add(link.icon);
+            if (link.icon.startsWith("fa-")) {
+                item.querySelector('i').classList.add(link.icon);
+                item.querySelector('i').style.display = "inline";
+                item.querySelector('img').style.display = "none";
+            } else {
+                item.querySelector('i').style.display = "none";
+                item.querySelector('img').style.display = "inline";
+                item.querySelector('img').src = link.icon;
+            }
             var dl = item.querySelector('dl');
             dl.querySelector('dt.title').textContent = link.title;
             dl.querySelector('dd.description').textContent = link.description;
@@ -114,7 +123,15 @@
             var link = li.link;
             form.querySelector('input#title').value = link.title;
             form.querySelector('input#description').value = link.description;
-            form.querySelector('div.icon i').className = FA_FORM_CLASSES + link.icon;
+            if (link.icon.startsWith('fa-')) {
+                form.querySelector('div.icon i').className = FA_FORM_CLASSES + link.icon;
+                form.querySelector('div.icon i').style.display = 'inline';
+                form.querySelector('div.icon img').style.display = 'none';
+            } else {
+                form.querySelector('div.icon i').style.display = 'inline';
+                form.querySelector('div.icon img').style.display = 'none';
+                form.querySelector('div.icon img').src = link.icon;
+            }
             form.querySelector('input#icon').value = link.icon;
             form.querySelector('input#url').value = link.url;
             var checked = form.querySelectorAll(".groups input[type='checkbox']");
@@ -150,9 +167,23 @@
 
         var updateIcon = function(e) {
             var form = document.getElementById('${n}_edit_form');
-            form.li.link.icon = e.target.value;
-            form.li.querySelector('i').className = FA_LIST_CLASSES + e.target.value;
-            form.querySelector('div.icon i').className = FA_FORM_CLASSES + e.target.value;
+            var icon = e.target.value;
+            form.li.link.icon = icon;
+            if (icon.startsWith('fa-')) {
+                form.li.querySelector('i').style.display = 'inline';
+                form.querySelector('div.icon i').style.display = 'inline';
+                form.li.querySelector('img').style.display = 'none';
+                form.querySelector('div.icon img').style.display = 'none';
+                form.li.querySelector('i').className = FA_LIST_CLASSES + icon;
+                form.querySelector('div.icon i').className = FA_FORM_CLASSES + icon;
+            } else {
+                form.li.querySelector('img').style.display = 'inline';
+                form.querySelector('div.icon img').style.display = 'inline';
+                form.li.querySelector('i').style.display = 'none';
+                form.querySelector('div.icon i').style.display = 'none';
+                form.li.querySelector('img').src = icon;
+                form.querySelector('div.icon img').src = icon;
+            }
         }
 
         var updateUrl = function(e) {
@@ -241,6 +272,19 @@
             app.querySelector('input[name="save"]').addEventListener('click', beforeSave);
         });
 
+        $(function() {
+            if (typeof upAttachments != "undefined") {
+                var setAttachment = function(attachment) {
+                    $('#${n}config input#icon').val(attachment.path);
+                };
+                ${n}.addAttachmentCallback = function(result) {
+                    setAttachment(result);
+                    upAttachments.hide();
+                };
+                $('#${n}config #upload').show();
+            }
+         });
+
     })(up.jQuery);
 </script>
 
@@ -281,12 +325,15 @@
             </div>
         </div>
         <div class="form-group icon">
-            <label for="icon" class="col-sm-2 control-label"><i class="fa fa-fw fa-lg" aria-hidden="true"></i>
+            <label for="icon" class="col-sm-2 control-label">
+                <i class="fa fa-fw fa-lg" aria-hidden="true"></i>
+                <img class="fa-lg fa-fw" src="" style="display:none;">
             </label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="icon" id="icon" value="${item.icon}" placeholder="fa-link">
                 <div class="field-error bg-danger"><spring:message code="resource-links.icon.invalid"/></div>
-            <a href="http://fontawesome.io/icons/" title="Font Awesome Icons" target="_blank">Font Awesome Icons</a>
+                <a id="upload" class="btn btn-link" style="display: none;" href="javascript:upAttachments.show(${n}.addAttachmentCallback);">Upload</a>
+                <a href="http://fontawesome.io/icons/" title="Font Awesome Icons" target="_blank">Font Awesome Icons</a>
             </div>
         </div>
         <div class="form-group url">

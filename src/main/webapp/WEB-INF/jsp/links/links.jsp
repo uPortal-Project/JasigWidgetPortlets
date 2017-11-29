@@ -31,8 +31,15 @@
            href='<c:out value="${item.url}"/>'
            target="_blank"
            title='<c:out value="${item.title}"/>'>
+            <c:choose>
+            <c:when test="${item.isIconFontAwesome()}">
             <i class="fa fa-pull-left fa-fw fa-3x ${item.icon}" aria-hidden="true"></i>
-            <dl>
+            </c:when>
+            <c:otherwise>
+            <img class="fa-3x fa-fw fa-pull-left" src="${item.icon}">
+            </c:otherwise>
+            </c:choose>
+             <dl>
                 <dt><c:out value="${item.title}"/></dt>
                 <dd><c:out value="${item.description}"/></dd>
             </dl>
