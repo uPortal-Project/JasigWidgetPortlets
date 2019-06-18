@@ -26,7 +26,7 @@
         <icu4j.version>51.1</icu4j.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
-        <jackson.version>2.9.2</jackson.version>
+        <jackson.version>2.9.9</jackson.version>
         <logbackVersion>1.0.12</logbackVersion>
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.5</sl4jVersion>
@@ -162,7 +162,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.1</version>
+                <version>4.3.6</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.portals.pluto</groupId>
