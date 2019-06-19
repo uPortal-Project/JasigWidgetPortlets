@@ -43,7 +43,7 @@ overlays/jasig-widget-portlets/src/main/webapp/WEB-INF/portlet.xml
 
 Add more user attributes as desired, after the current `user.login.id` is defined:
 
-```$xslt
+```xml
     <user-attribute>
         <description>Username attribute name for uPortal user</description>
         <name>user.login.id</name>
@@ -69,7 +69,7 @@ Add more user attributes as desired, after the current `user.login.id` is define
 ### <a name="jspdir"></a>JSP Location
 JSPs for the Simple JSP Portlet should be placed in the following location in _uPortal-start_:
 
-```$xslt
+```bash
 overlays/jasig-widget-portlets/src/main/webapp/WEB-INF/jsp/
 ```
 
@@ -77,7 +77,7 @@ overlays/jasig-widget-portlets/src/main/webapp/WEB-INF/jsp/
 ### <a name="examples"></a>Examples
 An example of a portlet definition file, `data/quickstart/portlet-definition/myjsp.portlet-definition.xml`:
 
-```$xslt
+```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <portlet-definition xmlns="https://source.jasig.org/schemas/uportal/io/portlet-definition" xmlns:ns2="https://source.jasig.org/schemas/uportal" xmlns:ns3="https://source.jasig.org/schemas/uportal/io/permission-owner" xmlns:ns4="https://source.jasig.org/schemas/uportal/io/stylesheet-descriptor" xmlns:ns5="https://source.jasig.org/schemas/uportal/io/portlet-type" xmlns:ns6="https://source.jasig.org/schemas/uportal/io/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="https://source.jasig.org/schemas/uportal/io/portlet-definition https://source.jasig.org/schemas/uportal/io/portlet-definition/portlet-definition-4.3.xsd">
     <title>My JSP</title>
@@ -108,7 +108,7 @@ An example of a portlet definition file, `data/quickstart/portlet-definition/myj
 
 The corresponding example JSP, `overlays/jasig-widget-portlets/src/main/webapp/WEB-INF/jsp/myJsp.jsp`:
 
-```html
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
