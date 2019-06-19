@@ -1,9 +1,9 @@
 # Simple JSP Portlet
 
 ## Table of Contents
-  - [Description](#disc)
+  - [Description](#desc)
   - [Feature Overview](#features)
-  - [Common Use Cases](#usages)
+  - [Common Use Cases](#usage)
   - [Portlet Preferences](#prefs)
   - [Additional Configuration](#config)
     - [Portlet.xml Settings](#settings)
