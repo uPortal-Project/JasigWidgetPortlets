@@ -34,7 +34,9 @@ import javax.portlet.RenderRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.core.env.PropertyResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,6 +56,8 @@ public class SimpleJspPortletController {
     // Instance Members.
     private final Log log = LogFactory.getLog(getClass());
     private Properties properties;
+    @Autowired
+    private PropertyResolver propertyResolver;
 
     /**
      * Set the properties.
@@ -76,6 +80,8 @@ public class SimpleJspPortletController {
 
         // load properties into the Model
         model.addAttribute("property", properties);
+
+        model.addAttribute("resolver", propertyResolver);
 
         final PortletPreferences prefs = req.getPreferences();
 

@@ -113,22 +113,27 @@ The corresponding example JSP, `overlays/jasig-widget-portlets/src/main/webapp/W
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-   </head>
-   <body>
-     <h3>UserInfo</h3>
-       <ul>
-      <c:forEach var="userAttr" items="${userInfo}">
-      <li>${userAttr}</li>
-      </c:forEach>
-       </ul>
-     <h3>Properties</h3>
-       <ul>
-      <c:forEach var="prop" items="${properties}">
-      <li>${prop}</li>
-      </c:forEach>
-       </ul>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h3>UserInfo</h3>
+      <ul>
+        <c:forEach var="userAttr" items="${userInfo}">
+        <li>${userAttr}</li>
+        </c:forEach>
+      </ul>
+    <h3>Properties</h3>
+      <ul>
+        <c:forEach var="prop" items="${property}">
+        <li>${prop}</li>
+        </c:forEach>
+      </ul>
+    <h3>Resolver</h3>
+      <ul>
+        <li>portal.server=${resolver.getProperty('portal.server')}</li>
+        <li>portal.context=${resolver.getProperty('portal.context')}</li>
+      </ul>
    </body>
 </html>
 ```
