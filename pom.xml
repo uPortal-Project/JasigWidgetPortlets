@@ -28,7 +28,7 @@
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <jackson.version>2.9.10</jackson.version>
         <logbackVersion>1.2.3</logbackVersion>
-        <pluto.version>2.1.0-M3</pluto.version>
+        <pluto.version>3.1.0</pluto.version>
         <sl4jVersion>1.7.30</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <ehcache.version>2.10.4</ehcache.version>
