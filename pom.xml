@@ -33,7 +33,7 @@
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
         <ehcache.version>2.10.4</ehcache.version>
         <portletUtils.version>1.1.0</portletUtils.version>
-        <spring.version>4.3.27.RELEASE</spring.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
         <resource-server.version>1.0.42</resource-server.version>
         <uportal-libs.version>5.8.1</uportal-libs.version>
     </properties>
