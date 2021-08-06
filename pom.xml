@@ -35,7 +35,7 @@
         <portletUtils.version>1.1.0</portletUtils.version>
         <spring.version>4.3.30.RELEASE</spring.version>
         <resource-server.version>1.0.42</resource-server.version>
-        <uportal-libs.version>5.10.0</uportal-libs.version>
+        <uportal-libs.version>5.11.0</uportal-libs.version>
     </properties>
 
     <licenses>
