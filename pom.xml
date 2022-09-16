@@ -28,7 +28,7 @@
         <hsqldb.version>2.6.1</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
         <jackson.version>2.9.10</jackson.version>
-        <logbackVersion>1.4.0</logbackVersion>
+        <logbackVersion>1.4.1</logbackVersion>
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.36</sl4jVersion>
         <ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
