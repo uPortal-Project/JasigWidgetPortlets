@@ -17,9 +17,9 @@
     <version>2.3.2-SNAPSHOT</version>
 
     <scm>
-        <connection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</connection>
-        <developerConnection>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</developerConnection>
-        <url>scm:git:git@github.com:Jasig/JasigWidgetPortlets.git</url>
+        <connection>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</connection>
+        <developerConnection>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</developerConnection>
+        <url>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</url>
         <tag>HEAD</tag>
     </scm>
 
