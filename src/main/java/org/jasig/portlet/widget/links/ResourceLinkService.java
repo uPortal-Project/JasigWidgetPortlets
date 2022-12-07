@@ -51,7 +51,7 @@ public class ResourceLinkService {
         ResourceLink link = null;
         try {
             link = mapper.readValue(json, ResourceLink.class);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Unable to parse JSON to ResourceLink: " + json, e);
         }
         return link;

@@ -27,7 +27,7 @@
         <icu4j.version>72.1</icu4j.version>
         <hsqldb.version>2.6.1</hsqldb.version>
         <jaxb2basics.version>0.6.0</jaxb2basics.version>
-        <jackson.version>2.9.10</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
         <logbackVersion>1.4.4</logbackVersion>
         <pluto.version>2.1.0-M3</pluto.version>
         <sl4jVersion>1.7.36</sl4jVersion>
@@ -51,6 +51,22 @@
         <repository>
             <id>java.net repository</id>
             <url>http://download.java.net/maven/2</url>
+        </repository>
+	<repository>
+            <id>Mulesoft</id>
+            <name>Mulesoft Repository</name>
+            <!-- mirror of most Codehaus artifacts -->
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>3rd-party-embedded</id>
+            <url>file://${project.basedir}/3rd-party/repository</url>
         </repository>
     </repositories>
 
@@ -583,6 +599,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>3.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -792,7 +813,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.1.2</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
                 </configuration>
