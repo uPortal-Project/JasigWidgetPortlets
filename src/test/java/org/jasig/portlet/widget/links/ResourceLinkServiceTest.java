@@ -63,7 +63,7 @@ public class ResourceLinkServiceTest {
         assertNull(ResourceLinkService.linkToJson(null));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testFromJson() {
         final ResourceLink link = createLink();
         final ResourceLink jsonLink = ResourceLinkService.jsonToLink(JSON);
