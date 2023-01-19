@@ -38,7 +38,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</connection>
-        <developerConnection>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:uPortal-Project/JasigWidgetPortlets.git</developerConnection>
         <url>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</url>
         <tag>HEAD</tag>
     </scm>
