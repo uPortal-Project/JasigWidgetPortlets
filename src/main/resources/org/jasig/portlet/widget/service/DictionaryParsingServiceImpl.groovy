@@ -18,6 +18,7 @@
  */
 import java.io.InputStream
 import groovy.xml.StreamingMarkupBuilder
+import groovy.xml.XmlSlurper
 import org.jasig.portlet.widget.service.IDictionaryParsingService
 
 class DictionaryParsingServiceImpl implements IDictionaryParsingService {
