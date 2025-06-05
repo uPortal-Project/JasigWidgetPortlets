@@ -1,7 +1,7 @@
 # Jasig Widget Portlets
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/jasig-widget-portlets/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/jasig-widget-portlets)
-[![build status](https://github.com/Jasig/JasigWidgetPortlets/workflows/CI/badge.svg?branch=master)](https://github.com/Jasig/JasigWidgetPortlets/actions)
+[![CI](https://github.com/Jasig/JasigWidgetPortlets/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/Jasig/JasigWidgetPortlets/actions/workflows/CI.yml)
 
 This is a [Sponsored Portlet][] in the uPortal ecosystem.
 
