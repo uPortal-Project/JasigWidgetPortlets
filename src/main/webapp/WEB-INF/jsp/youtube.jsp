@@ -18,154 +18,105 @@
     under the License.
 
 --%>
+<%--
+  -- Previously used Fluid pager, jQuery 1.8.3, jQuery UI 1.10.3, and Fluid 1.4.0
+  -- loaded via rs:resourceURL (all now removed from resource-server).
+  -- Also used YouTube Data API v2 (gdata.youtube.com) which was shut down in 2015.
+  --
+  -- Now uses YouTube Data API v3 via the server-side proxy (YouTubeService),
+  -- vanilla JS Bootstrap pagination, and up.jQuery from the portal skin.
+  --
+  -- Requires a YouTube Data API v3 key configured as the 'apiKey' portlet preference.
+  --%>
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <%-- Use jQuery 1.8.3 until https://issues.jasig.org/browse/WIDGPT-51 is fixed --%>
-    <script src="<rs:resourceURL value="/rs/jquery/1.8.3/jquery-1.8.3.min.js"/>" type="text/javascript"></script>
-    <script src="<rs:resourceURL value="/rs/jqueryui/1.10.3/jquery-ui-1.10.3.min.js"/>" type="text/javascript"></script>
-    <script src="<rs:resourceURL value="/rs/fluid/1.4.0/js/fluid-all-1.4.0.min.js"/>" type="text/javascript"></script>
-</c:if>
-
-<div id="${n}" class="portlet">
-<div class="fl-pager">
-    <div class="view-pager flc-pager-top portlet-section-options">
-        <ul id="pager-top" class="fl-pager-ui">
-          <li class="flc-pager-previous"><a href="#">&lt; <spring:message code="previous"/></a></li>
-          <li style="display:none">
-            <ul class="fl-pager-links flc-pager-links" style="margin:0; display:inline">
-              <li class="flc-pager-pageLink"><a href="javascript:;">1</a></li>
-              <li class="flc-pager-pageLink-disabled">2</li>
-              <li class="flc-pager-pageLink"><a href="javascript:;">3</a></li>
+<div id="${n}" class="container-fluid">
+    <div class="d-flex align-items-center gap-3 mb-2">
+        <nav>
+            <ul class="pagination mb-0">
+                <li class="page-item pager-previous"><a class="page-link" href="#"><spring:message code="previous"/></a></li>
+                <li class="page-item pager-next"><a class="page-link" href="#"><spring:message code="next"/></a></li>
             </ul>
-          </li>
-          <li class="flc-pager-next"><a href="#"><spring:message code="next"/> &gt;</a></li>
-          <li style="display:none">
-            <span class="flc-pager-summary"><spring:message code="show"/></span>
-            <span> <select class="pager-page-size flc-pager-page-size">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            </select></span> <spring:message code="per.page"/>
-          </li>
-        </ul>
-    </div><!-- end: portlet-section-options -->
-    
-    <div class="videos">
-        <div class="video">
-            <h3><a href="javascript:;" class="video-title"></a></h3>
-            <img class="img"/>
-            <p class="description"></p>
+        </nav>
+        <span class="pager-summary text-muted small"></span>
+        <div class="d-flex align-items-center gap-1 small">
+            <span><spring:message code="show"/></span>
+            <select class="form-select form-select-sm pager-page-size" style="width:auto">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span><spring:message code="per.page"/></span>
         </div>
     </div>
-    </div>
+    <div class="videos row"></div>
 </div>
 
-<script type="text/javascript"><rs:compressJs>
-    var ${n} = ${n} || {};
-<c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-        ${n}.jQuery = jQuery.noConflict(true)
-        ${n}.fluid = fluid;
-        fluid = null;
-        fluid_1_4 = null; // Still using fluid 1.4 so don't set fluid_1_5
-    </c:when>
-    <c:otherwise>
-        ${n}.jQuery = up.jQuery;
-        ${n}.fluid = up.fluid;
-    </c:otherwise>
-</c:choose>
-    ${n}.jQuery(document).ready(function(){
-        var $ = ${n}.jQuery;
-        var fluid = ${n}.fluid;
-        $.get('<c:url value="/ajax/youtube"><c:param name="user" value="${usernames[0]}"/></c:url>', {},
-            function (data) {
-                var tree = { children: [] };
-                var cutpoints = [
-                    { id: "video:", selector: ".video" },
-                    { id: "title", selector: ".video-title" },
-                    { id: "description", selector: ".description" },
-                    { id: "image", selector: ".img" }
-                ];
-                
-                $(data.data.items).each(function (idx, item){
-                    tree.children.push({
-                        ID: "video:",
-                        children: [
-                            { ID: "title", target: item.player["default"], linktext: item.title },
-                            { ID: "description", value: item.description },
-                            { ID: "image", 
-                                decorators: [
-                                     { type: "attrs", attributes: { src: item.thumbnail.hqDefault } }
-                                 ] 
-                            }
-                        ]
-                    });
-                });
-                
-                var columnDefs = [
-                    {
-                        key: "title",
-                        valuebinding: "*.title",
-                        components: {
-                            target: '${"${*.player.default}"}',
-                            linktext: '${"${*.title}"}'
-                        }
-                    },
-                    {
-                        key: "description",
-                        valuebinding: "*.description"
-                    },
-                    {
-                        key: "image",
-                        valuebinding: "*.img",
-                        components: function (row) {
-                            return {
-                                decorators: [{ type: "attrs", attributes: { src: row.thumbnail.hqDefault } }]
-                            };
-                        }
-                    }
-                ];
-                                      
-                var pagerOptions = {
-                    dataModel: data.data.items,
-                    annotateColumnRange: "title",
-                    columnDefs: columnDefs,
-                    bodyRenderer: {
-                        type: "fluid.pager.selfRender",
-                        options: {
-                            selectors: {
-                                root: ".videos"
-                            },
-                            row: "video:",
-                            renderOptions: {
-                                cutpoints: cutpoints
-                            }
-                        }
-                        
-                    },
-                    pagerBar: {
-                        type: "fluid.pager.pagerBar", 
-                        options: {
-                            pageList: {
-                                type: "fluid.pager.renderedPageList",
-                                options: { 
-                                    linkBody: "a"
-                                }
-                            }
-                        }
-                    }
-                };
-                
-                // initialize the pager and set it to 6 items per page.
-                var pager = fluid.pager($("#${n}"), pagerOptions);
-                pager.events.initiatePageSizeChange.fire(1);
+<script type="text/javascript">
+'use strict';
 
-            }, "json"
-        );
-    }); 
-</rs:compressJs></script>
+(function () {
+    var $ = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
+    var container = document.getElementById('${n}');
+    var videosEl = container.querySelector('.videos');
+    var pageSizeSelect = container.querySelector('.pager-page-size');
+    var prevBtn = container.querySelector('.pager-previous a');
+    var nextBtn = container.querySelector('.pager-next a');
+    var summaryEl = container.querySelector('.pager-summary');
+
+    var videos = [];
+    var currentPage = 0;
+    var pageSize = parseInt(pageSizeSelect.value, 10);
+
+    function renderPage() {
+        var start = currentPage * pageSize;
+        var end = Math.min(start + pageSize, videos.length);
+        var totalPages = Math.ceil(videos.length / pageSize);
+
+        videosEl.innerHTML = '';
+        videos.slice(start, end).forEach(function (video) {
+            var col = document.createElement('div');
+            col.className = 'col-sm-6 col-md-4 mb-3';
+            col.innerHTML =
+                '<div class="card h-100">' +
+                (video.thumbnail ? '<img src="' + video.thumbnail + '" class="card-img-top" alt=""/>' : '') +
+                '<div class="card-body">' +
+                '<h6 class="card-title"><a href="' + video.link + '" target="_blank">' + video.title + '</a></h6>' +
+                (video.description ? '<p class="card-text small">' + video.description + '</p>' : '') +
+                '</div></div>';
+            videosEl.appendChild(col);
+        });
+
+        summaryEl.textContent = videos.length > 0 ? (start + 1) + ' - ' + end + ' / ' + videos.length : '';
+        prevBtn.parentElement.classList.toggle('disabled', currentPage === 0);
+        nextBtn.parentElement.classList.toggle('disabled', currentPage >= totalPages - 1);
+    }
+
+    prevBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (currentPage > 0) { currentPage--; renderPage(); }
+    });
+
+    nextBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (currentPage < Math.ceil(videos.length / pageSize) - 1) { currentPage++; renderPage(); }
+    });
+
+    pageSizeSelect.addEventListener('change', function () {
+        pageSize = parseInt(this.value, 10);
+        currentPage = 0;
+        renderPage();
+    });
+
+    $.getJSON('<c:url value="/ajax/youtube"><c:param name="user" value="${usernames[0]}"/><c:param name="apiKey" value="${apiKey}"/></c:url>',
+        function (data) {
+            videos = data.videos || [];
+            renderPage();
+        }
+    );
+}());
+</script>

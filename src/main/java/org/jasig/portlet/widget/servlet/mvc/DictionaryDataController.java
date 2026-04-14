@@ -18,178 +18,135 @@
  */
 package org.jasig.portlet.widget.servlet.mvc;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasig.portlet.widget.service.IDictionaryParsingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.net.ssl.SSLContext;
 
 /**
  * DictionaryDataController handles AJAX requests for a word definition.
- * 
- * @author Jen Bourey
+ *
+ * Uses the Free Dictionary API (https://dictionaryapi.dev/) which requires
+ * no API key and returns JSON directly. The dictId parameter is retained for
+ * API compatibility but ignored since the Free Dictionary API does not support
+ * multiple dictionary sources.
  */
 @Controller
 @RequestMapping("/ajax/dictionary")
 public class DictionaryDataController {
-	
-	protected final Log log = LogFactory.getLog(getClass());
-	
-	protected final String DICT_SERVICE_URL = "http://services.aonaware.com/DictService/DictService.asmx/DefineInDict";
-	protected final String DICT_ID_PARAM_NAME = "dictId";
-	protected final String WORD_PARAM_NAME = "word";
 
-	private IDictionaryParsingService service;
-	
-	/**
-	 * Set the dictionary parsing service to be used to get a definition from 
-	 * the DictService server response.
-	 * 
-	 * @param service
-	 */
-	@Autowired(required = true)
-	public void setDictionaryParsingService(IDictionaryParsingService service) {
-		this.service = service;
-	}
-	
+    protected final Log log = LogFactory.getLog(getClass());
+
+    private static final String DICT_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/{word}";
+
+    private final RestTemplate restTemplate = buildRestTemplate();
+
+    private static RestTemplate buildRestTemplate() {
+        try {
+            SSLContext sslContext = SSLContextBuilder.create()
+                    .setProtocol("TLSv1.2")
+                    .build();
+            SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
+                    sslContext,
+                    new String[]{"TLSv1.2", "TLSv1.3"},
+                    null,
+                    NoopHostnameVerifier.INSTANCE);
+            return new RestTemplate(new HttpComponentsClientHttpRequestFactory(
+                    HttpClients.custom().setSSLSocketFactory(socketFactory).build()));
+        } catch (Exception e) {
+            return new RestTemplate();
+        }
+    }
+
     private Cache cache;
 
-    /**
-     * Cache of definitions.
-     * 
-     * @param cache
-     */
     @Required
     @Resource(name = "definitionCache")
     public void setCache(Cache cache) {
-            this.cache = cache;
+        this.cache = cache;
     }
 
-    /**
-     * Get a definition for the specified word from the specified dictionary.
-     * 
-     * @param request
-     * @param word
-     * @param dict
-     * @return
-     * @throws Exception
-     */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView getDefinition(HttpServletRequest request,
-			@RequestParam(value="word") String word, 
-			@RequestParam(value="dictId") String dict) throws Exception {
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getDefinition(HttpServletRequest request,
+            @RequestParam(value = "word") String word,
+            @RequestParam(value = "dictId", required = false) String dict) throws Exception {
 
-		Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
 
-		/*
-		 *  Make sure the requesting user has an existing portlet session. 
-		 *  This check is designed to prevent the portlet from easily becoming
-		 *  an open relay for the DictService server. 
-		 */
-		HttpSession session = request.getSession(false);
-		if (session == null || !((Boolean) session.getAttribute("hasDictionarySession"))) {
-			return new ModelAndView("jsonView", map);
-		}
-		
-		/*
-		 * Attempt to get the definition from the cache.  If it's not available,
-		 * pull it from the server and cache the result
-		 */
-		
-		String cacheKey = getCacheKey(word, dict);
-		Element cachedElement = cache.get(cacheKey);
-		String definition;
-		if (cachedElement == null) {
-			definition = getDefinition(word, dict);
-			cachedElement = new Element(cacheKey, definition);
-			cache.put(cachedElement);
-		} else {
-			definition = (String) cachedElement.getValue();			
-		}
-		
-		// return the definition as JSON data
-		map.put("definition", definition);
-		return new ModelAndView("jsonView", map);
-	}
-	
-	/**
-	 * Get the definition from the server.
-	 * 
-	 * @param word
-	 * @param dict
-	 * @return
-	 */
-	protected String getDefinition(String word, String dict) {
-		
-		// build the URL for this DictService request
-		StringBuffer url = new StringBuffer();
-		url.append(DICT_SERVICE_URL);
-		url.append("?").append(DICT_ID_PARAM_NAME).append("=").append(dict);
-		url.append("&").append(WORD_PARAM_NAME).append("=").append(word);
+        // Ensure the requesting user has an existing portlet session to
+        // prevent this endpoint from becoming an open relay.
+        HttpSession session = request.getSession(false);
+        if (session == null || !Boolean.TRUE.equals(session.getAttribute("hasDictionarySession"))) {
+            return new ModelAndView("jsonView", map);
+        }
 
-		HttpClient client = new HttpClient();
-		GetMethod get = null;
-		InputStream in = null;
-		
-		try {
+        String cacheKey = "freedict." + word.toLowerCase();
+        Element cachedElement = cache.get(cacheKey);
+        String definition;
 
-			get = new GetMethod(url.toString());
-			int rc = client.executeMethod(get);
-			if(rc == HttpStatus.SC_OK) {
-				
-				// parse the definition from the response
-				in = get.getResponseBodyAsStream();
-				String def = service.getDefinitionFromXml(in);
-				
-				// escape any HTML characters
-				return StringEscapeUtils.escapeHtml(def);
-			}
-			else {
-				log.warn("Failed to retrieve dictionary feed at " + url.toString() + ":" + rc);
-			}
-		} catch (HttpException e) {
-			log.warn("Error proxying url", e);
-		} catch (IOException e) {
-			log.warn("Error proxying url", e);
-		} finally {
-			if (get != null) {
-				get.releaseConnection();
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Get a cache key for the specified word and dictionary combination.
-	 * 
-	 * @param word
-	 * @param dict
-	 * @return
-	 */
-	protected String getCacheKey(String word, String dict) {
-		return dict.concat(".").concat(word);
-	}
+        if (cachedElement != null) {
+            definition = (String) cachedElement.getValue();
+        } else {
+            definition = fetchDefinition(word);
+            cache.put(new Element(cacheKey, definition));
+        }
 
+        map.put("definition", definition);
+        return new ModelAndView("jsonView", map);
+    }
+
+    private String fetchDefinition(String word) {
+        try {
+            JsonNode[] entries = restTemplate.getForObject(DICT_API_URL, JsonNode[].class, word);
+            if (entries == null || entries.length == 0) {
+                return null;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (JsonNode entry : entries) {
+                JsonNode meanings = entry.path("meanings");
+                for (JsonNode meaning : meanings) {
+                    String partOfSpeech = meaning.path("partOfSpeech").asText("");
+                    if (!partOfSpeech.isEmpty()) {
+                        sb.append("<strong>").append(partOfSpeech).append("</strong><br/>");
+                    }
+                    JsonNode definitions = meaning.path("definitions");
+                    int count = 0;
+                    for (JsonNode def : definitions) {
+                        if (count++ >= 3) break; // limit to 3 definitions per part of speech
+                        sb.append("<p>").append(def.path("definition").asText("")).append("</p>");
+                    }
+                }
+            }
+            return sb.length() > 0 ? sb.toString() : null;
+
+        } catch (Exception e) {
+            log.warn("Failed to retrieve definition for word: " + word, e);
+            return null;
+        }
+    }
 }

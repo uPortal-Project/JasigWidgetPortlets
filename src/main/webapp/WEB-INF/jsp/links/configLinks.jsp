@@ -19,9 +19,8 @@
 
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<script src="<rs:resourceURL value="/rs/lodash/4.17.4/lodash.min.js"/>"></script>
-<script src="<rs:resourceURL value="/rs/template/1.0.0/template.js"/>"></script>
-<rs:aggregatedResources path="${ usePortalJsLibs ? '/app-skin-shared.xml' : '/app-skin.xml' }"/>
+<script src="/ResourceServingWebapp/rs/lodash/4.17.4/lodash.min.js"></script>
+<script src="/ResourceServingWebapp/rs/template/1.0.0/template.js"></script>
 <c:set var="n"><portlet:namespace/></c:set>
 
 <template id="${n}_link_item">

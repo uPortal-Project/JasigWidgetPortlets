@@ -22,28 +22,19 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:url var="url" value="/ajax/dictionary"/>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <rs:aggregatedResources path="/resources.xml"/>
-</c:if>
-
-<script type="text/javascript"><rs:compressJs>
+<script type="text/javascript">
     var ${n} = {};
-<c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-        ${n}.jQuery = jQuery.noConflict(true)
-    </c:when>
-    <c:otherwise>
-        ${n}.jQuery = up.jQuery;
-    </c:otherwise>
-</c:choose>
+    ${n}.jQuery = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
     ${n}.jQuery(function(){
         var ${n}searchDictionary = function(form) {
              var $ = ${n}.jQuery;
              $("#${n}defs").html("");
-             $.get('${url}', {word: $(form.word).val(), dictId: $(form.dict).val()}, function(json){
-                 if (json.definition.length) {
+             $.get('${url}', {word: $(form.word).val()}, function(json){
+                 if (json.definition && json.definition.length) {
                      $(form).parent().find("div.defContainer").append($(document.createElement("hr")));
                      $(form).parent().find("div.defContainer").append($(document.createElement("div")).html(json.definition));
+                 } else {
+                     $(form).parent().find("div.defContainer").append($(document.createElement("p")).text("No definition found."));
                  }
              }, "json");
              return false;
@@ -56,12 +47,11 @@
         });
     });
 
-</rs:compressJs></script>
+</script>
 
 <div id="${n}tabs">
     <div id="${n}dictionaryTab">
         <form>
-            <input type="hidden" name="dict" value="wn"/>
             <input name="word"/> 
             <span class="buttons">
                 <input type="submit" value="Go!"/>

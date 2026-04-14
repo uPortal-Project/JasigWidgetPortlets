@@ -20,6 +20,9 @@ package org.jasig.portlet.widget.servlet.mvc;
 
 import java.util.Collections;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.jasig.portlet.widget.service.YouTubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,10 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * @author Jen Bourey
- * @version $Revision$
- */
 @Controller
 @RequestMapping("/ajax/youtube")
 public class YouTubeController {
@@ -43,8 +42,11 @@ public class YouTubeController {
     }
 
     @RequestMapping
-    public ModelAndView getFeed(@RequestParam("user") String user) {
-        String response = service.getYouTubeResponse(user);
+    public ModelAndView getFeed(
+            @RequestParam("user") String channelId,
+            @RequestParam(value = "apiKey", required = false) String apiKey,
+            HttpServletRequest request) {
+        String response = service.getYouTubeResponse(channelId, apiKey);
         return new ModelAndView("/string", Collections.singletonMap("response", response));
     }
 }

@@ -229,33 +229,6 @@
         </portlet-preferences>
     </portlet>
 
-    <!--portlet>
-        <portlet-name>stocks</portlet-name>
-        <display-name xml:lang="en">Stocks</display-name>
-        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>/WEB-INF/context/portlet/stocksPortletContext.xml</value>
-        </init-param>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>EDIT</portlet-mode>
-        </supports>
-        <supported-locale>en</supported-locale>
-        <portlet-info>
-            <title>Stocks</title>
-            <short-title>Stocks</short-title>
-            <keywords>Yahoo Yahoo! Stocks Finance</keywords>
-        </portlet-info>
-        <portlet-preferences>
-            <preference>
-                <name>includeJsLibs</name>
-                <value>false</value>
-            </preference>
-        </portlet-preferences>
-    </portlet-->
 
     <portlet>
         <portlet-name>SimpleJspPortlet</portlet-name>

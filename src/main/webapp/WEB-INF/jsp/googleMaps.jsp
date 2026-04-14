@@ -22,9 +22,6 @@
 <c:set var="n"><portlet:namespace/></c:set>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <rs:aggregatedResources path="/resources.xml"/>
-</c:if>
 <script src="//maps.google.com/maps/api/js?v=3.6&sensor=true"></script>
 
 <script type="text/javascript">

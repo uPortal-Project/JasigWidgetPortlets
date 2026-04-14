@@ -27,11 +27,6 @@
     <portlet:param name="gadgetUrl" value="GADGETURL"/>
 </portlet:renderURL>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <rs:aggregatedResources path="/resources.xml"/>
-    <script src="<rs:resourceURL value="/rs/fluid/1.5.0/js/fluid-custom.min.js"/>" type="text/javascript"></script>
-</c:if>
-
 <style type="text/css">
 ul.gadget-listings li {
     display: block;
@@ -49,127 +44,102 @@ ul.gadget-listings img {
 </style>
 
 <div class="portlet">
-<form method="post" action="${ searchUrl }">
-    
-    <p>
-        Category 
-        <select name="category">
-            <c:forEach items="${ categories }" var="category">
-                <option value="${ category.key }">${ category.displayName }</option>
-            </c:forEach>
-        </select>
-        Search for <input name="query"/>
-    </p>
-    
-    <div class="buttons">
-        <input type="submit" value="Search"/>
-    </div>
-</form>
+    <form method="post" action="${ searchUrl }">
+        <p>
+            Category
+            <select name="category">
+                <c:forEach items="${ categories }" var="category">
+                    <option value="${ category.key }">${ category.displayName }</option>
+                </c:forEach>
+            </select>
+            Search for <input name="query"/>
+        </p>
+        <div class="buttons">
+            <input type="submit" value="Search"/>
+        </div>
+    </form>
 
-<div id="${n}gadgetPager" class="fl-pager">
-    <div class="flc-pager-top view-pager">
-        <ul id="pager-top" class="fl-pager-ui">
-          <li class="flc-pager-previous"><a href="javascript:;">&lt; prev</a></li>
-          <li>
-            <ul class="fl-pager-links flc-pager-links" style="margin:0; display:inline">
-              <li class="flc-pager-pageLink"><a href="javascript:;">1</a></li>
+    <div id="${n}gadgetPager">
+        <nav class="d-flex align-items-center gap-3 mb-2">
+            <ul id="${n}pager-top" class="pagination mb-0">
+                <li class="page-item pager-previous"><a class="page-link" href="#">prev</a></li>
+                <li class="page-item pager-next"><a class="page-link" href="#">next</a></li>
             </ul>
-          </li>
-          <li class="flc-pager-next"><a href="javascript:;">next &gt;</a></li>
-          <li>
-            <span class="flc-pager-summary">show</span>
-            <span> <select class="pager-page-size flc-pager-page-size">
-            <option value="8">8</option>
-            <option value="16">16</option>
-            <option value="24">24</option>
-            </select></span> per page
-          </li>
-        </ul>
-        <ul class="gadget-listings">
-            <li rsf:id="gadget:">
-                <h3><a rsf:id="link" href=""></a></h3>
-                <img rsf:id="image" src=""/>
-            </li>
-        </ul>
+            <span class="pager-summary text-muted small"></span>
+            <div class="d-flex align-items-center gap-1 small">
+                <span>show</span>
+                <select class="form-select form-select-sm pager-page-size" style="width:auto">
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="24">24</option>
+                </select>
+                <span>per page</span>
+            </div>
+        </nav>
+        <ul class="gadget-listings"></ul>
     </div>
 </div>
-</div>
 
-<script type="text/javascript"><rs:compressJs>
-    var ${n} = {};
-<c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-        ${n}.jQuery = jQuery.noConflict(true)
-        ${n}.fluid = fluid;
-        fluid = null;
-        fluid_1_5 = null;
-    </c:when>
-    <c:otherwise>
-        ${n}.jQuery = up.jQuery;
-        ${n}.fluid = up.fluid;
-    </c:otherwise>
-</c:choose>
-    ${n}.jQuery(function(){
-         var $ = ${n}.jQuery;
-        var fluid = ${n}.fluid;
-        var pager, gadgets;
-        
-        $(document).ready(function () {
-            $.ajax({
-                url: '<c:url value="/ajax/gadgets"/>',
-                dataType: 'json',
-                async:false,
-                success: function (data, textStatus, jqXHR) {
-                    gadgets = data.gadgets
-                }
-            });
-            var options = {
-                dataModel: gadgets,
-                annotateColumnRange: "link",
-                columnDefs: [
-                    { 
-                        key: "link",
-                        valuebinding: "*.configureUrl",
-                        components: {
-                            target: '${ gadgetUrl }'.replace('&amp;', '&').replace("GADGETURL", '${"${*.configUrl}"}'),
-                            linktext: '${"${*.name}"}'
-                        }
-                    },
-                    { 
-                        key: "image",
-                        valuebinding: "*.name",
-                        components: function (row) {
-                            return {
-                                decorators: [
-                                    { type: "attrs", attributes: { src: '${"${*.imageUrl}"}' } }
-                                ]
-                            }
-                        }
-                    }
-                ],
-                bodyRenderer: {
-                    type: "fluid.pager.selfRender",
-                    options: {
-                        selectors: {
-                            root: ".gadget-listings"
-                        },
-                        row: "gadget:",
-                    }
-                    
-                },
-                pagerBar: {
-                    type: "fluid.pager.pagerBar", 
-                    options: {
-                        pageList: {
-                            type: "fluid.pager.renderedPageList",
-                            options: { 
-                                linkBody: "a"
-                            }
-                        }
-                    }
-                }
-            };
-            pager = fluid.pager($("#${n}gadgetPager"), options);
-         });
+<script type="text/javascript">
+'use strict';
+
+(function () {
+    var $ = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
+    var gadgetUrl = '${gadgetUrl}'.replace(/&amp;/g, '&');
+    var container = document.getElementById('${n}gadgetPager');
+    var listEl = container.querySelector('.gadget-listings');
+    var pageSizeSelect = container.querySelector('.pager-page-size');
+    var prevBtn = container.querySelector('.pager-previous a');
+    var nextBtn = container.querySelector('.pager-next a');
+    var summaryEl = container.querySelector('.pager-summary');
+
+    var gadgets = [];
+    var currentPage = 0;
+    var pageSize = parseInt(pageSizeSelect.value, 10);
+
+    function renderPage() {
+        var start = currentPage * pageSize;
+        var end = Math.min(start + pageSize, gadgets.length);
+        var totalPages = Math.ceil(gadgets.length / pageSize);
+
+        listEl.innerHTML = '';
+        gadgets.slice(start, end).forEach(function (gadget) {
+            var li = document.createElement('li');
+            var url = gadgetUrl.replace('GADGETURL', encodeURIComponent(gadget.configUrl || ''));
+            li.innerHTML =
+                '<h3><a href="' + url + '">' + gadget.name + '</a></h3>' +
+                (gadget.imageUrl ? '<img src="' + gadget.imageUrl + '" alt=""/>' : '');
+            listEl.appendChild(li);
+        });
+
+        summaryEl.textContent = gadgets.length > 0 ? (start + 1) + ' - ' + end + ' / ' + gadgets.length : '';
+        prevBtn.parentElement.classList.toggle('disabled', currentPage === 0);
+        nextBtn.parentElement.classList.toggle('disabled', currentPage >= totalPages - 1);
+    }
+
+    prevBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (currentPage > 0) { currentPage--; renderPage(); }
     });
-</rs:compressJs></script>
+
+    nextBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (currentPage < Math.ceil(gadgets.length / pageSize) - 1) { currentPage++; renderPage(); }
+    });
+
+    pageSizeSelect.addEventListener('change', function () {
+        pageSize = parseInt(this.value, 10);
+        currentPage = 0;
+        renderPage();
+    });
+
+    $.ajax({
+        url: '<c:url value="/ajax/gadgets"/>',
+        dataType: 'json',
+        success: function (data) {
+            gadgets = data.gadgets || [];
+            renderPage();
+        }
+    });
+}());
+</script>

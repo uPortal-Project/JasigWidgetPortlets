@@ -18,74 +18,41 @@
     under the License.
 
 --%>
+<%--
+  -- Previously used jQuery Mobile, Fluid selfRender, and YouTube Data API v2.
+  -- Replaced with a simple Bootstrap list view using YouTube Data API v3.
+  -- Requires 'apiKey' portlet preference (YouTube Data API v3 key).
+  --%>
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <rs:aggregatedResources path="/resources.xml"/>
-    <script src="<rs:resourceURL value="/rs/fluid/1.5.0/js/fluid-custom.min.js"/>" type="text/javascript"></script>
-</c:if>
-
 <div id="${n}" class="portlet">
-    <div data-role="content" class="portlet-content">
-        <ul data-role="listview" class="feed">
-            <li class="video">
-                <a href="javascript:;" class="video-link">
-                    <img class="img"/>
-                    <h3 class="video-title"></h3>
-                    <p class="description"></p>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <ul class="list-group feed"></ul>
 </div>
 
-<script type="text/javascript"><rs:compressJs>
-    var ${n} = ${n} || {};
-<c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-        ${n}.jQuery = jQuery.noConflict(true)
-        ${n}.fluid = fluid;
-        fluid = null;
-        fluid_1_5 = null;
-    </c:when>
-    <c:otherwise>
-        ${n}.jQuery = up.jQuery;
-        ${n}.fluid = up.fluid;
-    </c:otherwise>
-</c:choose>
-    ${n}.jQuery(document).ready(function(){
-        var $ = ${n}.jQuery;
-        var fluid = ${n}.fluid;
-        $.get('<c:url value="/ajax/youtube"><c:param name="user" value="${usernames[0]}"/></c:url>', {},
-            function (data) {
-                var tree = { children: [] };
-                var cutpoints = [
-                    { id: "video:", selector: ".video" },
-                    { id: "link", selector: ".video-link" },
-                    { id: "title", selector: ".video-title" },
-                    { id: "description", selector: ".description" },
-                    { id: "image", selector: ".img" }
-                ];
-                
-                $(data.data.items).each(function (idx, item){
-                    tree.children.push({
-                        ID: "video:",
-                        children: [
-                            { ID: "link", target: item.player["default"] },
-                            { ID: "title", value: item.title },
-                            { ID: "description", value: item.description },
-                            { ID: "image", 
-                                decorators: [
-                                     { type: "attrs", attributes: { src: item.thumbnail.sqDefault } }
-                                 ] 
-                            }
-                        ]
-                    });
-                });
-                fluid.selfRender($("#${n}"), tree, { cutpoints: cutpoints });
-            }, "json"
-        );
-    }); 
-</rs:compressJs></script>
+<script type="text/javascript">
+'use strict';
+
+(function () {
+    var $ = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
+    var listEl = document.querySelector('#${n} .feed');
+
+    $.getJSON('<c:url value="/ajax/youtube"><c:param name="user" value="${usernames[0]}"/><c:param name="apiKey" value="${apiKey}"/></c:url>',
+        function (data) {
+            var videos = data.videos || [];
+            videos.forEach(function (video) {
+                var li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.innerHTML =
+                    '<div class="d-flex gap-2">' +
+                    (video.thumbnail ? '<img src="' + video.thumbnail + '" style="width:80px;height:auto" alt=""/>' : '') +
+                    '<div><a href="' + video.link + '" target="_blank"><strong>' + video.title + '</strong></a>' +
+                    (video.description ? '<p class="mb-0 small">' + video.description + '</p>' : '') +
+                    '</div></div>';
+                listEl.appendChild(li);
+            });
+        }
+    );
+}());
+</script>
