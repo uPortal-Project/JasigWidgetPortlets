@@ -23,10 +23,10 @@
            xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
   <!--
-    | Bootstrap 5 and FontAwesome are provided by the portal skin via webjars.
-    | This file previously loaded Bootstrap 3 (namespaced) and FontAwesome 4
-    | independently, which is no longer needed.
-    +-->
+    Bootstrap 5 and FontAwesome are provided by the portal skin via webjars.
+    This file previously loaded Bootstrap 3 (namespaced) and FontAwesome 4
+    independently, which is no longer needed.
+  -->
 
   <css import="true">app-skin-shared.xml</css>
   <js import="true">app-skin-shared.xml</js>
