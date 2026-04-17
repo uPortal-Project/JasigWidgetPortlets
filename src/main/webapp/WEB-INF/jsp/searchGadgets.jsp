@@ -106,9 +106,21 @@ ul.gadget-listings img {
         gadgets.slice(start, end).forEach(function (gadget) {
             var li = document.createElement('li');
             var url = gadgetUrl.replace('GADGETURL', encodeURIComponent(gadget.configUrl || ''));
-            li.innerHTML =
-                '<h3><a href="' + url + '">' + gadget.name + '</a></h3>' +
-                (gadget.imageUrl ? '<img src="' + gadget.imageUrl + '" alt=""/>' : '');
+
+            var h3 = document.createElement('h3');
+            var a = document.createElement('a');
+            a.href = url;
+            a.textContent = gadget.name;
+            h3.appendChild(a);
+            li.appendChild(h3);
+
+            if (gadget.imageUrl && /^https?:\/\//i.test(gadget.imageUrl)) {
+                var img = document.createElement('img');
+                img.src = gadget.imageUrl;
+                img.alt = '';
+                li.appendChild(img);
+            }
+
             listEl.appendChild(li);
         });
 
