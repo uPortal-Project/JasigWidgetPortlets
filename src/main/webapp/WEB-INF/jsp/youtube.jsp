@@ -81,13 +81,40 @@
         videos.slice(start, end).forEach(function (video) {
             var col = document.createElement('div');
             col.className = 'col-sm-6 col-md-4 mb-3';
-            col.innerHTML =
-                '<div class="card h-100">' +
-                (video.thumbnail ? '<img src="' + video.thumbnail + '" class="card-img-top" alt=""/>' : '') +
-                '<div class="card-body">' +
-                '<h6 class="card-title"><a href="' + video.link + '" target="_blank">' + video.title + '</a></h6>' +
-                (video.description ? '<p class="card-text small">' + video.description + '</p>' : '') +
-                '</div></div>';
+
+            var card = document.createElement('div');
+            card.className = 'card h-100';
+
+            if (video.thumbnail && /^https?:\/\//i.test(video.thumbnail)) {
+                var img = document.createElement('img');
+                img.src = video.thumbnail;
+                img.className = 'card-img-top';
+                img.alt = '';
+                card.appendChild(img);
+            }
+
+            var cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            var h6 = document.createElement('h6');
+            h6.className = 'card-title';
+            var a = document.createElement('a');
+            if (video.link && /^https?:\/\//i.test(video.link)) { a.href = video.link; }
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.textContent = video.title;
+            h6.appendChild(a);
+            cardBody.appendChild(h6);
+
+            if (video.description) {
+                var p = document.createElement('p');
+                p.className = 'card-text small';
+                p.textContent = video.description;
+                cardBody.appendChild(p);
+            }
+
+            card.appendChild(cardBody);
+            col.appendChild(card);
             videosEl.appendChild(col);
         });
 
