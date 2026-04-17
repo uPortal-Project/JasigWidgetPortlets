@@ -32,12 +32,7 @@ import net.sf.ehcache.Element;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.net.ssl.SSLContext;
 
 /**
  * DictionaryDataController handles AJAX requests for a word definition.
@@ -63,25 +57,7 @@ public class DictionaryDataController {
 
     private static final String DICT_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/{word}";
 
-    private final RestTemplate restTemplate = buildRestTemplate();
-
-    private static RestTemplate buildRestTemplate() {
-        try {
-            SSLContext sslContext = SSLContextBuilder.create()
-                    .setProtocol("TLSv1.2")
-                    .build();
-            SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-                    sslContext,
-                    new String[]{"TLSv1.2", "TLSv1.3"},
-                    null,
-                    NoopHostnameVerifier.INSTANCE);
-            return new RestTemplate(new HttpComponentsClientHttpRequestFactory(
-                    HttpClients.custom().setSSLSocketFactory(socketFactory).build()));
-        } catch (Exception e) {
-            return new RestTemplate();
-        }
-    }
-
+    private final RestTemplate restTemplate = new RestTemplate();
     private Cache cache;
 
     @Required
