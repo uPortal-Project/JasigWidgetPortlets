@@ -349,7 +349,6 @@
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
-            <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
         <!-- servlet-api provided at runtime by Tomcat; version managed by uportal-portlet-parent. -->
