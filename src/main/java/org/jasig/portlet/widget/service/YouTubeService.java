@@ -18,62 +18,89 @@
  */
 package org.jasig.portlet.widget.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.io.IOUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-
+/**
+ * Fetches videos from a YouTube channel using the YouTube Data API v3.
+ *
+ * Requires a YouTube Data API v3 key configured as the 'apiKey' portlet
+ * preference. The channel is identified by the 'user' parameter which should
+ * be a YouTube channel ID (e.g. UCnUYZLuoy1rq1aVMwx4aTzw).
+ *
+ * Previously used the YouTube Data API v2 (gdata.youtube.com) which was
+ * shut down in 2015.
+ */
 @Service
 public class YouTubeService {
-    
+
     protected final Log log = LogFactory.getLog(getClass());
-    
-    @Cacheable(cacheName="youTubeCache")
-    public String getYouTubeResponse(String userName) {
-        String url = "http://gdata.youtube.com/feeds/api/videos?author=" + userName + "&v=2&alt=jsonc&orderby=published";
-        HttpClient client = new HttpClient();
-        GetMethod get = null;
+
+    private static final String SEARCH_URL =
+            "https://www.googleapis.com/youtube/v3/search" +
+            "?part=snippet&type=video&order=date&maxResults=50" +
+            "&channelId={channelId}&key={apiKey}";
+
+    private final RestTemplate restTemplate = new RestTemplate(
+            new HttpComponentsClientHttpRequestFactory(HttpClients.createDefault()));
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    /**
+     * Fetch videos for the given channel ID using the YouTube Data API v3.
+     *
+     * @param channelId the YouTube channel ID
+     * @param apiKey    the YouTube Data API v3 key
+     * @return JSON string with a 'videos' array, each item having title,
+     *         description, link, and thumbnail fields; or null on error
+     */
+    public String getYouTubeResponse(String channelId, String apiKey) {
+        if (apiKey == null || apiKey.trim().isEmpty()) {
+            log.warn("No YouTube Data API v3 key configured (portlet preference 'apiKey'). Cannot fetch videos.");
+            return emptyResponse();
+        }
 
         try {
-    
-            if(log.isDebugEnabled()) {
-                log.debug("Retrieving proxy url " + url);
+            JsonNode response = restTemplate.getForObject(SEARCH_URL, JsonNode.class, channelId, apiKey);
+            if (response == null) {
+                return emptyResponse();
             }
-            
-            get = new GetMethod(url);
-            int rc = client.executeMethod(get);
-            if(rc == HttpStatus.SC_OK) {
-                
-                // get the response body
-                log.debug("request completed successfully");
-                InputStream in = get.getResponseBodyAsStream();
-                
-                String response = IOUtils.toString(in);
-                return response;
-                
+
+            ArrayNode videos = objectMapper.createArrayNode();
+            JsonNode items = response.path("items");
+            for (JsonNode item : items) {
+                JsonNode snippet = item.path("snippet");
+                String videoId = item.path("id").path("videoId").asText("");
+                if (videoId.isEmpty()) continue;
+
+                ObjectNode video = objectMapper.createObjectNode();
+                video.put("title", snippet.path("title").asText(""));
+                video.put("description", snippet.path("description").asText(""));
+                video.put("link", "https://www.youtube.com/watch?v=" + videoId);
+                video.put("thumbnail", snippet.path("thumbnails").path("high").path("url").asText(
+                        snippet.path("thumbnails").path("default").path("url").asText("")));
+                videos.add(video);
             }
-            else {
-                log.warn("HttpStatus for " + url + ":" + rc);
-            }
-        } catch (HttpException e) {
-            log.warn("Error proxying url", e);
-        } catch (IOException e) {
-            log.warn("Error proxying url", e);
-        } finally {
-            if (get != null) {
-                get.releaseConnection();
-            }
+
+            ObjectNode result = objectMapper.createObjectNode();
+            result.set("videos", videos);
+            return objectMapper.writeValueAsString(result);
+
+        } catch (Exception e) {
+            log.warn("Failed to retrieve YouTube videos for channel: " + channelId, e);
+            return emptyResponse();
         }
-        return null;
     }
 
+    private String emptyResponse() {
+        return "{\"videos\":[]}";
+    }
 }

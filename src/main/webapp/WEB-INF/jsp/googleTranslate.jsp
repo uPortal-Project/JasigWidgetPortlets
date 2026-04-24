@@ -22,7 +22,7 @@
 <c:set var="namespace"><portlet:namespace/></c:set>
 
 <script src="http://www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script type="text/javascript"><rs:compressJs>
+<script type="text/javascript">
  google.load("language", "1");
  function ${namespace}translate(form) {
    google.language.translate(form.source.value, form.fromLanguage.value, form.toLanguage.value, function(result) {
@@ -34,7 +34,7 @@
    });
    return false;
  }
-</rs:compressJs></script>
+</script>
 
 <form onsubmit="return ${namespace}translate(this);">
     <p>

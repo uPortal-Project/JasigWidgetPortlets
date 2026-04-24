@@ -21,7 +21,7 @@
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
 
 <script src="//www.google.com/jsapi?key=${key}" type="text/javascript"></script>
-<script language="Javascript" type="text/javascript"><rs:compressJs>
+<script language="Javascript" type="text/javascript">
 //<![CDATA[
   google.load('search', '1.0');
 
@@ -61,5 +61,5 @@
   google.setOnLoadCallback(<portlet:namespace/>OnLoad, true);
 
 //]]>
-</rs:compressJs></script>
+</script>
 <div id="<portlet:namespace/>searchcontrol" style="width:100%;">Loading...</div>

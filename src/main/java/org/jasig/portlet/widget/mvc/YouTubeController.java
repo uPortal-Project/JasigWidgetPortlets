@@ -51,6 +51,7 @@ public class YouTubeController {
         Map<String, Object> model = new HashMap<String, Object>();
         PortletPreferences prefs = request.getPreferences();
         model.put("usernames", prefs.getValues("usernames", new String[]{"uPortal"}));
+        model.put("apiKey", prefs.getValue("apiKey", ""));
 
         String viewName;
         if (viewHelper.isMobile(request)) {

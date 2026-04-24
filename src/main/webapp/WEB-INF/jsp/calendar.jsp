@@ -21,28 +21,12 @@
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 <c:set var="n"><portlet:namespace/></c:set>
 
-<c:if test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-    <rs:aggregatedResources path="/resources.xml"/>
-</c:if>
-
-<div id="${n}calendar-channel"></div>
+<%--
+  -- Previously used jQuery UI datepicker (inline). Replaced with a native
+  -- HTML date input which is supported in all modern browsers and requires
+  -- no JavaScript or jQuery UI dependency.
+  --%>
+<div id="${n}calendar-channel">
+    <input type="date" id="${n}date-picker" class="form-control" style="width:auto"/>
+</div>
 <div style="clear:both">&nbsp;</div>
-
-<script type="text/javascript"><rs:compressJs>
-    var ${n} = ${n} || {};
-<c:choose>
-    <c:when test="${portletPreferencesValues['includeJsLibs'][0] != 'false'}">
-        ${n}.jQuery = jQuery.noConflict(true)
-    </c:when>
-    <c:otherwise>
-        ${n}.jQuery = up.jQuery;
-    </c:otherwise>
-</c:choose>
-    ${n}.jQuery("#${n}calendar-channel").ready(function(){
-        ${n}.jQuery('#${n}calendar-channel').datepicker({
-            inline:true,
-            changeMonth: false,
-            changeYear: false
-        });
-    }); 
-</rs:compressJs></script>
