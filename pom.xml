@@ -52,6 +52,7 @@
         <portletUtils.version>1.1.3</portletUtils.version>
         <spring.version>4.3.30.RELEASE</spring.version>
         <resource-server.version>1.5.2</resource-server.version>
+        <logbackVersion>1.3.12</logbackVersion>
         <uportal-libs.version>5.16.1</uportal-libs.version>
     </properties>
 
@@ -188,6 +189,10 @@
                     <exclusion>
                         <groupId>log4j</groupId>
                         <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -521,6 +526,10 @@
                 <exclusion>
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
