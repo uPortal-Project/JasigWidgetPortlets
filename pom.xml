@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.jasig.portlet</groupId>
         <artifactId>uportal-portlet-parent</artifactId>
-        <version>48</version>
+        <version>49</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -838,29 +838,21 @@
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
                     <configuration>
-                        <aggregate>true</aggregate>
+                        <!--
+                          | Parent v49 provides the standard excludes
+                          | (target/**, bin/**, pom.xml.*, release.properties,
+                          | LICENSE, NOTICE, docs/**, .idea/**, overlays/**)
+                          | and mappings (tld, xjb). Local block keeps only
+                          | the JasigWidgetPortlets-specific excludes.
+                        +-->
                         <excludes>
-                            <exclude>target/**</exclude>
-                            <exclude>bin/**</exclude>
-                            <exclude>pom.xml.*</exclude>
-                            <exclude>release.properties</exclude>
-                            <exclude>LICENSE</exclude>
-                            <exclude>NOTICE</exclude>
-                            <exclude>docs/**</exclude>
                             <exclude>**/*.channel</exclude>
                             <exclude>**/*.portlet.xml</exclude>
                             <exclude>**/*.json</exclude>
                             <exclude>src/main/webapp/css/*.css</exclude> <!-- LESSCSS (unfortunately) builds to here -->
                             <exclude>src/test/resources/org/jasig/portlet/widget/service/*.html</exclude>
-                            <exclude>src/test/resources/org/jasig/portlet/widget/service/googlecalendarviewer.xml
-                            </exclude>
-                            <exclude>.idea/**</exclude>  <!-- Exclude intelliJ Idea working folders -->
-                            <exclude>overlays/**</exclude>  <!-- Exclude intelliJ Idea working folders -->
+                            <exclude>src/test/resources/org/jasig/portlet/widget/service/googlecalendarviewer.xml</exclude>
                         </excludes>
-                        <mapping>
-                            <tld>XML_STYLE</tld>
-                            <xjb>XML_STYLE</xjb>
-                        </mapping>
                     </configuration>
                 </plugin>
             <plugin>
