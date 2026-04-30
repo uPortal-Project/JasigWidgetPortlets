@@ -53,7 +53,7 @@
         <spring.version>4.3.30.RELEASE</spring.version>
         <resource-server.version>1.5.3</resource-server.version>
         <logbackVersion>1.5.32</logbackVersion>
-        <uportal-libs.version>5.16.1</uportal-libs.version>
+        <uportal-libs.version>5.17.3</uportal-libs.version>
     </properties>
 
     <licenses>
