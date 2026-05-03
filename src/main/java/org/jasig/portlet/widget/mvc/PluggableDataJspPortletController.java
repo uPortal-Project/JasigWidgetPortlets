@@ -32,7 +32,7 @@ import javax.portlet.ResourceResponse;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasig.portlet.widget.dao.PluggableDataDao;
