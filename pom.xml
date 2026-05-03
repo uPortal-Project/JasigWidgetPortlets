@@ -33,13 +33,13 @@
 
     <name>Jasig Widget Portlets</name>
     <description>Collection of small, simple widget-type portlets.</description>
-    <version>2.4.1-SNAPSHOT</version>
+    <version>2.4.1</version>
 
     <scm>
         <connection>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</connection>
         <developerConnection>scm:git:git@github.com:uPortal-Project/JasigWidgetPortlets.git</developerConnection>
         <url>scm:git:https://github.com/uPortal-Project/JasigWidgetPortlets.git</url>
-        <tag>HEAD</tag>
+        <tag>jasig-widget-portlets-2.4.1</tag>
     </scm>
 
     <properties>
@@ -889,7 +889,7 @@
                 <configuration>
                     <warName>jasig-widget-portlets</warName>
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                    <overlays/>
+                    <overlays />
                 </configuration>
             </plugin>
             <plugin>
