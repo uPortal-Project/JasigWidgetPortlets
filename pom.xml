@@ -185,10 +185,6 @@
                         <groupId>log4j</groupId>
                         <artifactId>log4j</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>commons-collections</groupId>
-                        <artifactId>commons-collections</artifactId>
-                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -507,16 +503,27 @@
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+
+        <!-- json-lib's JSONObject (used by net.sf.json.spring.web.servlet.view.JsonView)
+             needs org.apache.commons.collections.map.ListOrderedMap at runtime.
+             uportal-portlet-parent v51 banned commons-collections [3.2.1,4.0]
+             over CVE-2015-6420; the enforcer override below allows 3.2.2
+             specifically. The CVE is a deserialization RCE that requires
+             attacker-controlled serialized input, which json-lib's internal
+             ListOrderedMap usage doesn't expose. Pinned in dependencyManagement
+             above; declared explicitly here so the WAR bundles it. -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -799,6 +806,33 @@
 
     <build>
             <plugins>
+
+                <!-- Local enforcer override: parent v51 bans
+                     commons-collections [3.2.1,4.0] over CVE-2015-6420, but
+                     json-lib needs ListOrderedMap from 3.2.2 at runtime
+                     (see the commons-collections dependency block above for
+                     full context). Allow 3.2.2 specifically here. Drop once
+                     json-lib is replaced (e.g. with Jackson's ObjectMapper).
+                  -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>enforce-versions</id>
+                            <configuration>
+                                <rules>
+                                    <bannedDependencies>
+                                        <includes>
+                                            <include>commons-collections:commons-collections:3.2.2</include>
+                                        </includes>
+                                    </bannedDependencies>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <plugin>
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
