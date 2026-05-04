@@ -19,6 +19,7 @@ This project includes:
   AJAX Portlet Support under The BSD License
   AOP alliance under Public Domain
   Apache Commons Codec under Apache License, Version 2.0
+  Apache Commons Collections under Apache License, Version 2.0
   Apache Commons Compress under Apache-2.0
   Apache Commons IO under Apache-2.0
   Apache Commons Lang under Apache-2.0
