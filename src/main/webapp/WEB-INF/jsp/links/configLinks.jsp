@@ -19,8 +19,7 @@
 
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<script src="/ResourceServingWebapp/rs/lodash/4.17.4/lodash.min.js"></script>
-<script src="/ResourceServingWebapp/rs/template/1.0.0/template.js"></script>
+<script src="/resource-server/rs/template/1.0.0/template.js"></script>
 <c:set var="n"><portlet:namespace/></c:set>
 
 <template id="${n}_link_item">
@@ -90,7 +89,7 @@
             var link = cloneDefaultLink();
             app.querySelector('ul').appendChild(createLinkListItem(link));
             var last;
-            _.forEach(document.getElementById('${n}config').querySelectorAll("li"), function(li) {
+            Array.from(document.getElementById('${n}config').querySelectorAll("li")).forEach(function (li) {
                 li.classList.remove('active');
                 last = li;
             });
@@ -108,7 +107,7 @@
         }
 
         var selectItem = function(e) {
-            _.forEach(document.getElementById('${n}config').querySelectorAll('li'), function(li) {
+            Array.from(document.getElementById('${n}config').querySelectorAll('li')).forEach(function (li) {
                 li.classList.remove('active');
             });
             var li = parentLi(e.target);
@@ -240,7 +239,7 @@
         var beforeSave = function() {
             var app = document.getElementById('${n}config');
             var links = [];
-            _.forEach(app.querySelectorAll('li'), function(item) {
+            Array.from(app.querySelectorAll('li')).forEach(function (item) {
                 links.push(item.link);
             });
             app.querySelector('input[name="links"]').value = JSON.stringify(links);
@@ -254,10 +253,10 @@
             }
 
             var app = document.getElementById('${n}config');
-            _.forEach(${n}.links, function(link) {
+            ${n}.links.forEach(function (link) {
                 var item = app.querySelector('ul').appendChild(createLinkListItem(link));
             });
-            _.forEach(app.querySelectorAll('li'), function(item, i) {
+            Array.from(app.querySelectorAll('li')).forEach(function (item, i) {
                 // have to iterate the list items b/c the returned new child cannot be updated
                 setupLi(item, ${n}.links[i]);
             });
